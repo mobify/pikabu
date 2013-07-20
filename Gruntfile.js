@@ -24,14 +24,15 @@ module.exports = function(grunt) {
                 dest: 'build/pikabu.min.js'
             }
         },
-        cssmin: {
-            core: {
-                src: 'src/pikabu.css',
-                dest: 'build/pikabu.min.css'
+        compass: {
+            options: {
+                config: 'config.rb',
+                cssDir: '../build',
+                outputStyle: 'compressed'
             },
-            style: {
-                src: 'src/pikabu-style.css',
-                dest: 'build/pikabu-style.min.css'
+            dist: {
+                clean: true,
+                force: true
             }
         },
         shell: {
@@ -42,7 +43,7 @@ module.exports = function(grunt) {
         },
         zip: {
             "build/pikabu.zip": ["src/pikabu.js", "src/pikabu.css", 
-            "src/pikabu-style.css"]
+            "src/pikabu-theme.css"]
         },
         s3: {
             key: '<%= localConfig.aws.key %>',
@@ -53,7 +54,7 @@ module.exports = function(grunt) {
             upload: [
                 { // build
                     src: "build/*",
-                    dest: "pikabu/<%= pkg.version %>/",
+                    dest: "modules/pikabu/<%= pkg.version %>/",
                     rel: "build"
                 }
             ]
@@ -63,15 +64,14 @@ module.exports = function(grunt) {
 
     // Load the task plugins
     grunt.loadNpmTasks('grunt-contrib-uglify');
-    grunt.loadNpmTasks('grunt-css');
+    grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-zip');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-clean');
 
     // Default task(s).
-    grunt.registerTask('build', ['uglify', 'cssmin', 'zip']);
+    grunt.registerTask('build', ['uglify', 'compass', 'zip']);
     grunt.registerTask('release', ['build', 'shell:tagRelease', 's3'])
     grunt.registerTask('default', 'build')
-
 };

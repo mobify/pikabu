@@ -7,3 +7,4 @@ css_dir = "."
 sass_dir = "scss"
 images_dir = "i"
 javascripts_dir = "."
+
