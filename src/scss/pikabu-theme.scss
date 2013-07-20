@@ -1,44 +1,201 @@
-@import "defaults";
+@charset "UTF-8";
+@import "compass";
 
-.m-pikabu-viewport {
+// ==========================================================================
+// FONTS
+// ==========================================================================
+
+@font-face {
+    font-family: 'entypo';
+    font-style: 'normal';
+    font-weight: 'normal';
+    src: url('http://weloveiconfonts.com/api/fonts/entypo/entypo.eot');
+    src: url('http://weloveiconfonts.com/api/fonts/entypo/entypo.eot?#iefix') format('eot'), 
+    url('http://weloveiconfonts.com/api/fonts/entypo/entypo.woff') format('woff'), 
+    url('http://weloveiconfonts.com/api/fonts/entypo/entypo.ttf') format('truetype'), 
+    url('http://weloveiconfonts.com/api/fonts/entypo/entypo.svg#entypo') format('svg');
 }
 
-.m-pikabu-container {
-    background: white;
+
+// ==========================================================================
+// COLOURS
+// ==========================================================================
+
+    // NEUTRAL COLOURS
+    $gray: #6b645c;
+    $light: #e6e6dd;
+
+
+    // BRAND
+    $brand: #e64a33;
+
+    $accent: #fee65e;
+    $dark-accent: #ffaa42;
+    $light-accent: #fdef6e;
+
+    $background: #fcfdf4;
+
+// ==========================================================================
+// MARGINS + TEXT
+// ==========================================================================
+
+    $margin: 10px;
+
+
+// ==========================================================================
+// GENERAL
+// ==========================================================================
+
+body {
+    margin: 0;
+    padding: 0;
+
+    background: $background;
+
+    color: $gray;
+    font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-.m-pikabu-sidebar {
-    background: #333;
+header {
+    overflow: hidden;
+    
+    background: $accent;
+    border-bottom:solid 2px $dark-accent;
 
-    color: white;
+    text-align: center;
+    @include text-shadow(1px 1px 0 $background);
+}
 
-    p,
-    a {
-        color: white;
+header h1 {
+    display: inline-block;
+    margin: 0;
+    
+    font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', sans-serif;
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 50px;
+    color: $brand;
+
+    &::before {
+        content: "\26a1";
+        margin-right: $margin*1.5;
+        font-family: 'entypo', sans-serif;
     }
+}
 
-    .x-close-panel {
-        //@include icon(close, $position: after);
+.m-pikabu-nav-toggle {
+    position: relative;
+    float: left;
+    
+    display: block;
+    width: 50px;
+    height: 30px;
+    margin: $margin;
 
+    background: $light-accent;
+    border: solid 1px rgba($brand, .35);
+    @include border-radius(3px);
+    @include box-shadow(inset 0 1px 0 $background);
+    
+    text-indent: 100%;
+    white-space: nowrap;
+    
+    color: $brand;
+    line-height: 29px;
+    
+    &[data-role="right"] {
+        float: right;
+    }
+        
+    &::after {
+        content: '☰';
+        position: absolute;
+        left: 0;
+        top: 0;
+        
         display: block;
-        padding: ($margin/2) $margin;
-
-        font-size: $small-text;
+        width: 100%;
+        height: 100%;
+        
+        font-family: 'entypo', sans-serif;
+        text-align: center;
+        text-indent: 0;
+        font-size: 25px;
         font-weight: bold;
-        text-transform: uppercase;
+        color: inherit;
+    }
 
-        &:after {
-            position: absolute;
-            top: $margin/2 + 2;
-            right: $margin;
-        }
+    &[data-role="right"]::after {
+        content: "\e705";
+         font-size: 17px;
+    }
+    
+    .m-pikabu-left-visible &[data-role="left"],
+    .m-pikabu-right-visible &[data-role="right"] {
+        background: rgba(black,.1);
+        @include box-shadow(inset 0 1px 0 rgba(black,.1));
     }
 }
 
-// When pikabu is visible, don't show their share widget
-.m-pikabu-left-visible,
-.m-pikabu-right-visible {
-    #vnContainer {
-        display: none;
+section {
+    padding: $margin*2;
+}
+
+.m-pikabu-sidebar{
+    padding: $margin;
+    background: $gray;
+    color: white;
+}
+
+// <TODO> Why do we need this?
+.m-pikabu-container {
+    background: $background;
+}
+
+section h2 {
+    display: block;
+    margin:0;
+    
+    color: $brand;    
+    font-size: 21px;
+    font-weight: 300;
+    line-height: 1.4;
+    
+}
+
+section h3 {
+    display: block;
+    margin: $margin*2 (-$margin*2) $margin;
+    padding: $margin/2 $margin*2 $margin/2+2;
+
+    background: $brand;
+    border-bottom: solid 2px $light;
+    
+    color: $background;
+    font-size: 18px;
+    font-weight: normal;
+}
+
+section p {
+    margin-bottom: $margin*1.5;
+    
+    font-size: 16px;
+    line-height: 1.4;
+}
+
+section p em {
+    color: $brand;
+    font-style: normal;
+}
+
+section a {
+    color: $brand;
+    &:hover {
+        color: black;
+        @include transition(color 0.1s linear);
     }
+}
+
+section ul {
+    margin: 15px 0;
 }

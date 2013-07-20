@@ -1,24 +1,17 @@
-@charset "utf-8";
-@import "compass";
-@import "defaults";
+@charset "UTF-8";
+@import "compass/css3";
 
-$margin: 5px;
-
-// 3, 2, 1 - Hit it!
-
-body {
-    @include display-box;
-    @include box-orient(vertical);
+* {
+    @include box-sizing(border-box);
 }
 
 .m-pikabu-viewport {
     position: relative;
 
-    @include box-flex(1);
     @include display-box;
     @include box-orient(horizontal);
     overflow: hidden;
-
+  
     -webkit-perspective: 1000;
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
@@ -27,67 +20,56 @@ body {
 .m-pikabu-sidebar {
     position: absolute;
 
-    z-index: 31;
-
     overflow: visible;
     display: block;
-    width: 300px;
+    width: 80%;
 
+    background: #222;
+
+  
     &.m-pikabu-left {
         @include translate3d(-100%, 0, 0);
     }
-
+  
     &.m-pikabu-right {
         right: 0;
-        top: 0;
         @include translate3d(100%, 0, 0);
     }
-
+  
     .m-pikabu-left-visible &.m-pikabu-left,
     .m-pikabu-right-visible &.m-pikabu-right {
         @include translate3d(0, 0, 0);
     }
 }
 
-.m-pikabu-container {
+.m-pikabu-container { 
     width: 100%;
     -webkit-backface-visibility: hidden;
-    -webkit-transform: translate3d(0,0,0);
-
-    overflow: auto;
-
+  
     .m-pikabu-left-visible &.m-pikabu-left,
     .m-pikabu-right-visible &.m-pikabu-right {
         position: absolute;
     }
 
     .m-pikabu-left-visible & {
-        @include translate3d(300px, 0, 0);
+        @include translate3d(80%, 0, 0);
     }
 
     .m-pikabu-right-visible & {
-         @include translate3d(-300px, 0, 0);
+         @include translate3d(-80%, 0, 0);
     }
 }
 
 .m-pikabu-container,
 .m-pikabu-sidebar {
     @include transition(
-    -webkit-transform 0.2s cubic-bezier(0.785, 0.135, 0.150, 0.860)
+        -webkit-transform 0.2s ease-in
     );
-}
-
-.m-pikabu-container {
-    min-height: 589px;
-    .x-portrait & {
-        min-height: 845px;
-    }
 }
 
 .m-pikabu-overlay {
     display: none;
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
+  
     .m-pikabu-left-visible &,
     .m-pikabu-right-visible & {
         position: absolute;
@@ -104,29 +86,10 @@ body {
 
 // Scrolling
 
-.m-pikabu-overflow-touch {
-    -webkit-overflow-scrolling: touch;
+.m-pikabu-overflow-scrolling .m-pikabu-sidebar {
+    overflow: auto;
 }
 
-// If we have overflow scrolling
-
-.m-pikabu-overflow-scrolling:not(.x-unfixed-header) {
-    height: 100%;
-
-    body {
-        height: 100%;
-    }
-
-    .m-pikabu-sidebar {
-        overflow: auto;
-    }
-
-    .m-pikabu-container {
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        -webkit-overflow-scrolling: touch;
-    }
+.m-pikabu-overflow-touch {
+    -webkit-overflow-scrolling: touch;
 }
