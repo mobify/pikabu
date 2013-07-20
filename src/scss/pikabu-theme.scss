@@ -1,0 +1,44 @@
+@import "defaults";
+
+.m-pikabu-viewport {
+}
+
+.m-pikabu-container {
+    background: white;
+}
+
+.m-pikabu-sidebar {
+    background: #333;
+
+    color: white;
+
+    p,
+    a {
+        color: white;
+    }
+
+    .x-close-panel {
+        //@include icon(close, $position: after);
+
+        display: block;
+        padding: ($margin/2) $margin;
+
+        font-size: $small-text;
+        font-weight: bold;
+        text-transform: uppercase;
+
+        &:after {
+            position: absolute;
+            top: $margin/2 + 2;
+            right: $margin;
+        }
+    }
+}
+
+// When pikabu is visible, don't show their share widget
+.m-pikabu-left-visible,
+.m-pikabu-right-visible {
+    #vnContainer {
+        display: none;
+    }
+}
