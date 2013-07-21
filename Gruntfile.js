@@ -35,6 +35,13 @@ module.exports = function(grunt) {
                 force: true
             }
         },
+        copy: {
+            main: {
+                files: [
+                    {expand: true, flatten: true, src: ['src/pikabu.js'], dest: 'build/', filter: 'isFile'}
+                ]  
+            }  
+        },
         shell: {
             tagRelease: {
                 command: 'git tag -a <%= releaseName %> -m "<%= releaseMessage %>" &&' +
@@ -65,13 +72,14 @@ module.exports = function(grunt) {
     // Load the task plugins
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-compass');
+    grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-zip');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-clean');
 
     // Default task(s).
-    grunt.registerTask('build', ['uglify', 'compass', 'zip']);
+    grunt.registerTask('build', ['uglify', 'compass', 'zip', 'copy']);
     grunt.registerTask('release', ['build', 'shell:tagRelease', 's3'])
     grunt.registerTask('default', 'build')
 };
