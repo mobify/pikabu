@@ -15,6 +15,20 @@ module.exports = function(grunt) {
         clean: {
             buildProducts: "build/"
         },
+        connect: {
+            server: {
+                options: {
+                    hostname: '*',
+                    port: 3000,
+                    middleware: function(connect, options) {
+                        return [
+                            connect.static(__dirname),
+                            connect.directory(__dirname)
+                        ]
+                    }
+                }
+            }
+        },
         uglify: {
             options: {
                 banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
@@ -71,6 +85,7 @@ module.exports = function(grunt) {
 
     // Load the task plugins
     grunt.loadNpmTasks('grunt-contrib-uglify');
+    grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-shell');
@@ -80,6 +95,7 @@ module.exports = function(grunt) {
 
     // Default task(s).
     grunt.registerTask('build', ['uglify', 'compass', 'zip', 'copy']);
-    grunt.registerTask('release', ['build', 'shell:tagRelease', 's3'])
-    grunt.registerTask('default', 'build')
+    grunt.registerTask('release', ['build', 'shell:tagRelease', 's3']);
+    grunt.registerTask('default', 'build');
+    grunt.registerTask('serve', ['connect:server:keepalive']);
 };
