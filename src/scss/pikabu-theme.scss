@@ -10,9 +10,9 @@
     font-style: 'normal';
     font-weight: 'normal';
     src: url('http://weloveiconfonts.com/api/fonts/entypo/entypo.eot');
-    src: url('http://weloveiconfonts.com/api/fonts/entypo/entypo.eot?#iefix') format('eot'), 
-    url('http://weloveiconfonts.com/api/fonts/entypo/entypo.woff') format('woff'), 
-    url('http://weloveiconfonts.com/api/fonts/entypo/entypo.ttf') format('truetype'), 
+    src: url('http://weloveiconfonts.com/api/fonts/entypo/entypo.eot?#iefix') format('eot'),
+    url('http://weloveiconfonts.com/api/fonts/entypo/entypo.woff') format('woff'),
+    url('http://weloveiconfonts.com/api/fonts/entypo/entypo.ttf') format('truetype'),
     url('http://weloveiconfonts.com/api/fonts/entypo/entypo.svg#entypo') format('svg');
 }
 
@@ -58,7 +58,7 @@ body {
 
 header {
     overflow: hidden;
-    
+
     background: $accent;
     border-bottom:solid 2px $dark-accent;
 
@@ -69,7 +69,7 @@ header {
 header h1 {
     display: inline-block;
     margin: 0;
-    
+
     font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', sans-serif;
     font-size: 22px;
     font-weight: bold;
@@ -86,7 +86,7 @@ header h1 {
 .m-pikabu-nav-toggle {
     position: relative;
     float: left;
-    
+
     display: block;
     width: 50px;
     height: 30px;
@@ -96,27 +96,27 @@ header h1 {
     border: solid 1px rgba($brand, .35);
     @include border-radius(3px);
     @include box-shadow(inset 0 1px 0 $background);
-    
+
     text-indent: 100%;
     white-space: nowrap;
-    
+
     color: $brand;
     line-height: 29px;
-    
+
     &[data-role="right"] {
         float: right;
     }
-        
+
     &::after {
         content: '☰';
         position: absolute;
         left: 0;
         top: 0;
-        
+
         display: block;
         width: 100%;
         height: 100%;
-        
+
         font-family: 'entypo', sans-serif;
         text-align: center;
         text-indent: 0;
@@ -129,7 +129,7 @@ header h1 {
         content: "\e705";
          font-size: 17px;
     }
-    
+
     .m-pikabu-left-visible &[data-role="left"],
     .m-pikabu-right-visible &[data-role="right"] {
         background: rgba(black,.1);
@@ -142,6 +142,8 @@ section {
 }
 
 .m-pikabu-sidebar{
+    @include box-sizing(border-box);
+
     padding: $margin;
     background: $gray;
     color: white;
@@ -155,12 +157,12 @@ section {
 section h2 {
     display: block;
     margin:0;
-    
-    color: $brand;    
+
+    color: $brand;
     font-size: 21px;
     font-weight: 300;
     line-height: 1.4;
-    
+
 }
 
 section h3 {
@@ -170,7 +172,7 @@ section h3 {
 
     background: $brand;
     border-bottom: solid 2px $light;
-    
+
     color: $background;
     font-size: 18px;
     font-weight: normal;
@@ -178,7 +180,7 @@ section h3 {
 
 section p {
     margin-bottom: $margin*1.5;
-    
+
     font-size: 16px;
     line-height: 1.4;
 }
