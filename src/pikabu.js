@@ -68,7 +68,7 @@ function supportsTransitions() {
 
 /* @url: http://stackoverflow.com/questions/5661671/detecting-transform-translate3d-support */
 function has3d() {
-    var el = document.createElement('p'), 
+    var el = document.createElement('p'),
         has3d,
         transforms = {
             'webkitTransform':'-webkit-transform',
@@ -159,9 +159,9 @@ window.Pikabu = (function() {
         // <TODO> Is there a better way to do this?
         $leftSidebar.hide();
     };
-    
+
     // Sidebar
-    pikabu.showSidebar = function(type) {   
+    pikabu.showSidebar = function(type) {
         $sidebars.addClass('m-pikabu-overflow-touch');
 
         // part of left side bar will appear on orientation change on slow devices
@@ -188,10 +188,17 @@ window.Pikabu = (function() {
         // so we do these after the sidebar has closed
         setTimeout(function() {
             $sidebars.removeClass('m-pikabu-overflow-touch');
-            $children.css('height', '');
-            
-            // Force a reflow here, this might not work correctly!
-            $mainContent[0].offsetHeight
+            $viewport.css('height', '');
+            $mainContent.css('height', '');
+
+            // add this arbitrary margin-bottom to force a reflow when we remove it
+            $mainContent.css('marginBottom', 1);
+
+            // Not sure why but we need a scrollTo here to get the reflow to work
+            window.scrollTo(0, 0);
+
+            // remove the unnecessary margin-bottom to force reflow and properly recalculate the height of this container
+            $mainContent.css('marginBottom', '');
 
             $leftSidebar.hide();
         }, 250);    // <TODO>: Can we trigger this when the animation is done?
@@ -200,7 +207,7 @@ window.Pikabu = (function() {
     pikabu.recalculateSidebarHeight = function(viewportHeight) {
         var offset = window.pageYOffset,
             windowHeight = $(window).height();
-        
+
         // Crazy Android 2.3.3 is not getting the correct portrait width
         if(isLegacyAndroid() && orientation == 0) {
             if( dWidth > dHeight ) {
