@@ -68,7 +68,7 @@ function supportsTransitions() {
 
 /* @url: http://stackoverflow.com/questions/5661671/detecting-transform-translate3d-support */
 function has3d() {
-    var el = document.createElement('p'), 
+    var el = document.createElement('p'),
         has3d,
         transforms = {
             'webkitTransform':'-webkit-transform',
@@ -156,12 +156,11 @@ window.Pikabu = (function() {
         }
 
         // Hide left side bar by default
-        // <TODO> Is there a better way to do this?
-        $leftSidebar.hide();
+        $leftSidebar.addClass('m-pikabu-hidden');
     };
-    
+
     // Sidebar
-    pikabu.showSidebar = function(type) {   
+    pikabu.showSidebar = function(type) {
         $sidebars.addClass('m-pikabu-overflow-touch');
 
         // part of left side bar will appear on orientation change on slow devices
@@ -189,18 +188,18 @@ window.Pikabu = (function() {
         setTimeout(function() {
             $sidebars.removeClass('m-pikabu-overflow-touch');
             $children.css('height', '');
-            
+
             // Force a reflow here, this might not work correctly!
             $mainContent[0].offsetHeight
 
-            $leftSidebar.hide();
+            $leftSidebar.addClass('m-pikabu-hidden');
         }, 250);    // <TODO>: Can we trigger this when the animation is done?
     };
 
     pikabu.recalculateSidebarHeight = function(viewportHeight) {
         var offset = window.pageYOffset,
             windowHeight = $(window).height();
-        
+
         // Crazy Android 2.3.3 is not getting the correct portrait width
         if(isLegacyAndroid() && orientation == 0) {
             if( dWidth > dHeight ) {

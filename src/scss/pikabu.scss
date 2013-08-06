@@ -11,7 +11,7 @@
     @include display-box;
     @include box-orient(horizontal);
     overflow: hidden;
-  
+
     -webkit-perspective: 1000;
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
@@ -26,26 +26,26 @@
 
     background: #222;
 
-  
+
     &.m-pikabu-left {
         @include translate3d(-100%, 0, 0);
     }
-  
+
     &.m-pikabu-right {
         right: 0;
         @include translate3d(100%, 0, 0);
     }
-  
+
     .m-pikabu-left-visible &.m-pikabu-left,
     .m-pikabu-right-visible &.m-pikabu-right {
         @include translate3d(0, 0, 0);
     }
 }
 
-.m-pikabu-container { 
+.m-pikabu-container {
     width: 100%;
     -webkit-backface-visibility: hidden;
-  
+
     .m-pikabu-left-visible &.m-pikabu-left,
     .m-pikabu-right-visible &.m-pikabu-right {
         position: absolute;
@@ -69,7 +69,7 @@
 
 .m-pikabu-overlay {
     display: none;
-  
+
     .m-pikabu-left-visible &,
     .m-pikabu-right-visible & {
         position: absolute;
@@ -82,6 +82,10 @@
 
         cursor: pointer;
     }
+}
+
+.m-pikabu-hidden {
+    display: none;
 }
 
 // Scrolling
