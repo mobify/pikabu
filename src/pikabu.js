@@ -166,7 +166,7 @@ window.Pikabu = (function() {
         // part of left side bar will appear on orientation change on slow devices
         // only show when requested
         if (type == 'left' ) {
-            $leftSidebar.show();
+            $leftSidebar.removeClass('m-pikabu-hidden');
         }
 
         if (type == 'left' || type == 'right') {
