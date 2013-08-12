@@ -93,168 +93,204 @@ function has3d() {
     return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
 }
 
+// Pikabu class
+window.Pikabu = (function(options) {
 
-window.Pikabu = (function() {
-    var pikabu = {},
-        $document = $('html'),
-        $viewport = $('.m-pikabu-viewport'),
-        $children = $viewport.children(),
-        $mainContent = $('.m-pikabu-container'),
-        $sidebars = $('.m-pikabu-sidebar'),
-        $leftSidebar = $('.m-pikabu-left'),
-        $rightSidebar = $('.m-pikabu-right'),
-        leftVisible = 'm-pikabu-left-visible',
-        rightVisible = 'm-pikabu-right-visible',
-        dWidth = window.innerWidth,
-        // 81 is the missing height due to browser bars when recording the height in landscape
-        dHeight = window.innerHeight + 81;
+    var self = $.extend(this, {
+        $document: $('html'),
 
+        // Overridable settings
+        settings: {
+            viewport: '.m-pikabu-viewport',
+            mainContent: '.m-pikabu-container',
 
-    pikabu.init = function () {
-        // check if we have overflow scrolling or not
-        if (hasOverflowScrolling()) {
-            $document.addClass('m-pikabu-overflow-scrolling');
+            leftSidebar: '.m-pikabu-left',
+            rightSidebar: '.m-pikabu-right',
+            sidebars: '.m-pikabu-sidebar',
+
+            leftVisible: 'm-pikabu-left-visible',
+            rightVisible: 'm-pikabu-right-visible',
+            
+            dWidth: window.innerWidth,
+            // 81 is the missing height due to browser bars when recording the height in landscape
+            dHeight: window.innerHeight + 81
         }
+    });
 
-        if (isLegacyAndroid()) {
-            $document.addClass('m-pikabu-legacy-android');
-        }
+    // Create Pikabu
+    self.init(options);
 
-        if (supportsTransitions()) {
-            $document.addClass('m-pikabu-transitions');
-        }
-
-        if (has3d()) {
-            $document.addClass('m-pikabu-translate3d');
-        }
-
-        // Bind handlers
-        // Toggle sidebars!
-        if (window.FastButton) {
-            $('.m-pikabu-nav-toggle').fasttap(function(e) {
-                e.stopPropagation();
-                pikabu.showSidebar($(this.element).attr('data-role'));
-            });
-
-            // Overlay: stop clicks, close the sidebars and slide back to main content
-            $('.m-pikabu-overlay').fasttap(function(e) {
-                e.stopPropagation();
-                pikabu.closeSidebars();
-            });
-        }
-        else {
-            $('.m-pikabu-nav-toggle').click(function(e) {
-                e.stopPropagation();
-                pikabu.showSidebar($(this).attr('data-role'));
-            });
-
-            // Overlay: stop clicks, close the sidebars and slide back to main content
-            $('.m-pikabu-overlay').click(function(e) {
-                e.stopPropagation();
-                pikabu.closeSidebars();
-            });
-        }
-
-        // Hide left side bar by default
-        $leftSidebar.addClass('m-pikabu-hidden');
-    };
-
-    // Sidebar
-    pikabu.showSidebar = function(type) {
-        $sidebars.addClass('m-pikabu-overflow-touch');
-
-        // part of left side bar will appear on orientation change on slow devices
-        // only show when requested
-        if (type == 'left' ) {
-            $leftSidebar.removeClass('m-pikabu-hidden');
-        }
-
-        if (type == 'left' || type == 'right') {
-            $document.toggleClass('m-pikabu-' + type + '-visible');
-
-            window.scrollTo(0, 0);
-            this.recalculateSidebarHeight($(window).height());
-        }
-    };
-
-    pikabu.closeSidebars = function() {
-        $document.removeClass(leftVisible).removeClass(rightVisible);
-        $viewport.css('width', 'auto');
-        window.scrollTo(0, 0);
-
-        // 1. Removing overflow-scrolling-touch causes a content flash
-        // 2. Removing height too soon causes panel with few content to be not full height during animation
-        // so we do these after the sidebar has closed
-        setTimeout(function() {
-            $sidebars.removeClass('m-pikabu-overflow-touch');
-            $children.css('height', '');
-
-            // Force a reflow here, this might not work correctly!
-            $mainContent[0].offsetHeight
-
-            $leftSidebar.addClass('m-pikabu-hidden');
-        }, 250);    // <TODO>: Can we trigger this when the animation is done?
-    };
-
-    pikabu.recalculateSidebarHeight = function(viewportHeight) {
-        var offset = window.pageYOffset,
-            windowHeight = $(window).height();
-
-        // Crazy Android 2.3.3 is not getting the correct portrait width
-        if(isLegacyAndroid() && orientation == 0) {
-            if( dWidth > dHeight ) {
-                $viewport.css('width', dHeight );
-            }
-            else {
-                $viewport.css('width', dWidth );
-            }
-        }
-        else {
-            $viewport.css('width', 'auto');
-        }
-
-        // we have overflow scroll touch (iOS devices)
-        if ($document.hasClass('m-pikabu-overflow-scrolling') && ($document.hasClass(leftVisible) || $document.hasClass(rightVisible))) {
-            $children.height(viewportHeight);
-            $viewport.height(viewportHeight);
-        }
-        // other devices/desktop
-        else {
-            $rightSidebar.removeAttr('style');
-            $leftSidebar.removeAttr('style');
-            $viewport.removeAttr('style');
-
-            if ($document.hasClass(leftVisible)) {
-                // case: sidebar is taller than the window
-                // we need to extend the viewport height so that we can scroll through the whole sidebar
-                if ($leftSidebar.height() > windowHeight) {
-                    $viewport.height($leftSidebar.height());
-                }
-                // case: sidebar is shorter than the window
-                // we need to make the sidebar taller to extend the background to the bottom of the page
-                else {
-                    $leftSidebar.height(windowHeight);
-                    $viewport.height(windowHeight);
-                }
-            } else if ($document.hasClass(rightVisible)) {
-                // case: sidebar is taller than the window
-                // we need to extend the viewport height so that we can scroll through the whole sidebar
-                if ($rightSidebar.height() > windowHeight) {
-                    $viewport.css('height', $rightSidebar.height());
-                }
-                // case: sidebar is shorter than the window
-                // we need to make the sidebar taller to extend the background to the bottom of the page
-                else {
-                    $rightSidebar.css('min-height', windowHeight);
-                    $viewport.css('height', windowHeight);
-                }
-            }
-
-            window.scrollTo(0, offset);
-        }
-    };
-
-    return pikabu;
+    return self;
 });
+
+Pikabu.prototype.init = function (options) {
+
+    var self = this;
+
+    // Set any custom options
+    $.extend(self.settings, options);
+
+    // Set up elements
+    self.$viewport = $(self.settings.viewport);
+
+    self.$leftSidebar = $(self.settings.leftSidebar);
+    self.$rightSidebar = $(self.settings.rightSidebar);
+    self.$sidebars = $(self.settings.sidebars);
+    self.$mainContent = $(self.settings.mainContent);
+
+    self.$children = self.$viewport.children();
+
+    // check if we have overflow scrolling or not
+    if (hasOverflowScrolling()) {
+        self.$document.addClass('m-pikabu-overflow-scrolling');
+    }
+
+    if (isLegacyAndroid()) {
+        self.$document.addClass('m-pikabu-legacy-android');
+    }
+
+    if (supportsTransitions()) {
+        self.$document.addClass('m-pikabu-transitions');
+    }
+
+    if (has3d()) {
+        self.$document.addClass('m-pikabu-translate3d');
+    }
+
+    // Bind handlers
+    // Toggle sidebars!
+    if (window.FastButton) {
+        $('.m-pikabu-nav-toggle').fasttap(function(e) {
+            e.stopPropagation();
+            self.showSidebar($(this.element).attr('data-role'));
+        });
+
+        // Overlay: stop clicks, close the sidebars and slide back to main content
+        $('.m-pikabu-overlay').fasttap(function(e) {
+            e.stopPropagation();
+            self.closeSidebars();
+        });
+    }
+    else {
+        $('.m-pikabu-nav-toggle').click(function(e) {
+            e.stopPropagation();
+            self.showSidebar($(this).attr('data-role'));
+        });
+
+        // Overlay: stop clicks, close the sidebars and slide back to main content
+        $('.m-pikabu-overlay').click(function(e) {
+            e.stopPropagation();
+            self.closeSidebars();
+        });
+    }
+
+    // Hide left side bar by default
+    self.$leftSidebar.addClass('m-pikabu-hidden');
+};
+
+// Sidebar
+Pikabu.prototype.showSidebar = function(type) {
+
+    var self = this;
+
+    self.$sidebars.addClass('m-pikabu-overflow-touch');
+
+    // part of left side bar will appear on orientation change on slow devices
+    // only show when requested
+    if (type == 'left' ) {
+        self.$leftSidebar.removeClass('m-pikabu-hidden');
+    }
+
+    if (type == 'left' || type == 'right') {
+        self.$document.toggleClass('m-pikabu-' + type + '-visible');
+
+        window.scrollTo(0, 0);
+        self.recalculateSidebarHeight($(window).height());
+    }
+};
+
+Pikabu.prototype.closeSidebars = function() {
+
+    var self = this;
+
+    self.$document.removeClass(self.settings.leftVisible).removeClass(self.settings.rightVisible);
+    self.$viewport.css('width', 'auto');
+    window.scrollTo(0, 0);
+
+    // 1. Removing overflow-scrolling-touch causes a content flash
+    // 2. Removing height too soon causes panel with few content to be not full height during animation
+    // so we do these after the sidebar has closed
+    setTimeout(function() {
+        self.$sidebars.removeClass('m-pikabu-overflow-touch');
+        self.$children.css('height', '');
+
+        // Force a reflow here, this might not work correctly!
+        self.$mainContent[0].offsetHeight;
+
+        self.$leftSidebar.addClass('m-pikabu-hidden');
+    }, 250);    // <TODO>: Can we trigger this when the animation is done?
+};
+
+Pikabu.prototype.recalculateSidebarHeight = function(viewportHeight) {
+
+    var self = this;
+    var offset = window.pageYOffset,
+        windowHeight = $(window).height();
+
+    // Crazy Android 2.3.3 is not getting the correct portrait width
+    // <TODO>: Orientation access?
+    if(isLegacyAndroid() && orientation == 0) {
+        if( self.dWidth > self.dHeight ) {
+            self.$viewport.css('width', dHeight );
+        }
+        else {
+            self.$viewport.css('width', dWidth );
+        }
+    }
+    else {
+        self.$viewport.css('width', 'auto');
+    }
+
+    // we have overflow scroll touch (iOS devices)
+    if (self.$document.hasClass('m-pikabu-overflow-scrolling') 
+        && (self.$document.hasClass(self.settings.leftVisible) || self.$document.hasClass(self.settings.rightVisible))) {
+        self.$children.height(viewportHeight);
+        self.$viewport.height(viewportHeight);
+    }
+    // other devices/desktop
+    else {
+        self.$rightSidebar.removeAttr('style');
+        self.$leftSidebar.removeAttr('style');
+        self.$viewport.removeAttr('style');
+
+        if (self.$document.hasClass(self.settings.leftVisible)) {
+            // case: sidebar is taller than the window
+            // we need to extend the viewport height so that we can scroll through the whole sidebar
+            if (self.$leftSidebar.height() > windowHeight) {
+                self.$viewport.height(self.$leftSidebar.height());
+            }
+            // case: sidebar is shorter than the window
+            // we need to make the sidebar taller to extend the background to the bottom of the page
+            else {
+                self.$leftSidebar.height(windowHeight);
+                self.$viewport.height(windowHeight);
+            }
+        } else if (self.$document.hasClass(self.settings.rightVisible)) {
+            // case: sidebar is taller than the window
+            // we need to extend the viewport height so that we can scroll through the whole sidebar
+            if (self.$rightSidebar.height() > windowHeight) {
+                self.$viewport.css('height', self.$rightSidebar.height());
+            }
+            // case: sidebar is shorter than the window
+            // we need to make the sidebar taller to extend the background to the bottom of the page
+            else {
+                self.$rightSidebar.css('min-height', windowHeight);
+                self.$viewport.css('height', windowHeight);
+            }
+        }
+
+        window.scrollTo(0, offset);
+    }
+};
 
 })($);
