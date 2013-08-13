@@ -229,6 +229,9 @@
 
         var self = this;
 
+        // Store scroll offset for later use
+        self.scrollOffset = window.pageYOffset;
+
         self.$sidebars.addClass('m-pikabu-overflow-touch');
 
         // part of left side bar will appear on orientation change on slow devices
@@ -243,10 +246,10 @@
             // Which sidebar is open?
             self.$openSidebar = type === 'left' ? self.$leftSidebar : self.$rightSidebar;
 
-            window.scrollTo(0, 0);
-
             self.setViewportWidth();
-            self.setHeights($(window).height());
+            self.setHeights();
+
+            window.scrollTo(0, 0);
         }
     };
 
@@ -259,9 +262,11 @@
             .removeClass(self.settings.leftVisibleClass)
             .removeClass(self.settings.rightVisibleClass);
         
+        // Reset viewport
         self.$viewport.css('width', 'auto');
 
-        window.scrollTo(0, 0);
+        // Scroll back to where we were before we opened the sidebar
+        window.scrollTo(0, self.scrollOffset);
 
         // 1. Removing overflow-scrolling-touch causes a content flash
         // 2. Removing height too soon causes panel with few content to be not full height during animation
@@ -286,7 +291,7 @@
 
         var self = this;
 
-        // Crazy Android 2.3.3 is not getting the correct portrait width
+        // Android 2.3.3 is not getting the correct portrait width
         if(self.device.isLegacyAndroid && orientation == 0) {
             if(self.device.width > self.device.height) {
                 self.$viewport.css('width', self.device.height);
@@ -299,18 +304,19 @@
         }
     }
 
-    // Recalculate sidebar height on opening
-    Pikabu.prototype.setHeights = function(viewportHeight) {
+    // Recalculate sidebar and viewport height on opening the sidebar
+    Pikabu.prototype.setHeights = function() {
 
         var self = this;
-        var offset = window.pageYOffset, windowHeight = $(window).height();
+        var windowHeight = $(window).height();
 
         if (self.device.hasOverflowScrolling) {
-            // we have overflow scroll touch (iOS devices)
-            self.$children.height(viewportHeight);
-            self.$viewport.height(viewportHeight);
+            // We have overflow scroll touch (iOS devices)
+            self.$children.height(windowHeight);
+            self.$viewport.height(windowHeight);
         } else { 
-            // other devices/desktop
+            // Other devices/desktop
+
             // Reset styles
             self.$openSidebar.removeAttr('style');
             self.$viewport.removeAttr('style');
@@ -326,8 +332,6 @@
                 self.$openSidebar.height(windowHeight);
                 self.$viewport.height(windowHeight);
             }
-
-            window.scrollTo(0, offset);
         }
     };
 
