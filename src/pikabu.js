@@ -101,19 +101,21 @@ window.Pikabu = (function(options) {
 
         // Overridable settings
         settings: {
-            viewport: '.m-pikabu-viewport',
-            mainContent: '.m-pikabu-container',
+            viewportSelector: '.m-pikabu-viewport',
+            mainContentSelector: '.m-pikabu-container',
 
-            leftSidebar: '.m-pikabu-left',
-            rightSidebar: '.m-pikabu-right',
-            sidebars: '.m-pikabu-sidebar',
+            leftSidebarSelector: '.m-pikabu-left',
+            rightSidebarSelector: '.m-pikabu-right',
+            sidebarsSelector: '.m-pikabu-sidebar',
 
-            leftVisible: 'm-pikabu-left-visible',
-            rightVisible: 'm-pikabu-right-visible',
-            
-            dWidth: window.innerWidth,
+            leftVisibleClass: 'm-pikabu-left-visible',
+            rightVisibleClass: 'm-pikabu-right-visible',
+
+            overlaySelector: '.m-pikabu-overlay',
+
+            deviceWidth: window.innerWidth,
             // 81 is the missing height due to browser bars when recording the height in landscape
-            dHeight: window.innerHeight + 81
+            deviceHeight: window.innerHeight + 81
         }
     });
 
@@ -131,16 +133,16 @@ Pikabu.prototype.init = function (options) {
     $.extend(self.settings, options);
 
     // Set up elements
-    self.$viewport = $(self.settings.viewport);
+    self.$viewport = $(self.settings.viewportSelector);
 
-    self.$leftSidebar = $(self.settings.leftSidebar);
-    self.$rightSidebar = $(self.settings.rightSidebar);
-    self.$sidebars = $(self.settings.sidebars);
-    self.$mainContent = $(self.settings.mainContent);
+    self.$leftSidebar = $(self.settings.leftSidebarSelector);
+    self.$rightSidebar = $(self.settings.rightSidebarSelector);
+    self.$sidebars = $(self.settings.sidebarsSelector);
+    self.$mainContent = $(self.settings.mainContentSelector);
 
     self.$children = self.$viewport.children();
+    self.$overlay = $(self.settings.overlaySelector);
 
-    // check if we have overflow scrolling or not
     if (hasOverflowScrolling()) {
         self.$document.addClass('m-pikabu-overflow-scrolling');
     }
@@ -157,16 +159,17 @@ Pikabu.prototype.init = function (options) {
         self.$document.addClass('m-pikabu-translate3d');
     }
 
-    // Bind handlers
-    // Toggle sidebars!
+    // Bind handlers to toggle sidebars
     if (window.FastButton) {
-        $('.m-pikabu-nav-toggle').fasttap(function(e) {
+        // Do we have fasttap?
+        // <TODO> Specify expected implementation
+        self.$navToggle.fasttap(function(e) {
             e.stopPropagation();
             self.showSidebar($(this.element).attr('data-role'));
         });
 
         // Overlay: stop clicks, close the sidebars and slide back to main content
-        $('.m-pikabu-overlay').fasttap(function(e) {
+        self.$overlay.fasttap(function(e) {
             e.stopPropagation();
             self.closeSidebars();
         });
@@ -178,7 +181,7 @@ Pikabu.prototype.init = function (options) {
         });
 
         // Overlay: stop clicks, close the sidebars and slide back to main content
-        $('.m-pikabu-overlay').click(function(e) {
+        self.$overlay.click(function(e) {
             e.stopPropagation();
             self.closeSidebars();
         });
@@ -213,7 +216,7 @@ Pikabu.prototype.closeSidebars = function() {
 
     var self = this;
 
-    self.$document.removeClass(self.settings.leftVisible).removeClass(self.settings.rightVisible);
+    self.$document.removeClass(self.settings.leftVisibleClass).removeClass(self.settings.rightVisibleClass);
     self.$viewport.css('width', 'auto');
     window.scrollTo(0, 0);
 
@@ -240,11 +243,10 @@ Pikabu.prototype.recalculateSidebarHeight = function(viewportHeight) {
     // Crazy Android 2.3.3 is not getting the correct portrait width
     // <TODO>: Orientation access?
     if(isLegacyAndroid() && orientation == 0) {
-        if( self.dWidth > self.dHeight ) {
-            self.$viewport.css('width', dHeight );
-        }
-        else {
-            self.$viewport.css('width', dWidth );
+        if(self.deviceWidth > self.deviceHeight) {
+            self.$viewport.css('width', deviceHeight);
+        } else {
+            self.$viewport.css('width', deviceWidth);
         }
     }
     else {
@@ -253,7 +255,7 @@ Pikabu.prototype.recalculateSidebarHeight = function(viewportHeight) {
 
     // we have overflow scroll touch (iOS devices)
     if (self.$document.hasClass('m-pikabu-overflow-scrolling') 
-        && (self.$document.hasClass(self.settings.leftVisible) || self.$document.hasClass(self.settings.rightVisible))) {
+        && (self.$document.hasClass(self.settings.leftVisibleClass) || self.$document.hasClass(self.settings.rightVisibleClass))) {
         self.$children.height(viewportHeight);
         self.$viewport.height(viewportHeight);
     }
@@ -263,7 +265,7 @@ Pikabu.prototype.recalculateSidebarHeight = function(viewportHeight) {
         self.$leftSidebar.removeAttr('style');
         self.$viewport.removeAttr('style');
 
-        if (self.$document.hasClass(self.settings.leftVisible)) {
+        if (self.$document.hasClass(self.settings.leftVisibleClass)) {
             // case: sidebar is taller than the window
             // we need to extend the viewport height so that we can scroll through the whole sidebar
             if (self.$leftSidebar.height() > windowHeight) {
@@ -275,7 +277,7 @@ Pikabu.prototype.recalculateSidebarHeight = function(viewportHeight) {
                 self.$leftSidebar.height(windowHeight);
                 self.$viewport.height(windowHeight);
             }
-        } else if (self.$document.hasClass(self.settings.rightVisible)) {
+        } else if (self.$document.hasClass(self.settings.rightVisibleClass)) {
             // case: sidebar is taller than the window
             // we need to extend the viewport height so that we can scroll through the whole sidebar
             if (self.$rightSidebar.height() > windowHeight) {
