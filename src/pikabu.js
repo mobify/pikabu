@@ -113,6 +113,8 @@ window.Pikabu = (function(options) {
 
             overlaySelector: '.m-pikabu-overlay',
 
+            navTogglesSelector: '.m-pikabu-nav-toggle',
+
             deviceWidth: window.innerWidth,
             // 81 is the missing height due to browser bars when recording the height in landscape
             deviceHeight: window.innerHeight + 81
@@ -139,6 +141,8 @@ Pikabu.prototype.init = function (options) {
     self.$rightSidebar = $(self.settings.rightSidebarSelector);
     self.$sidebars = $(self.settings.sidebarsSelector);
     self.$mainContent = $(self.settings.mainContentSelector);
+
+    self.$navToggles = $(self.settings.navTogglesSelector);
 
     self.$children = self.$viewport.children();
 
@@ -170,9 +174,9 @@ Pikabu.prototype.init = function (options) {
     if (window.FastButton) {
         // Do we have fasttap?
         // <TODO> Specify expected implementation
-        self.$navToggle.fasttap(function(e) {
+        self.$navToggles.fasttap(function(e) {
             e.stopPropagation();
-            self.showSidebar($(this.element).attr('data-role'));
+            self.showSidebar($(this.element).attr('data-role') || 'left');
         });
 
         // Overlay: stop clicks, close the sidebars and slide back to main content
@@ -182,9 +186,9 @@ Pikabu.prototype.init = function (options) {
         });
     }
     else {
-        $('.m-pikabu-nav-toggle').click(function(e) {
+        self.$navToggles.click(function(e) {
             e.stopPropagation();
-            self.showSidebar($(this).attr('data-role'));
+            self.showSidebar($(this).attr('data-role') || 'left');
         });
 
         // Overlay: stop clicks, close the sidebars and slide back to main content
