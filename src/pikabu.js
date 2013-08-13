@@ -1,309 +1,334 @@
 // Pikabu.js
 (function($) {
 
-// Do we have overflow scrolling?
-function hasOverflowScrolling() {
-    var prefixes = ['webkit', 'moz', 'o', 'ms'];
-    var div = document.createElement('div');
-    var body = document.getElementsByTagName('body')[0];
-    var hasIt = false;
+    // Detect device characteristics
+    function deviceCharacteristics() {
 
-    body.appendChild(div);
+        // Do we have overflow scrolling?
+        function hasOverflowScrolling() {
+            var prefixes = ['webkit', 'moz', 'o', 'ms'];
+            var div = document.createElement('div');
+            var body = document.getElementsByTagName('body')[0];
+            var hasIt = false;
 
-    for (var i = 0; i < prefixes.length; i++) {
-        var prefix = prefixes[i];
-        div.style[prefix + 'OverflowScrolling'] = 'touch';
-    }
+            body.appendChild(div);
 
-    // And the non-prefixed property
-    div.style.overflowScrolling = 'touch';
+            for (var i = 0; i < prefixes.length; i++) {
+                var prefix = prefixes[i];
+                div.style[prefix + 'OverflowScrolling'] = 'touch';
+            }
 
-    // Now check the properties
-    var computedStyle = window.getComputedStyle(div);
+            // And the non-prefixed property
+            div.style.overflowScrolling = 'touch';
 
-    // First non-prefixed
-    hasIt = !!computedStyle.overflowScrolling;
+            // Now check the properties
+            var computedStyle = window.getComputedStyle(div);
 
-    // Now prefixed...
-    for (var i = 0; i < prefixes.length; i++) {
-        var prefix = prefixes[i];
-        if (!!computedStyle[prefix + 'OverflowScrolling']) {
-            hasIt = true;
-            break;
+            // First non-prefixed
+            hasIt = !!computedStyle.overflowScrolling;
+
+            // Now prefixed...
+            for (var i = 0; i < prefixes.length; i++) {
+                var prefix = prefixes[i];
+                if (!!computedStyle[prefix + 'OverflowScrolling']) {
+                    hasIt = true;
+                    break;
+                }
+            }
+
+            // Cleanup old div elements
+            div.parentNode.removeChild(div);
+
+            return hasIt;
         }
-    }
 
-    // Cleanup old div elements
-    div.parentNode.removeChild(div);
+        // Detect older Androids
+        function isLegacyAndroid() {
+            var android = /Android\s+([\d\.]+)/.exec(window.navigator.userAgent);
 
-    return hasIt;
-}
+            if (android && android.length > 0 && (parseInt(android[1]) < 3)) {
+                // we are on Android 2.x
+                return true;
+            }
 
-function isLegacyAndroid() {
-    var android = /Android\s+([\d\.]+)/.exec(window.navigator.userAgent);
-
-    if (android && android.length > 0 && (parseInt(android[1]) < 3)) {
-        // we are on Android 2.x
-        return true;
-    }
-
-    return false;
-}
-
-/* @url: http://stackoverflow.com/questions/7264899/detect-css-transitions-using-javascript-and-without-modernizr */
-function supportsTransitions() {
-    var b = document.body || document.documentElement;
-    var s = b.style;
-    var p = 'transition';
-    if(typeof s[p] == 'string') {return true; }
-
-    // Tests for vendor specific prop
-    v = ['Moz', 'Webkit', 'Khtml', 'O', 'ms'],
-    p = p.charAt(0).toUpperCase() + p.substr(1);
-    for(var i=0; i<v.length; i++) {
-      if(typeof s[v[i] + p] == 'string') { return true; }
-    }
-    return false;
-}
-
-/* @url: http://stackoverflow.com/questions/5661671/detecting-transform-translate3d-support */
-function has3d() {
-    var el = document.createElement('p'),
-        has3d,
-        transforms = {
-            'webkitTransform':'-webkit-transform',
-            'OTransform':'-o-transform',
-            'msTransform':'-ms-transform',
-            'MozTransform':'-moz-transform',
-            'transform':'transform'
-        };
-
-    // Add it to the body to get the computed style.
-    document.body.insertBefore(el, null);
-
-    for (var t in transforms) {
-        if (el.style[t] !== undefined) {
-            el.style[t] = "translate3d(1px,1px,1px)";
-            has3d = window.getComputedStyle(el).getPropertyValue(transforms[t]);
+            return false;
         }
-    }
 
-    document.body.removeChild(el);
+        /* @url: http://stackoverflow.com/questions/7264899/detect-css-transitions-using-javascript-and-without-modernizr */
+        function supportsTransitions() {
+            var b = document.body || document.documentElement;
+            var s = b.style;
+            var p = 'transition';
+            if(typeof s[p] == 'string') {return true; }
 
-    return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
-}
+            // Tests for vendor specific prop
+            v = ['Moz', 'Webkit', 'Khtml', 'O', 'ms'],
+            p = p.charAt(0).toUpperCase() + p.substr(1);
+            for(var i=0; i<v.length; i++) {
+              if(typeof s[v[i] + p] == 'string') { return true; }
+            }
+            return false;
+        }
 
-// Pikabu class
-window.Pikabu = (function(options) {
+        /* @url: http://stackoverflow.com/questions/5661671/detecting-transform-translate3d-support */
+        function has3d() {
+            var el = document.createElement('p'),
+                has3d,
+                transforms = {
+                    'webkitTransform':'-webkit-transform',
+                    'OTransform':'-o-transform',
+                    'msTransform':'-ms-transform',
+                    'MozTransform':'-moz-transform',
+                    'transform':'transform'
+                };
 
-    var self = $.extend(this, {
-        $document: $('html'),
+            // Add it to the body to get the computed style.
+            document.body.insertBefore(el, null);
 
-        // Overridable settings
-        settings: {
-            viewportSelector: '.m-pikabu-viewport',
-            mainContentSelector: '.m-pikabu-container',
+            for (var t in transforms) {
+                if (el.style[t] !== undefined) {
+                    el.style[t] = "translate3d(1px,1px,1px)";
+                    has3d = window.getComputedStyle(el).getPropertyValue(transforms[t]);
+                }
+            }
 
-            leftSidebarSelector: '.m-pikabu-left',
-            rightSidebarSelector: '.m-pikabu-right',
-            sidebarsSelector: '.m-pikabu-sidebar',
+            document.body.removeChild(el);
 
-            leftVisibleClass: 'm-pikabu-left-visible',
-            rightVisibleClass: 'm-pikabu-right-visible',
+            return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
+        }
 
-            overlaySelector: '.m-pikabu-overlay',
-
-            navTogglesSelector: '.m-pikabu-nav-toggle',
-
-            deviceWidth: window.innerWidth,
+        // Cache device characteristics
+        return {
+            'hasOverflowScrolling': hasOverflowScrolling(),
+            'isLegacyAndroid': isLegacyAndroid(),
+            'supportsTransitions': supportsTransitions(),
+            'has3d': has3d(),
             // 81 is the missing height due to browser bars when recording the height in landscape
-            deviceHeight: window.innerHeight + 81
-        }
+            height: window.innerHeight + 81,
+            width: window.innerWidth
+        };
+    }
+
+    // Pikabu class
+    window.Pikabu = (function(options) {
+
+        var self = $.extend(this, {
+            $document: $('html'),
+
+            // Overridable settings
+            settings: {
+                viewportSelector: '.m-pikabu-viewport',
+                mainContentSelector: '.m-pikabu-container',
+
+                leftSidebarSelector: '.m-pikabu-left',
+                rightSidebarSelector: '.m-pikabu-right',
+                sidebarsSelector: '.m-pikabu-sidebar',
+
+                leftVisibleClass: 'm-pikabu-left-visible',
+                rightVisibleClass: 'm-pikabu-right-visible',
+
+                // Click-to-close overlay
+                overlaySelector: '.m-pikabu-overlay',
+
+                // Controls that trigger the sidebar
+                navTogglesSelector: '.m-pikabu-nav-toggle',
+
+                leftSidebarWidth: '80%',
+                rightSidebarWidth: '80%'
+            }
+        });
+
+        // Create Pikabu
+        self.init(options);
+
+        return self;
     });
 
-    // Create Pikabu
-    self.init(options);
+    // Let the magic begin
+    Pikabu.prototype.init = function (options) {
 
-    return self;
-});
+        var self = this;
 
-Pikabu.prototype.init = function (options) {
+        // Get device characteristics
+        self.device = Pikabu.prototype.device || deviceCharacteristics();
+        self.markDeviceCharacteristics();
 
-    var self = this;
+        // Set any custom options
+        $.extend(self.settings, options);
 
-    // Set any custom options
-    $.extend(self.settings, options);
+        // Set up elements
+        self.$viewport = $(self.settings.viewportSelector);
 
-    // Set up elements
-    self.$viewport = $(self.settings.viewportSelector);
+        self.$leftSidebar = $(self.settings.leftSidebarSelector);
+        self.$rightSidebar = $(self.settings.rightSidebarSelector);
+        self.$sidebars = $(self.settings.sidebarsSelector);
+        self.$mainContent = $(self.settings.mainContentSelector);
 
-    self.$leftSidebar = $(self.settings.leftSidebarSelector);
-    self.$rightSidebar = $(self.settings.rightSidebarSelector);
-    self.$sidebars = $(self.settings.sidebarsSelector);
-    self.$mainContent = $(self.settings.mainContentSelector);
+        self.$navToggles = $(self.settings.navTogglesSelector);
 
-    self.$navToggles = $(self.settings.navTogglesSelector);
+        self.$children = self.$viewport.children();
 
-    self.$children = self.$viewport.children();
+        // Create overlay if it doesn't exist
+        if(!$(self.settings.overlaySelector).length) {
+            self.$mainContent
+                .prepend('<div class="' + self.settings.overlaySelector.slice(1) + '">');
+        }
 
-    // Create overlay if it doesn't exist
-    if(!$(self.settings.overlaySelector).length) {
-        self.$mainContent
-            .prepend('<div class="' + self.settings.overlaySelector.slice(1) + '">');
-    }
+        self.$overlay = $(self.settings.overlaySelector);
 
-    self.$overlay = $(self.settings.overlaySelector);
+        // Bind handlers to toggle sidebars
+        self.bindHandlers();
 
-    if (hasOverflowScrolling()) {
-        self.$document.addClass('m-pikabu-overflow-scrolling');
-    }
+        // Hide left side bar by default
+        self.$leftSidebar.addClass('m-pikabu-hidden');
+    };
 
-    if (isLegacyAndroid()) {
-        self.$document.addClass('m-pikabu-legacy-android');
-    }
+    // Bind nav toggles and overlay handlers
+    Pikabu.prototype.bindHandlers = function() {
 
-    if (supportsTransitions()) {
-        self.$document.addClass('m-pikabu-transitions');
-    }
+        var self = this;
 
-    if (has3d()) {
-        self.$document.addClass('m-pikabu-translate3d');
-    }
-
-    // Bind handlers to toggle sidebars
-    if (window.FastButton) {
-        // Do we have fasttap?
-        // <TODO> Specify expected implementation
-        self.$navToggles.fasttap(function(e) {
+        // Shows sidebar on clicking/tapping nav toggles
+        self.$navToggles.on('click', function(e) {
             e.stopPropagation();
-            self.showSidebar($(this.element).attr('data-role') || 'left');
+            self.showSidebar($(this).attr('data-role'));
         });
 
-        // Overlay: stop clicks, close the sidebars and slide back to main content
-        self.$overlay.fasttap(function(e) {
+        // Closes sidebar on clicking/tapping overlay
+        self.$overlay.on('click', function(e) {
             e.stopPropagation();
             self.closeSidebars();
         });
-    }
-    else {
-        self.$navToggles.click(function(e) {
-            e.stopPropagation();
-            self.showSidebar($(this).attr('data-role') || 'left');
-        });
-
-        // Overlay: stop clicks, close the sidebars and slide back to main content
-        self.$overlay.click(function(e) {
-            e.stopPropagation();
-            self.closeSidebars();
-        });
+        
     }
 
-    // Hide left side bar by default
-    self.$leftSidebar.addClass('m-pikabu-hidden');
-};
+    // Set classes to identify features
+    Pikabu.prototype.markDeviceCharacteristics = function() {
 
-// Sidebar
-Pikabu.prototype.showSidebar = function(type) {
+        var self = this;
 
-    var self = this;
+        if (self.device.hasOverflowScrolling) {
+            self.$document.addClass('m-pikabu-overflow-scrolling');
+        }
 
-    self.$sidebars.addClass('m-pikabu-overflow-touch');
+        if (self.device.isLegacyAndroid) {
+            self.$document.addClass('m-pikabu-legacy-android');
+        }
 
-    // part of left side bar will appear on orientation change on slow devices
-    // only show when requested
-    if (type == 'left' ) {
-        self.$leftSidebar.removeClass('m-pikabu-hidden');
+        if (self.device.supportsTransitions) {
+            self.$document.addClass('m-pikabu-transitions');
+        }
+        
+        if (self.device.has3d) {
+            self.$document.addClass('m-pikabu-translate3d');
+        }
     }
 
-    if (type == 'left' || type == 'right') {
-        self.$document.toggleClass('m-pikabu-' + type + '-visible');
+    // Show sidebar
+    Pikabu.prototype.showSidebar = function(type) {
+
+        var self = this;
+
+        self.$sidebars.addClass('m-pikabu-overflow-touch');
+
+        // part of left side bar will appear on orientation change on slow devices
+        // only show when requested
+        if (type == 'left' ) {
+            self.$leftSidebar.removeClass('m-pikabu-hidden');
+        }
+
+        if (type == 'left' || type == 'right') {
+            self.$document.toggleClass('m-pikabu-' + type + '-visible');
+
+            // Which sidebar is open?
+            self.$openSidebar = type === 'left' ? self.$leftSidebar : self.$rightSidebar;
+
+            window.scrollTo(0, 0);
+
+            self.setViewportWidth();
+            self.setHeights($(window).height());
+        }
+    };
+
+    // Close sidebars
+    Pikabu.prototype.closeSidebars = function() {
+
+        var self = this;
+
+        self.$document
+            .removeClass(self.settings.leftVisibleClass)
+            .removeClass(self.settings.rightVisibleClass);
+        
+        self.$viewport.css('width', 'auto');
 
         window.scrollTo(0, 0);
-        self.recalculateSidebarHeight($(window).height());
-    }
-};
 
-Pikabu.prototype.closeSidebars = function() {
+        // 1. Removing overflow-scrolling-touch causes a content flash
+        // 2. Removing height too soon causes panel with few content to be not full height during animation
+        // so we do these after the sidebar has closed
+        setTimeout(function() {
+            self.$sidebars.removeClass('m-pikabu-overflow-touch');
+            self.$children.css('height', '');
 
-    var self = this;
+            // Mark both sidebars as closed
+            self.$openSidebar = null;
 
-    self.$document.removeClass(self.settings.leftVisibleClass).removeClass(self.settings.rightVisibleClass);
-    self.$viewport.css('width', 'auto');
-    window.scrollTo(0, 0);
+            // <TODO> Check to make sure this works
+            // Force a reflow here, this might not work correctly!
+            self.$mainContent[0].offsetHeight;
 
-    // 1. Removing overflow-scrolling-touch causes a content flash
-    // 2. Removing height too soon causes panel with few content to be not full height during animation
-    // so we do these after the sidebar has closed
-    setTimeout(function() {
-        self.$sidebars.removeClass('m-pikabu-overflow-touch');
-        self.$children.css('height', '');
+            self.$leftSidebar.addClass('m-pikabu-hidden');
+        }, 250);    // <TODO>: Can we trigger this when the animation is done?
+    };
 
-        // Force a reflow here, this might not work correctly!
-        self.$mainContent[0].offsetHeight;
+    // Set width of viewport
+    Pikabu.prototype.setViewportWidth = function() {
 
-        self.$leftSidebar.addClass('m-pikabu-hidden');
-    }, 250);    // <TODO>: Can we trigger this when the animation is done?
-};
+        var self = this;
 
-Pikabu.prototype.recalculateSidebarHeight = function(viewportHeight) {
-
-    var self = this;
-    var offset = window.pageYOffset,
-        windowHeight = $(window).height();
-
-    // Crazy Android 2.3.3 is not getting the correct portrait width
-    // <TODO>: Orientation access?
-    if(isLegacyAndroid() && orientation == 0) {
-        if(self.deviceWidth > self.deviceHeight) {
-            self.$viewport.css('width', deviceHeight);
-        } else {
-            self.$viewport.css('width', deviceWidth);
+        // Crazy Android 2.3.3 is not getting the correct portrait width
+        if(self.device.isLegacyAndroid && orientation == 0) {
+            if(self.device.width > self.device.height) {
+                self.$viewport.css('width', self.device.height);
+            } else {
+                self.$viewport.css('width', self.device.width);
+            }
+        }
+        else {
+            self.$viewport.css('width', 'auto');
         }
     }
-    else {
-        self.$viewport.css('width', 'auto');
-    }
 
-    // we have overflow scroll touch (iOS devices)
-    if (self.$document.hasClass('m-pikabu-overflow-scrolling') 
-        && (self.$document.hasClass(self.settings.leftVisibleClass) || self.$document.hasClass(self.settings.rightVisibleClass))) {
-        self.$children.height(viewportHeight);
-        self.$viewport.height(viewportHeight);
-    }
-    // other devices/desktop
-    else {
-        self.$rightSidebar.removeAttr('style');
-        self.$leftSidebar.removeAttr('style');
-        self.$viewport.removeAttr('style');
+    // Recalculate sidebar height on opening
+    Pikabu.prototype.setHeights = function(viewportHeight) {
 
-        if (self.$document.hasClass(self.settings.leftVisibleClass)) {
-            // case: sidebar is taller than the window
-            // we need to extend the viewport height so that we can scroll through the whole sidebar
-            if (self.$leftSidebar.height() > windowHeight) {
-                self.$viewport.height(self.$leftSidebar.height());
+        var self = this;
+        var offset = window.pageYOffset, windowHeight = $(window).height();
+
+        if (self.device.hasOverflowScrolling) {
+            // we have overflow scroll touch (iOS devices)
+            self.$children.height(viewportHeight);
+            self.$viewport.height(viewportHeight);
+        } else { 
+            // other devices/desktop
+            // Reset styles
+            self.$openSidebar.removeAttr('style');
+            self.$viewport.removeAttr('style');
+
+            // Case: sidebar is taller than the window
+            // We need to extend the viewport height so that we can scroll through the whole sidebar
+            if (self.$openSidebar.height() > windowHeight) {
+                self.$viewport.height(self.$openSidebar.height());
             }
-            // case: sidebar is shorter than the window
-            // we need to make the sidebar taller to extend the background to the bottom of the page
+            // Case: sidebar is shorter than the window
+            // We need to make the sidebar taller to extend the background to the bottom of the page
             else {
-                self.$leftSidebar.height(windowHeight);
+                self.$openSidebar.height(windowHeight);
                 self.$viewport.height(windowHeight);
             }
-        } else if (self.$document.hasClass(self.settings.rightVisibleClass)) {
-            // case: sidebar is taller than the window
-            // we need to extend the viewport height so that we can scroll through the whole sidebar
-            if (self.$rightSidebar.height() > windowHeight) {
-                self.$viewport.css('height', self.$rightSidebar.height());
-            }
-            // case: sidebar is shorter than the window
-            // we need to make the sidebar taller to extend the background to the bottom of the page
-            else {
-                self.$rightSidebar.css('min-height', windowHeight);
-                self.$viewport.css('height', windowHeight);
-            }
-        }
 
-        window.scrollTo(0, offset);
-    }
-};
+            window.scrollTo(0, offset);
+        }
+    };
 
 })($);
