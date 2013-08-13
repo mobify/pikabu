@@ -141,6 +141,13 @@ Pikabu.prototype.init = function (options) {
     self.$mainContent = $(self.settings.mainContentSelector);
 
     self.$children = self.$viewport.children();
+
+    // Create overlay if it doesn't exist
+    if(!$(self.settings.overlaySelector).length) {
+        self.$mainContent
+            .prepend('<div class="' + self.settings.overlaySelector.slice(1) + '">');
+    }
+
     self.$overlay = $(self.settings.overlaySelector);
 
     if (hasOverflowScrolling()) {
