@@ -25,21 +25,15 @@
     width: 80%;
 
     background: #222;
+}
 
-
-    &.m-pikabu-left {
+.m-pikabu-left {
         @include translate3d(-100%, 0, 0);
     }
 
-    &.m-pikabu-right {
-        right: 0;
-        @include translate3d(100%, 0, 0);
-    }
-
-    .m-pikabu-left-visible &.m-pikabu-left,
-    .m-pikabu-right-visible &.m-pikabu-right {
-        @include translate3d(0, 0, 0);
-    }
+.m-pikabu-right {
+    right: 0;
+    @include translate3d(100%, 0, 0);
 }
 
 .m-pikabu-container {
@@ -49,14 +43,6 @@
     .m-pikabu-left-visible &.m-pikabu-left,
     .m-pikabu-right-visible &.m-pikabu-right {
         position: absolute;
-    }
-
-    .m-pikabu-left-visible & {
-        @include translate3d(80%, 0, 0);
-    }
-
-    .m-pikabu-right-visible & {
-         @include translate3d(-80%, 0, 0);
     }
 }
 

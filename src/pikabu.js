@@ -144,8 +144,10 @@
 
             // Overridable settings
             settings: {
+                pikabuStylesId: 'm-pikabu-styles',
+
                 viewportSelector: '.m-pikabu-viewport',
-                mainContentSelector: '.m-pikabu-container',
+                elementSelector: '.m-pikabu-container',
 
                 leftSidebarSelector: '.m-pikabu-left',
                 rightSidebarSelector: '.m-pikabu-right',
@@ -194,7 +196,7 @@
         self.$leftSidebar = $(self.settings.leftSidebarSelector);
         self.$rightSidebar = $(self.settings.rightSidebarSelector);
         self.$sidebars = $(self.settings.sidebarsSelector);
-        self.$element = $(self.settings.mainContentSelector);
+        self.$element = $(self.settings.elementSelector);
 
         self.$navToggles = $(self.settings.navTogglesSelector);
 
@@ -267,34 +269,68 @@
         }
     }
 
+    Pikabu.prototype.applyTransformations = function() {
+        
+        var self = this;
+        var visibleSidebarSelector = self.$openSidebar === self.$leftSidebar ? 
+                self.settings.leftSidebarSelector : self.settings.rightSidebarSelector;
+        var width = self.$openSidebar === self.$leftSidebar ? 
+                self.settings.leftSidebarWidth : '-' + self.settings.rightSidebarWidth;
+
+        var styles = '<style id="' + self.settings.pikabuStylesId + '">\n' + 
+                        self.settings.elementSelector + ' {\n' + 
+                            '\t-webkit-transform: translate3d(' + width + ', 0, 0);\n' + 
+                            '\t-moz-transform: translate3d(' + width + ', 0, 0);\n' + 
+                            '\t-ms-transform: translate3d(' + width + ', 0, 0);\n' + 
+                            '\t-o-transform: translate3d(' + width + ', 0, 0);\n' +
+                            '\ttransform: translate3d(' + width + ', 0, 0);\n' + 
+                        '}\n' +
+                        visibleSidebarSelector + ' {\n' + 
+                        '\t-webkit-transform: translate3d(0, 0, 0);\n' + 
+                        '\t-moz-transform: translate3d(0, 0, 0);\n' + 
+                        '\t-ms-transform: translate3d(0, 0, 0);\n' + 
+                        '\t-o-transform: translate3d(0, 0, 0);\n' + 
+                        '\ttransform: translate3d(0, 0, 0);\n' + 
+                        '}'
+                    '</style>';
+
+        // Add styles to document
+        self.$document.find('head').append(styles);
+    }
+
     // Show sidebar
-    Pikabu.prototype.showSidebar = function(type) {
+    Pikabu.prototype.showSidebar = function(target) {
 
         var self = this;
+        var width;
 
         // Store scroll offset for later use
         self.scrollOffset = window.pageYOffset;
 
         self.$sidebars.addClass('m-pikabu-overflow-touch');
 
-        // part of left side bar will appear on orientation change on slow devices
+        // Part of left side bar will appear on orientation change on slow devices
         // only show when requested
-        if (type == 'left' ) {
+        if (target === 'left' ) {
             self.$leftSidebar.removeClass('m-pikabu-hidden');
+            self.$openSidebar = self.$leftSidebar;
+            width = self.settings.leftSidebarWidth;
+        } else {
+            self.$openSidebar = self.$rightSidebar;
+            width = '-' + self.settings.rightSidebarWidth;
         }
 
-        if (type == 'left' || type == 'right') {
-            self.$document.toggleClass('m-pikabu-' + type + '-visible');
+        self.$document.toggleClass('m-pikabu-' + target + '-visible');
 
-            // Which sidebar is open?
-            self.$openSidebar = type === 'left' ? self.$leftSidebar : self.$rightSidebar;
+        // Set dimensions of elements
+        self.applyTransformations(width);
+        self.setViewportWidth();
+        self.setHeights();
 
-            self.setViewportWidth();
-            self.setHeights();
+        // Scroll to the top of the sidebar
+        window.scrollTo(0, 0);
 
-            window.scrollTo(0, 0);
-            self.$element.trigger('pikabu:opened');
-        }
+        self.$element.trigger('pikabu:opened');
     };
 
     // Reset sidebar classes on closing
@@ -327,6 +363,7 @@
         
         // Reset viewport
         self.$viewport.css('width', 'auto');
+        $('#' + self.settings.pikabuStylesId).remove();
 
         // Scroll back to where we were before we opened the sidebar
         window.scrollTo(0, self.scrollOffset);
