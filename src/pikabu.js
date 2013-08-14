@@ -97,12 +97,39 @@
             return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
         }
 
+        // Determine which transition event to use
+        function transitionEvent(){
+            // http://stackoverflow.com/questions/5023514/how-do-i-normalize-css3-transition-functions-across-browsers
+            // hack for ios 3.1.* because of poor transition support.
+            if (/iPhone\ OS\ 3_1/.test(navigator.userAgent)) {
+                return undefined;
+            }
+
+            var el = document.createElement('fakeelement');
+            var transitions = {
+                'transition':'transitionEnd transitionend',
+                'OTransition':'oTransitionEnd',
+                'MSTransition':'msTransitionEnd',
+                'MozTransition':'transitionend',
+                'WebkitTransition':'webkitTransitionEnd'
+            }
+
+            var t;
+            for(t in transitions){
+                if( el.style[t] !== undefined ){
+                    return transitions[t];
+                }
+            }
+            return;
+        }
+
         // Cache device characteristics
         return {
             'hasOverflowScrolling': hasOverflowScrolling(),
             'isLegacyAndroid': isLegacyAndroid(),
             'supportsTransitions': supportsTransitions(),
             'has3d': has3d(),
+            'transitionEvent': transitionEvent(),
             // 81 is the missing height due to browser bars when recording the height in landscape
             height: window.innerHeight + 81,
             width: window.innerWidth
@@ -253,6 +280,23 @@
         }
     };
 
+    // Reset sidebar classes on closing
+    Pikabu.prototype.resetSidebar = function($sidebar) {
+        var self = this;
+
+        $sidebar.removeClass('m-pikabu-overflow-touch');
+        self.$children.css('height', '');
+
+        // <TODO> Check to make sure this works
+        // Force a reflow here, this might not work correctly!
+        self.$mainContent[0].offsetHeight;
+
+        $sidebar.addClass('m-pikabu-hidden');
+
+        // Mark both sidebars as closed
+        self.$openSidebar = null;
+    }
+
     // Close sidebars
     Pikabu.prototype.closeSidebars = function() {
 
@@ -269,21 +313,11 @@
         window.scrollTo(0, self.scrollOffset);
 
         // 1. Removing overflow-scrolling-touch causes a content flash
-        // 2. Removing height too soon causes panel with few content to be not full height during animation
-        // so we do these after the sidebar has closed
-        setTimeout(function() {
-            self.$sidebars.removeClass('m-pikabu-overflow-touch');
-            self.$children.css('height', '');
-
-            // Mark both sidebars as closed
-            self.$openSidebar = null;
-
-            // <TODO> Check to make sure this works
-            // Force a reflow here, this might not work correctly!
-            self.$mainContent[0].offsetHeight;
-
-            self.$leftSidebar.addClass('m-pikabu-hidden');
-        }, 250);    // <TODO>: Can we trigger this when the animation is done?
+        // 2. Removing height too soon causes panel with content to be 
+        // not full height during animation, so we do these after the sidebar has closed
+        self.$openSidebar.on('transitionend', function(e) {
+            self.resetSidebar($(this));
+        });
     };
 
     // Set width of viewport
