@@ -161,7 +161,12 @@
                 navTogglesSelector: '.m-pikabu-nav-toggle',
 
                 leftSidebarWidth: '80%',
-                rightSidebarWidth: '80%'
+                rightSidebarWidth: '80%',
+
+                // Events we publish
+                'onInit': function() {},
+                'onOpened': function() {},
+                'onClosed': function() {}
             }
         });
 
@@ -189,7 +194,7 @@
         self.$leftSidebar = $(self.settings.leftSidebarSelector);
         self.$rightSidebar = $(self.settings.rightSidebarSelector);
         self.$sidebars = $(self.settings.sidebarsSelector);
-        self.$mainContent = $(self.settings.mainContentSelector);
+        self.$element = $(self.settings.mainContentSelector);
 
         self.$navToggles = $(self.settings.navTogglesSelector);
 
@@ -197,17 +202,28 @@
 
         // Create overlay if it doesn't exist
         if(!$(self.settings.overlaySelector).length) {
-            self.$mainContent
+            self.$element
                 .prepend('<div class="' + self.settings.overlaySelector.slice(1) + '">');
         }
 
         self.$overlay = $(self.settings.overlaySelector);
 
-        // Bind handlers to toggle sidebars
         self.bindHandlers();
+        self.bindEvents();
 
         // Hide left side bar by default
         self.$leftSidebar.addClass('m-pikabu-hidden');
+
+        self.$element.trigger('pikabu:initialized');
+    };
+
+    // Bind Pikabu events
+    Pikabu.prototype.bindEvents = function() {
+        var self = this;
+
+        self.$element.on('pikabu:initialized', self.settings.onInit);
+        self.$element.on('pikabu:opened', self.settings.onOpened);
+        self.$element.on('pikabu:closed', self.settings.onClosed);
     };
 
     // Bind nav toggles and overlay handlers
@@ -277,6 +293,7 @@
             self.setHeights();
 
             window.scrollTo(0, 0);
+            self.$element.trigger('pikabu:opened');
         }
     };
 
@@ -289,12 +306,14 @@
 
         // <TODO> Check to make sure this works
         // Force a reflow here, this might not work correctly!
-        self.$mainContent[0].offsetHeight;
+        self.$element[0].offsetHeight;
 
         $sidebar.addClass('m-pikabu-hidden');
 
         // Mark both sidebars as closed
         self.$openSidebar = null;
+
+        self.$element.trigger('pikabu:closed');
     }
 
     // Close sidebars
