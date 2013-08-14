@@ -141,20 +141,20 @@
 
         var self = $.extend(this, {
             $document: $('html'),
+            leftVisibleClass: 'm-pikabu-left-visible',
+            rightVisibleClass: 'm-pikabu-right-visible',
+            pikabuStylesId: 'm-pikabu-styles',
+            viewportSelector: '.m-pikabu-viewport',
 
             // Overridable settings
             settings: {
-                pikabuStylesId: 'm-pikabu-styles',
 
-                viewportSelector: '.m-pikabu-viewport',
+                // The main content container
                 elementSelector: '.m-pikabu-container',
 
+                // The sidebar content containers
                 leftSidebarSelector: '.m-pikabu-left',
                 rightSidebarSelector: '.m-pikabu-right',
-                sidebarsSelector: '.m-pikabu-sidebar',
-
-                leftVisibleClass: 'm-pikabu-left-visible',
-                rightVisibleClass: 'm-pikabu-right-visible',
 
                 // Click-to-close overlay
                 overlaySelector: '.m-pikabu-overlay',
@@ -191,11 +191,10 @@
         $.extend(self.settings, options);
 
         // Set up elements
-        self.$viewport = $(self.settings.viewportSelector);
+        self.$viewport = $(self.viewportSelector);
 
         self.$leftSidebar = $(self.settings.leftSidebarSelector);
         self.$rightSidebar = $(self.settings.rightSidebarSelector);
-        self.$sidebars = $(self.settings.sidebarsSelector);
         self.$element = $(self.settings.elementSelector);
 
         self.$navToggles = $(self.settings.navTogglesSelector);
@@ -210,6 +209,7 @@
 
         self.$overlay = $(self.settings.overlaySelector);
 
+        // Bind Pikabu events and event handlers
         self.bindHandlers();
         self.bindEvents();
 
@@ -236,7 +236,7 @@
         // Shows sidebar on clicking/tapping nav toggles
         self.$navToggles.on('click', function(e) {
             e.stopPropagation();
-            self.showSidebar($(this).attr('data-role'));
+            self.openSidebar($(this).attr('data-role'));
         });
 
         // Closes sidebar on clicking/tapping overlay
@@ -277,7 +277,7 @@
         var width = self.$openSidebar === self.$leftSidebar ? 
                 self.settings.leftSidebarWidth : '-' + self.settings.rightSidebarWidth;
 
-        var styles = '<style id="' + self.settings.pikabuStylesId + '">\n' + 
+        var styles = '<style id="' + self.pikabuStylesId + '">\n' + 
                         self.settings.elementSelector + ' {\n' + 
                             '\t-webkit-transform: translate3d(' + width + ', 0, 0);\n' + 
                             '\t-moz-transform: translate3d(' + width + ', 0, 0);\n' + 
@@ -298,16 +298,14 @@
         self.$document.find('head').append(styles);
     }
 
-    // Show sidebar
-    Pikabu.prototype.showSidebar = function(target) {
+    // Open sidebar
+    Pikabu.prototype.openSidebar = function(target) {
 
         var self = this;
         var width;
 
         // Store scroll offset for later use
         self.scrollOffset = window.pageYOffset;
-
-        self.$sidebars.addClass('m-pikabu-overflow-touch');
 
         // Part of left side bar will appear on orientation change on slow devices
         // only show when requested
@@ -320,6 +318,7 @@
             width = '-' + self.settings.rightSidebarWidth;
         }
 
+        self.$openSidebar.addClass('m-pikabu-overflow-touch');
         self.$document.toggleClass('m-pikabu-' + target + '-visible');
 
         // Set dimensions of elements
@@ -358,12 +357,13 @@
         var self = this;
 
         self.$document
-            .removeClass(self.settings.leftVisibleClass)
-            .removeClass(self.settings.rightVisibleClass);
+            .removeClass(self.leftVisibleClass + ' ' + self.rightVisibleClass);
         
         // Reset viewport
         self.$viewport.css('width', 'auto');
-        $('#' + self.settings.pikabuStylesId).remove();
+
+        // Remove sidebar, container tranform styles
+        $('#' + self.pikabuStylesId).remove();
 
         // Scroll back to where we were before we opened the sidebar
         window.scrollTo(0, self.scrollOffset);
@@ -380,18 +380,14 @@
     Pikabu.prototype.setViewportWidth = function() {
 
         var self = this;
+        var width = 'auto;'
 
         // Android 2.3.3 is not getting the correct portrait width
         if(self.device.isLegacyAndroid && orientation == 0) {
-            if(self.device.width > self.device.height) {
-                self.$viewport.css('width', self.device.height);
-            } else {
-                self.$viewport.css('width', self.device.width);
-            }
+            width = Math.max(self.device.height, self.device.width);
         }
-        else {
-            self.$viewport.css('width', 'auto');
-        }
+
+        self.$viewport.css('width', 'auto');
     }
 
     // Recalculate sidebar and viewport height on opening the sidebar
