@@ -7,39 +7,44 @@
 
 .m-pikabu-viewport {
     position: relative;
-
-    @include display-box;
-    @include box-orient(horizontal);
     overflow: hidden;
 
     -webkit-perspective: 1000;
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
+
+    // Defaults when JS is disabled
+    .no-js & {
+        display: block;
+    }
 }
 
 .m-pikabu-sidebar {
     position: absolute;
 
+    top: 0;
+    bottom: 0;
+
     overflow: visible;
     display: block;
-    width: 80%;
 
     background: #222;
-
-
-    &.m-pikabu-left {
-        @include translate3d(-100%, 0, 0);
-    }
-
-    &.m-pikabu-right {
-        right: 0;
-        @include translate3d(100%, 0, 0);
-    }
-
-    .m-pikabu-left-visible &.m-pikabu-left,
-    .m-pikabu-right-visible &.m-pikabu-right {
+    
+    // Defaults when JS is disabled
+    .no-js & {
+        position: relative;
+        width: 100%;
         @include translate3d(0, 0, 0);
     }
+}
+
+.m-pikabu-left {
+    @include translate3d(-100%, 0, 0);
+}
+
+.m-pikabu-right {
+    right: 0;
+    @include translate3d(100%, 0, 0);
 }
 
 .m-pikabu-container {
@@ -50,21 +55,11 @@
     .m-pikabu-right-visible &.m-pikabu-right {
         position: absolute;
     }
-
-    .m-pikabu-left-visible & {
-        @include translate3d(80%, 0, 0);
-    }
-
-    .m-pikabu-right-visible & {
-         @include translate3d(-80%, 0, 0);
-    }
 }
 
 .m-pikabu-container,
 .m-pikabu-sidebar {
-    @include transition(
-        -webkit-transform 0.2s ease-in
-    );
+    @include transition(transform 0.2s ease-in);
 }
 
 .m-pikabu-overlay {
@@ -96,4 +91,38 @@
 
 .m-pikabu-overflow-touch {
     -webkit-overflow-scrolling: touch;
+}
+
+// Responsive adjustments
+
+@media all and (min-width: 769px) {
+
+    .m-pikabu-viewport {
+        width: 100%;
+        @include display-box;
+        @include box-orient(horizontal);
+
+        .m-pikabu-nav-toggle {
+            display: none;
+        }
+    }
+
+    .m-pikabu-left,
+    .m-pikabu-right {
+        display: block;
+        @include box-flex(1);
+
+        position: relative;
+
+        width: auto !important;
+        min-width: 20%;
+        height: 100%;
+
+        @include translate3d(0, 0, 0);
+    }
+
+    .m-pikabu-container {
+        @include box-flex(3);
+        width: auto !important;
+    }
 }

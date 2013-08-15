@@ -1,4 +1,4 @@
-<html>
+<html class="no-js">
     <head>
         <title>Mobify's Pikabu - a simple off-canvas flyout framework</title>
         
@@ -31,8 +31,6 @@
             </div>
             <!-- the main page content -->
             <div class="m-pikabu-container">
-                <!-- Overlay is needed to have a big click area to close the sidebars -->
-                <div class="m-pikabu-overlay"></div>
                 <header>
                     <a class="m-pikabu-nav-toggle" data-role="left">Left Menu</a>
                     <h1>Pikabu</h1>
@@ -67,8 +65,21 @@
         <script type="text/javascript" src="src/pikabu.js"></script>
         <script>
             $(function() {
-                pikabu = new Pikabu;
-                pikabu.init();
+                pikabu = new Pikabu({
+                    widths: {
+                        left: '50%',
+                        right: '70%'
+                    }
+                });
+
+                /*
+                Sample usage:
+                pikabu.oœpenSidebar('right');
+                pikabu.closeSidebars();
+
+                pikabu.activeSidebar // 'left' or 'right'
+                pikabu.$sidebars[pikabu.activeSidebar] // get the Zepto/jQuery active sidebar object
+                */
             });
         </script>
     </body>
