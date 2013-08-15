@@ -7,15 +7,13 @@
 
 .m-pikabu-viewport {
     position: relative;
-
-    @include display-box;
-    @include box-orient(horizontal);
     overflow: hidden;
 
     -webkit-perspective: 1000;
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
 
+    // Defaults when JS is disabled
     .no-js & {
         display: block;
     }
@@ -31,6 +29,8 @@
     display: block;
 
     background: #222;
+    
+    // Defaults when JS is disabled
     .no-js & {
         position: relative;
         width: 100%;
@@ -91,4 +91,38 @@
 
 .m-pikabu-overflow-touch {
     -webkit-overflow-scrolling: touch;
+}
+
+// Responsive adjustments
+
+@media all and (min-width: 769px) {
+
+    .m-pikabu-viewport {
+        width: 100%;
+        @include display-box;
+        @include box-orient(horizontal);
+
+        .m-pikabu-nav-toggle {
+            display: none;
+        }
+    }
+
+    .m-pikabu-left,
+    .m-pikabu-right {
+        display: block;
+        @include box-flex(1);
+
+        position: relative;
+
+        width: auto !important;
+        min-width: 20%;
+        height: 100%;
+
+        @include translate3d(0, 0, 0);
+    }
+
+    .m-pikabu-container {
+        @include box-flex(3);
+        width: auto !important;
+    }
 }

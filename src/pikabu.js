@@ -222,8 +222,9 @@
         this.bindHandlers();
         this.bindEvents();
 
-        // Hide left side bar by default
+        // Hide sidebars by default
         this.$sidebars['left'].addClass('m-pikabu-hidden');
+        this.$sidebars['right'].addClass('m-pikabu-hidden');
 
         // Assign it back to the instance
         this.settings = settings;
@@ -326,9 +327,7 @@
         // Store scroll offset for later use
         this.scrollOffset = window.pageYOffset;
 
-        if (target === 'left' ) {            
-            this.$sidebars[target].removeClass('m-pikabu-hidden');
-        }
+        this.$sidebars[target].removeClass('m-pikabu-hidden');
 
         // Mark the chosen sidebar as being open
         this.activeSidebar = target;
@@ -338,9 +337,10 @@
         this.$document.addClass('m-pikabu-' + target + '-visible');
 
         // Set dimensions of elements
-        this.applyTransformations(target);
-        this.setViewportWidth();
         this.setHeights();
+        this.setViewportWidth();
+
+        this.applyTransformations(target);
 
         // Scroll to the top of the sidebar
         window.scrollTo(0, 0);
@@ -355,7 +355,6 @@
         this.$children.css('height', '');
 
         // <TODO> Check to make sure this works
-
         this.$viewport.css('height', '');
         this.$element.css('height', '');
 
@@ -394,7 +393,7 @@
         // 1. Removing overflow-scrolling-touch causes a content flash
         // 2. Removing height too soon causes panel with content to be 
         // not full height during animation, so we do these after the sidebar has closed
-        this.$sidebars[this.activeSidebar].on('transitionend', function(e) {
+        this.$element.one('transitionend', function(e) {
             _this.resetSidebar($(this));
 
             // Scroll back to where we were before we opened the sidebar
