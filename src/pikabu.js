@@ -185,6 +185,9 @@
         var styles;
         var settings = this.settings;
 
+        // Remove body no-js, in case it exists
+        $('html').removeClass('no-js');
+
         // Get device characteristics
         this.device = Pikabu.prototype.device || deviceCharacteristics();
         this.markDeviceCharacteristics();

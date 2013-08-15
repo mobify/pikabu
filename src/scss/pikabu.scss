@@ -15,6 +15,10 @@
     -webkit-perspective: 1000;
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
+
+    .no-js & {
+        display: block;
+    }
 }
 
 .m-pikabu-sidebar {
@@ -27,6 +31,11 @@
     display: block;
 
     background: #222;
+    .no-js & {
+        position: relative;
+        width: 100%;
+        @include translate3d(0, 0, 0);
+    }
 }
 
 .m-pikabu-left {
