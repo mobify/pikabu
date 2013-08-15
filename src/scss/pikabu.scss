@@ -20,16 +20,18 @@
 .m-pikabu-sidebar {
     position: absolute;
 
+    top: 0;
+    bottom: 0;
+
     overflow: visible;
     display: block;
-    width: 80%;
 
     background: #222;
 }
 
 .m-pikabu-left {
-        @include translate3d(-100%, 0, 0);
-    }
+    @include translate3d(-100%, 0, 0);
+}
 
 .m-pikabu-right {
     right: 0;
@@ -48,9 +50,7 @@
 
 .m-pikabu-container,
 .m-pikabu-sidebar {
-    @include transition(
-        -webkit-transform 0.2s ease-in
-    );
+    @include transition(transform 0.2s ease-in);
 }
 
 .m-pikabu-overlay {

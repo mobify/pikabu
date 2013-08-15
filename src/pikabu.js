@@ -143,27 +143,28 @@
             $document: $('html'),
             leftVisibleClass: 'm-pikabu-left-visible',
             rightVisibleClass: 'm-pikabu-right-visible',
-            pikabuStylesId: 'm-pikabu-styles',
+            activePikabuStyles: 'm-pikabu-styles',
             viewportSelector: '.m-pikabu-viewport',
 
             // Overridable settings
             settings: {
-
-                // The main content container
-                elementSelector: '.m-pikabu-container',
-
                 // The sidebar content containers
-                leftSidebarSelector: '.m-pikabu-left',
-                rightSidebarSelector: '.m-pikabu-right',
+                selectors: {
+                    // The main content container
+                    element: '.m-pikabu-container',
+                    // Sidebars
+                    left: '.m-pikabu-left',
+                    right: '.m-pikabu-right',
+                    // Click-to-close overlay
+                    overlay: '.m-pikabu-overlay',
+                    // Controls that trigger the sidebar
+                    navToggles: '.m-pikabu-nav-toggle'
+                },
 
-                // Click-to-close overlay
-                overlaySelector: '.m-pikabu-overlay',
-
-                // Controls that trigger the sidebar
-                navTogglesSelector: '.m-pikabu-nav-toggle',
-
-                leftSidebarWidth: '80%',
-                rightSidebarWidth: '80%',
+                widths: {
+                    left: '80%',
+                    right: '80%'
+                },
 
                 // Events we publish
                 'onInit': function() {},
@@ -181,242 +182,262 @@
     // Let the magic begin
     Pikabu.prototype.init = function (options) {
 
-        var self = this;
+        var styles;
+        var settings = this.settings;
 
         // Get device characteristics
-        self.device = Pikabu.prototype.device || deviceCharacteristics();
-        self.markDeviceCharacteristics();
+        this.device = Pikabu.prototype.device || deviceCharacteristics();
+        this.markDeviceCharacteristics();
 
         // Set any custom options
-        $.extend(self.settings, options);
+        $.extend(settings, options);
 
         // Set up elements
-        self.$viewport = $(self.viewportSelector);
+        this.$viewport = $(this.viewportSelector);
+        this.$element = $(settings.selectors['element']);
+        this.$sidebars = {
+            left: $(settings.selectors['left']),
+            right: $(settings.selectors['right'])
+        };
 
-        self.$leftSidebar = $(self.settings.leftSidebarSelector);
-        self.$rightSidebar = $(self.settings.rightSidebarSelector);
-        self.$element = $(self.settings.elementSelector);
+        this.$navToggles = $(settings.selectors['navToggles']);
 
-        self.$navToggles = $(self.settings.navTogglesSelector);
-
-        self.$children = self.$viewport.children();
+        this.$children = this.$viewport.children();
 
         // Create overlay if it doesn't exist
-        if(!$(self.settings.overlaySelector).length) {
-            self.$element
-                .prepend('<div class="' + self.settings.overlaySelector.slice(1) + '">');
+        if(!$(settings.selectors['overlay']).length) {
+            this.$element
+                .prepend('<div class="' + settings.selectors['overlay'].slice(1) + '">');
         }
 
-        self.$overlay = $(self.settings.overlaySelector);
+        this.$overlay = $(settings.selectors['overlay']);
+
+        // Add persistent styles for sidebars
+        this.applyPersistentStyles();
 
         // Bind Pikabu events and event handlers
-        self.bindHandlers();
-        self.bindEvents();
+        this.bindHandlers();
+        this.bindEvents();
 
         // Hide left side bar by default
-        self.$leftSidebar.addClass('m-pikabu-hidden');
+        this.$sidebars['left'].addClass('m-pikabu-hidden');
 
-        self.$element.trigger('pikabu:initialized');
+        // Assign it back to the instance
+        this.settings = settings;
+
+        this.$element.trigger('pikabu:initialized');
     };
 
     // Bind Pikabu events
     Pikabu.prototype.bindEvents = function() {
-        var self = this;
-
-        self.$element.on('pikabu:initialized', self.settings.onInit);
-        self.$element.on('pikabu:opened', self.settings.onOpened);
-        self.$element.on('pikabu:closed', self.settings.onClosed);
+        this.$element.on('pikabu:initialized', this.settings.onInit);
+        this.$element.on('pikabu:opened', this.settings.onOpened);
+        this.$element.on('pikabu:closed', this.settings.onClosed);
     };
 
     // Bind nav toggles and overlay handlers
     Pikabu.prototype.bindHandlers = function() {
 
-        var self = this;
+        var _this = this;
 
         // Shows sidebar on clicking/tapping nav toggles
-        self.$navToggles.on('click', function(e) {
+        this.$navToggles.on('click', function(e) {
             e.stopPropagation();
-            self.openSidebar($(this).attr('data-role'));
+            _this.openSidebar($(this).attr('data-role'));
         });
 
         // Closes sidebar on clicking/tapping overlay
-        self.$overlay.on('click', function(e) {
+        this.$overlay.on('click', function(e) {
             e.stopPropagation();
-            self.closeSidebars();
+            _this.closeSidebars();
         });
         
     }
 
     // Set classes to identify features
     Pikabu.prototype.markDeviceCharacteristics = function() {
-
-        var self = this;
-
-        if (self.device.hasOverflowScrolling) {
-            self.$document.addClass('m-pikabu-overflow-scrolling');
+        if (this.device.hasOverflowScrolling) {
+            this.$document.addClass('m-pikabu-overflow-scrolling');
         }
-
-        if (self.device.isLegacyAndroid) {
-            self.$document.addClass('m-pikabu-legacy-android');
+        if (this.device.isLegacyAndroid) {
+            this.$document.addClass('m-pikabu-legacy-android');
         }
-
-        if (self.device.supportsTransitions) {
-            self.$document.addClass('m-pikabu-transitions');
+        if (this.device.supportsTransitions) {
+            this.$document.addClass('m-pikabu-transitions');
         }
-        
-        if (self.device.has3d) {
-            self.$document.addClass('m-pikabu-translate3d');
+        if (this.device.has3d) {
+            this.$document.addClass('m-pikabu-translate3d');
         }
     }
 
-    Pikabu.prototype.applyTransformations = function() {
-        
-        var self = this;
-        var visibleSidebarSelector = self.$openSidebar === self.$leftSidebar ? 
-                self.settings.leftSidebarSelector : self.settings.rightSidebarSelector;
-        var width = self.$openSidebar === self.$leftSidebar ? 
-                self.settings.leftSidebarWidth : '-' + self.settings.rightSidebarWidth;
+    // Styles that aren't deleted when the sidebars are closed
+    Pikabu.prototype.applyPersistentStyles = function() {
+        var styles = '<style>\n' + 
+                this.settings.selectors['left'] + ' {\n' +
+                    '\twidth: ' + this.settings.widths['left'] + ';\n' +
+                    '}\n' + 
+                    this.settings.selectors['right'] + ' {\n' + 
+                    '\twidth: ' + this.settings.widths['right'] + ';\n' +
+                    '}' +
+                '</style>';
 
-        var styles = '<style id="' + self.pikabuStylesId + '">\n' + 
-                        self.settings.elementSelector + ' {\n' + 
-                            '\t-webkit-transform: translate3d(' + width + ', 0, 0);\n' + 
-                            '\t-moz-transform: translate3d(' + width + ', 0, 0);\n' + 
-                            '\t-ms-transform: translate3d(' + width + ', 0, 0);\n' + 
-                            '\t-o-transform: translate3d(' + width + ', 0, 0);\n' +
-                            '\ttransform: translate3d(' + width + ', 0, 0);\n' + 
+        // Add styles to document
+        this.$document.find('head').append(styles);
+    }
+
+    // Styles applied when Pikabu is activated
+    Pikabu.prototype.applyTransformations = function(sidebar) {
+        
+        var width;
+        var transform;
+
+        width = this.settings.widths[sidebar];
+
+        // Transform to the left or the right
+        transform = sidebar === 'left' ? width : '-' + width;
+
+        var styles = '<style id="' + this.activePikabuStyles + '">\n' + 
+                        this.settings.selectors['element'] + ' {\n' + 
+                            '\t-webkit-transform: translate3d(' + transform + ', 0, 0);\n' + 
+                            '\t-moz-transform: translate3d(' + transform + ', 0, 0);\n' + 
+                            '\t-ms-transform: translate3d(' + transform + ', 0, 0);\n' + 
+                            '\t-o-transform: translate3d(' + transform + ', 0, 0);\n' +
+                            '\ttransform: translate3d(' + transform + ', 0, 0);\n' + 
                         '}\n' +
-                        visibleSidebarSelector + ' {\n' + 
+                        this.settings.selectors[sidebar] + ' {\n' + 
                         '\t-webkit-transform: translate3d(0, 0, 0);\n' + 
                         '\t-moz-transform: translate3d(0, 0, 0);\n' + 
                         '\t-ms-transform: translate3d(0, 0, 0);\n' + 
                         '\t-o-transform: translate3d(0, 0, 0);\n' + 
                         '\ttransform: translate3d(0, 0, 0);\n' + 
-                        '}'
+                        '}' +
                     '</style>';
 
         // Add styles to document
-        self.$document.find('head').append(styles);
+        this.$document.find('head').append(styles);
     }
 
     // Open sidebar
     Pikabu.prototype.openSidebar = function(target) {
 
-        var self = this;
-        var width;
-
         // Store scroll offset for later use
-        self.scrollOffset = window.pageYOffset;
+        this.scrollOffset = window.pageYOffset;
 
-        // Part of left side bar will appear on orientation change on slow devices
-        // only show when requested
-        if (target === 'left' ) {
-            self.$leftSidebar.removeClass('m-pikabu-hidden');
-            self.$openSidebar = self.$leftSidebar;
-            width = self.settings.leftSidebarWidth;
-        } else {
-            self.$openSidebar = self.$rightSidebar;
-            width = '-' + self.settings.rightSidebarWidth;
+        if (target === 'left' ) {            
+            this.$sidebars[target].removeClass('m-pikabu-hidden');
         }
 
-        self.$openSidebar.addClass('m-pikabu-overflow-touch');
-        self.$document.toggleClass('m-pikabu-' + target + '-visible');
+        // Mark the chosen sidebar as being open
+        this.activeSidebar = target;
+
+        // Add support classes
+        this.$sidebars[target].addClass('m-pikabu-overflow-touch');
+        this.$document.addClass('m-pikabu-' + target + '-visible');
 
         // Set dimensions of elements
-        self.applyTransformations(width);
-        self.setViewportWidth();
-        self.setHeights();
+        this.applyTransformations(target);
+        this.setViewportWidth();
+        this.setHeights();
 
         // Scroll to the top of the sidebar
         window.scrollTo(0, 0);
 
-        self.$element.trigger('pikabu:opened');
+        this.$element.trigger('pikabu:opened');
     };
 
     // Reset sidebar classes on closing
     Pikabu.prototype.resetSidebar = function($sidebar) {
-        var self = this;
-
+        
         $sidebar.removeClass('m-pikabu-overflow-touch');
-        self.$children.css('height', '');
+        this.$children.css('height', '');
 
         // <TODO> Check to make sure this works
-        // Force a reflow here, this might not work correctly!
-        self.$element[0].offsetHeight;
 
-        $sidebar.addClass('m-pikabu-hidden');
+        this.$viewport.css('height', '');
+        this.$element.css('height', '');
+
+        // add this arbitrary margin-bottom to force a reflow when we remove it
+        this.$element.css('marginBottom', 1);
+
+        // Not sure why but we need a scrollTo here to get the reflow to work
+        window.scrollTo(0, 0);
+
+        // Remove the unnecessary margin-bottom to force reflow and properly recalculate the height of this container
+        this.$element.css('marginBottom', '');
+
+        this.$sidebars['left'].addClass('m-pikabu-hidden');
 
         // Mark both sidebars as closed
-        self.$openSidebar = null;
+        this.activeSidebar = null;
 
-        self.$element.trigger('pikabu:closed');
+        this.$element.trigger('pikabu:closed');
     }
 
     // Close sidebars
     Pikabu.prototype.closeSidebars = function() {
 
-        var self = this;
+        var _this = this;
 
-        self.$document
-            .removeClass(self.leftVisibleClass + ' ' + self.rightVisibleClass);
+        // Add class to body to indicate currently open sidebars
+        this.$document
+            .removeClass(this.leftVisibleClass + ' ' + this.rightVisibleClass);
         
         // Reset viewport
-        self.$viewport.css('width', 'auto');
+        this.$viewport.css('width', 'auto');
 
         // Remove sidebar, container tranform styles
-        $('#' + self.pikabuStylesId).remove();
-
-        // Scroll back to where we were before we opened the sidebar
-        window.scrollTo(0, self.scrollOffset);
+        $('#' + this.activePikabuStyles).remove();
 
         // 1. Removing overflow-scrolling-touch causes a content flash
         // 2. Removing height too soon causes panel with content to be 
         // not full height during animation, so we do these after the sidebar has closed
-        self.$openSidebar.on('transitionend', function(e) {
-            self.resetSidebar($(this));
+        this.$sidebars[this.activeSidebar].on('transitionend', function(e) {
+            _this.resetSidebar($(this));
+
+            // Scroll back to where we were before we opened the sidebar
+            window.scrollTo(0, this.scrollOffset);
         });
     };
 
     // Set width of viewport
     Pikabu.prototype.setViewportWidth = function() {
 
-        var self = this;
-        var width = 'auto;'
+        var width = 'auto';
 
         // Android 2.3.3 is not getting the correct portrait width
-        if(self.device.isLegacyAndroid && orientation == 0) {
-            width = Math.max(self.device.height, self.device.width);
+        if(this.device.isLegacyAndroid && orientation == 0) {
+            width = Math.max(this.device.height, this.device.width);
         }
 
-        self.$viewport.css('width', 'auto');
+        this.$viewport.css('width', width);
     }
 
     // Recalculate sidebar and viewport height on opening the sidebar
     Pikabu.prototype.setHeights = function() {
 
-        var self = this;
         var windowHeight = $(window).height();
 
-        if (self.device.hasOverflowScrolling) {
+        if (this.device.hasOverflowScrolling) {
             // We have overflow scroll touch (iOS devices)
-            self.$children.height(windowHeight);
-            self.$viewport.height(windowHeight);
+            this.$children.height(windowHeight);
+            this.$viewport.height(windowHeight);
         } else { 
             // Other devices/desktop
 
             // Reset styles
-            self.$openSidebar.removeAttr('style');
-            self.$viewport.removeAttr('style');
+            this.$sidebars[this.activeSidebar].removeAttr('style');
+            this.$viewport.removeAttr('style');
 
             // Case: sidebar is taller than the window
             // We need to extend the viewport height so that we can scroll through the whole sidebar
-            if (self.$openSidebar.height() > windowHeight) {
-                self.$viewport.height(self.$openSidebar.height());
+            if (this.$sidebars[this.activeSidebar].height() > windowHeight) {
+                this.$viewport.height(this.$sidebars[this.activeSidebar].height());
             }
             // Case: sidebar is shorter than the window
             // We need to make the sidebar taller to extend the background to the bottom of the page
             else {
-                self.$openSidebar.height(windowHeight);
-                self.$viewport.height(windowHeight);
+                this.$sidebars[this.activeSidebar].height(windowHeight);
+                this.$viewport.height(windowHeight);
             }
         }
     };
