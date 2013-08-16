@@ -98,6 +98,7 @@
 @media all and (min-width: 769px) {
 
     .m-pikabu-viewport {
+        position: static;
         width: 100%;
         @include display-box;
         @include box-orient(horizontal);
