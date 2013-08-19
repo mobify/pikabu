@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import "compass/css3";
+@import "compass/utilities/general/clearfix";
 
 * {
     @include box-sizing(border-box);
@@ -99,9 +100,10 @@
 
     .m-pikabu-viewport {
         position: static;
-        width: 100%;
-        @include display-box;
-        @include box-orient(horizontal);
+        display: block;
+        min-height: 100%;
+
+        @include pie-clearfix;
 
         .m-pikabu-nav-toggle {
             display: none;
@@ -111,19 +113,19 @@
     .m-pikabu-left,
     .m-pikabu-right {
         display: block;
-        @include box-flex(1);
-
         position: relative;
 
-        width: auto !important;
-        min-width: 20%;
-        height: 100%;
+        float: left;
+        width: 20%;
+        min-height: 100%;
 
         @include translate3d(0, 0, 0);
+
+        overflow: auto;
     }
 
     .m-pikabu-container {
-        @include box-flex(3);
-        width: auto !important;
+        float: left;
+        width: 60%;
     }
 }

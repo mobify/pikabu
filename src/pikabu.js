@@ -255,7 +255,6 @@
             e.stopPropagation();
             _this.closeSidebars();
         });
-        
     }
 
     // Set classes to identify features
@@ -277,10 +276,10 @@
     // Styles that aren't deleted when the sidebars are closed
     Pikabu.prototype.applyPersistentStyles = function() {
         var styles = '<style>\n' + 
-                this.settings.selectors['left'] + ' {\n' +
+                this.settings.leftVisibleClass + ' ' + this.settings.selectors['left'] + ' {\n' +
                     '\twidth: ' + this.settings.widths['left'] + ';\n' +
                     '}\n' + 
-                    this.settings.selectors['right'] + ' {\n' + 
+                this.settings.rightVisibleClass + ' ' + this.settings.selectors['right'] + ' {\n' + 
                     '\twidth: ' + this.settings.widths['right'] + ';\n' +
                     '}' +
                 '</style>';
@@ -420,40 +419,18 @@
         var windowHeight = $(window).height();
         var sidebarHeight = this.$sidebars[this.activeSidebar][0].scrollHeight;
         var contentHeight = this.$element[0].scrollHeight;
+        var maxHeight = Math.max(windowHeight, contentHeight);
 
-        console.log("Window: ", windowHeight, "Sidebar: ", sidebarHeight, "Content: ", contentHeight);
-
-        var maxHeight = Math.max(windowHeight, sidebarHeight);
-        maxHeight = Math.max(maxHeight, contentHeight);
-
-        // Set viewport to tallest element height
-        this.$viewport.height(maxHeight);
-
-        console.log("Tallest: ", maxHeight);
-
-        // if (this.device.hasOverflowScrolling) {
-        //     // We have overflow scroll touch (iOS devices)
-        //     this.$children.height(windowHeight);
-        //     this.$viewport.height(windowHeight);
-        // } else { 
-        //     // Other devices/desktop
-
-        //     // Reset styles
-        //     this.$sidebars[this.activeSidebar].removeAttr('style');
-        //     this.$viewport.removeAttr('style');
-
-        //     // Case: sidebar is taller than the window
-        //     // We need to extend the viewport height so that we can scroll through the whole sidebar
-        //     if (this.$sidebars[this.activeSidebar].height() > windowHeight) {
-        //         this.$viewport.height(this.$sidebars[this.activeSidebar].height());
-        //     }
-        //     // Case: sidebar is shorter than the window
-        //     // We need to make the sidebar taller to extend the background to the bottom of the page
-        //     else {
-        //         this.$sidebars[this.activeSidebar].height(windowHeight);
-        //         this.$viewport.height(windowHeight);
-        //     }
-        // }
+        if(this.device.hasOverflowScrolling) {
+            // Lock viewport for devices that have overflow-scrolling: touch, eg: iOS 5 devices
+            this.$children.height(windowHeight);
+            this.$viewport.height(windowHeight);
+        } else {
+            // Set viewport to tallest element height
+            this.$viewport.height(maxHeight);
+            this.$overlay.height(maxHeight);
+            this.$element.height(maxHeight);
+        }
     };
 
 })($);
