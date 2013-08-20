@@ -155,6 +155,7 @@
                     // The main content container
                     element: '.m-pikabu-container',
                     // Sidebars
+                    common: '.m-pikabu-sidebar',
                     left: '.m-pikabu-left',
                     right: '.m-pikabu-right',
                     // Click-to-close overlay
@@ -167,6 +168,9 @@
                     left: '80%',
                     right: '80%'
                 },
+
+                // Transition speeds for open/close animation
+                transitionSpeed: 0.2,
 
                 // Events we publish
                 'onInit': function() {},
@@ -320,12 +324,21 @@
 
     // Styles that aren't deleted when the sidebars are closed
     Pikabu.prototype.applyPersistentStyles = function() {
+        var transitionSelector = this.settings.selectors['common'] + ', \n' + 
+            this.settings.selectors['element'];
         var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + this.settings.selectors['left'];
         var rightSidebarSelector = '.' + this.rightVisibleClass + ' ' + this.settings.selectors['right'];
         var styles = '<style>\n' + 
+                transitionSelector + ' {\n' + 
+                    '-webkit-transition: -webkit-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
+                    '-moz-transition: -moz-transform '+ this.settings.transitionSpeed + 's ease-in;\n' + 
+                    '-ms-transition: -ms-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
+                    '-o-transition: -o-transform ' + this.settings.transitionSpeed +'s ease-in;\n' +
+                    'transition: transform ' + this.settings.transitionSpeed +'s ease-in;\n' +
+                '}\n' + 
                 leftSidebarSelector + ' {\n' +
                     '\twidth: ' + this.settings.widths['left'] + ';\n' +
-                    '}\n' + 
+                '}\n' + 
                 rightSidebarSelector + ' {\n' + 
                     '\twidth: ' + this.settings.widths['right'] + ';\n' +
                     '}' +

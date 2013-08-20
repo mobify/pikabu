@@ -45,11 +45,6 @@
     }
 }
 
-.m-pikabu-container,
-.m-pikabu-sidebar {
-    @include transition(transform 0.2s ease-in);
-}
-
 .m-pikabu-overlay {
     display: none;
 
