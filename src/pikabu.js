@@ -45,13 +45,13 @@
         // It's an Android
         function isAndroid() {
             var android = /Android\s+([\d\.]+)/.exec(window.navigator.userAgent);
-            return android && android.length;
+            return !!(android && android.length);
         }
 
         // Detect older Androids
         function isLegacyAndroid() {
             var android = /Android\s+([\d\.]+)/.exec(window.navigator.userAgent);
-            return android && android.length && (parseInt(android[1]) < 3);
+            return !!(android && android.length && (parseInt(android[1]) < 3));
         }
 
         /* @url: http://stackoverflow.com/questions/7264899/detect-css-transitions-using-javascript-and-without-modernizr */
@@ -290,6 +290,7 @@
             _this.closeSidebars();
         });
 
+        // Recalculate heights and width of viewport on size/orientation change
         $(window).on('resize orientationchange', function() {
             // Set dimensions of elements
             _this.setHeights();
@@ -330,7 +331,7 @@
         this.$document.find('head').append(styles);
     }
 
-    // Styles applied when Pikabu is activated
+    // Styles applied when sidebars are opened
     Pikabu.prototype.applyTransformations = function(sidebar) {
         
         var width;
