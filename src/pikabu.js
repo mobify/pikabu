@@ -144,10 +144,11 @@
             leftVisibleClass: 'm-pikabu-left-visible',
             rightVisibleClass: 'm-pikabu-right-visible',
             activePikabuStyles: 'm-pikabu-styles',
-            viewportSelector: '.m-pikabu-viewport',
 
             // Overridable settings
             settings: {
+                // Main Pikabu viewport
+                viewportSelector: '.m-pikabu-viewport',
                 // The sidebar content containers
                 selectors: {
                     // The main content container
@@ -193,7 +194,7 @@
         this.markDeviceCharacteristics();
 
         // Set any custom options
-        $.extend(settings, options);
+        $.extend(true, settings, options);
 
         // Set up elements
         this.$viewport = $(this.viewportSelector);
@@ -275,11 +276,13 @@
 
     // Styles that aren't deleted when the sidebars are closed
     Pikabu.prototype.applyPersistentStyles = function() {
+        var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + this.settings.selectors['left'];
+        var rightSidebarSelector = '.' + this.rightVisibleClass + ' ' + this.settings.selectors['right'];
         var styles = '<style>\n' + 
-                this.settings.leftVisibleClass + ' ' + this.settings.selectors['left'] + ' {\n' +
+                leftSidebarSelector + ' {\n' +
                     '\twidth: ' + this.settings.widths['left'] + ';\n' +
                     '}\n' + 
-                this.settings.rightVisibleClass + ' ' + this.settings.selectors['right'] + ' {\n' + 
+                rightSidebarSelector + ' {\n' + 
                     '\twidth: ' + this.settings.widths['right'] + ';\n' +
                     '}' +
                 '</style>';
