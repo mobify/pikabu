@@ -1,6 +1,5 @@
 @charset "UTF-8";
 @import "compass/css3";
-@import "compass/utilities/general/clearfix";
 
 * {
     @include box-sizing(border-box);
@@ -13,11 +12,6 @@
     -webkit-perspective: 1000;
     -webkit-transform: translateZ(0);
     -webkit-backface-visibility: hidden;
-
-    // Defaults when JS is disabled
-    .no-js & {
-        display: block;
-    }
 }
 
 .m-pikabu-sidebar {
@@ -26,17 +20,10 @@
     top: 0;
     bottom: 0;
 
-    overflow: visible;
+    overflow: auto;
     display: block;
 
     background: #222;
-    
-    // Defaults when JS is disabled
-    .no-js & {
-        position: relative;
-        width: 100%;
-        @include translate3d(0, 0, 0);
-    }
 }
 
 .m-pikabu-left {
@@ -85,47 +72,6 @@
 }
 
 // Scrolling
-
-.m-pikabu-overflow-scrolling .m-pikabu-sidebar {
-    overflow: auto;
-}
-
 .m-pikabu-overflow-touch {
     -webkit-overflow-scrolling: touch;
-}
-
-// Responsive adjustments
-
-@media all and (min-width: 769px) {
-
-    .m-pikabu-viewport {
-        position: static;
-        display: block;
-        min-height: 100%;
-
-        @include pie-clearfix;
-
-        .m-pikabu-nav-toggle {
-            display: none;
-        }
-    }
-
-    .m-pikabu-left,
-    .m-pikabu-right {
-        display: block;
-        position: relative;
-
-        float: left;
-        width: 20%;
-        min-height: 100%;
-
-        @include translate3d(0, 0, 0);
-
-        overflow: auto;
-    }
-
-    .m-pikabu-container {
-        float: left;
-        width: 60%;
-    }
 }

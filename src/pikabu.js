@@ -5,7 +5,7 @@
     function deviceCharacteristics() {
 
         // Do we have overflow scrolling?
-        function hasOverflowScrolling() {
+        function hasOverflowScrollingTouch() {
             var prefixes = ['webkit', 'moz', 'o', 'ms'];
             var div = document.createElement('div');
             var body = document.getElementsByTagName('body')[0];
@@ -42,16 +42,16 @@
             return hasIt;
         }
 
+        // It's an Android
+        function isAndroid() {
+            var android = /Android\s+([\d\.]+)/.exec(window.navigator.userAgent);
+            return android && android.length;
+        }
+
         // Detect older Androids
         function isLegacyAndroid() {
             var android = /Android\s+([\d\.]+)/.exec(window.navigator.userAgent);
-
-            if (android && android.length > 0 && (parseInt(android[1]) < 3)) {
-                // we are on Android 2.x
-                return true;
-            }
-
-            return false;
+            return android && android.length && (parseInt(android[1]) < 3);
         }
 
         /* @url: http://stackoverflow.com/questions/7264899/detect-css-transitions-using-javascript-and-without-modernizr */
@@ -125,7 +125,8 @@
 
         // Cache device characteristics
         return {
-            'hasOverflowScrolling': hasOverflowScrolling(),
+            'hasOverflowScrollingTouch': hasOverflowScrollingTouch(),
+            'isAndroid': isAndroid(),
             'isLegacyAndroid': isLegacyAndroid(),
             'supportsTransitions': supportsTransitions(),
             'has3d': has3d(),
@@ -180,6 +181,38 @@
         return self;
     });
 
+    // Animated scrollTo
+    Pikabu.prototype.scrollTo = function(endY, duration, easingFunc) {
+
+        // enable smooth scrolling in Zepto
+        var interpolate = function (source, target, shift) {
+            return (source + (target - source) * shift);
+        };
+
+        var easing = function (pos) {
+            return (-Math.cos(pos * Math.PI) / 2) + .5;
+        };
+
+        var endY = endY || (this.device.isAndroid ? 1 : 0);
+        var duration = duration || 200;
+        (typeof easingFunc === 'function') && (easing = easingFunc);
+
+        var startY = window.pageYOffset,
+            startT  = Date.now(),
+            finishT = startT + duration;
+
+        var animate = function() {
+            var now = +(new Date()),
+                shift = (now > finishT) ? 1 : (now - startT) / duration;
+
+            window.scrollTo(0, interpolate(startY, endY, easing(shift)));
+
+            (now > finishT) || setTimeout(animate, 15);
+        };
+
+        animate();
+    }
+
     // Let the magic begin
     Pikabu.prototype.init = function (options) {
 
@@ -197,7 +230,7 @@
         $.extend(true, settings, options);
 
         // Set up elements
-        this.$viewport = $(this.viewportSelector);
+        this.$viewport = $(this.settings.viewportSelector);
         this.$element = $(settings.selectors['element']);
         this.$sidebars = {
             left: $(settings.selectors['left']),
@@ -256,11 +289,17 @@
             e.stopPropagation();
             _this.closeSidebars();
         });
+
+        $(window).on('resize orientationchange', function() {
+            // Set dimensions of elements
+            _this.setHeights();
+            _this.setViewportWidth();
+        });
     }
 
     // Set classes to identify features
     Pikabu.prototype.markDeviceCharacteristics = function() {
-        if (this.device.hasOverflowScrolling) {
+        if (this.device.hasOverflowScrollingTouch) {
             this.$document.addClass('m-pikabu-overflow-scrolling');
         }
         if (this.device.isLegacyAndroid) {
@@ -345,7 +384,7 @@
         this.applyTransformations(target);
 
         // Scroll to the top of the sidebar
-        window.scrollTo(0, 0);
+        this.scrollTo(0);
 
         this.$element.trigger('pikabu:opened');
     };
@@ -364,7 +403,7 @@
         this.$element.css('marginBottom', 1);
 
         // Not sure why but we need a scrollTo here to get the reflow to work
-        window.scrollTo(0, 0);
+        this.scrollTo(0);
 
         // Remove the unnecessary margin-bottom to force reflow and properly recalculate the height of this container
         this.$element.css('marginBottom', '');
@@ -399,7 +438,7 @@
             _this.resetSidebar($(this));
 
             // Scroll back to where we were before we opened the sidebar
-            window.scrollTo(0, _this.scrollOffset);
+            _this.scrollTo(_this.scrollOffset);
         });
     };
 
@@ -424,15 +463,15 @@
         var contentHeight = this.$element[0].scrollHeight;
         var maxHeight = Math.max(windowHeight, contentHeight);
 
-        if(this.device.hasOverflowScrolling) {
+        if(this.device.hasOverflowScrollingTouch) {
             // Lock viewport for devices that have overflow-scrolling: touch, eg: iOS 5 devices
             this.$children.height(windowHeight);
             this.$viewport.height(windowHeight);
         } else {
             // Set viewport to tallest element height
-            this.$viewport.height(maxHeight);
-            this.$overlay.height(maxHeight);
-            this.$element.height(maxHeight);
+            this.$viewport.height(windowHeight);
+            this.$overlay.height(windowHeight);
+            this.$element.height(windowHeight);
         }
     };
 
