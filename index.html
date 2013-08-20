@@ -90,7 +90,7 @@
 
         <!-- include zepto.js or jquery.js -->
         <!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"></script> -->
-        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="libs/jquery-1.10.2.min.js"></script>
         <!-- include pikabu.js -->
         <script type="text/javascript" src="src/pikabu.js"></script>
         <script>
@@ -103,7 +103,10 @@
                 // All options are optional
                 pikabu = new Pikabu({
                     // If you'd like to request different elements be used
-                    // as controls
+                    // as controls. 
+                    // IMPORTANT: If you change the class names here, please
+                    // remember to change the appropriate classes in the 
+                    // stylesheets as well.
                     selectors: {
                         element: '.main-element-container',
                         left: '.left-sidebar',

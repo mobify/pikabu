@@ -1,0 +1,21 @@
+// Change class names to the ones we expect
+@import "../src/scss/pikabu";
+@import "../src/scss/pikabu-theme";
+
+// Extend Pikabu functionality to renamed classes
+.test-viewport {
+	@extend .m-pikabu-viewport;
+}
+.test-sidebar {
+	@extend .m-pikabu-sidebar;
+}
+.test-sidebar-left {
+	@extend .m-pikabu-left;
+}
+.test-sidebar-right {
+	@extend .m-pikabu-right;
+}
+.test-container {
+	@extend .m-pikabu-container;
+}
+

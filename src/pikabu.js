@@ -263,6 +263,10 @@
         // Assign it back to the instance
         this.settings = settings;
 
+        // Set initial heights and width
+        this.setHeights();
+        this.setViewportWidth();
+
         this.$element.trigger('pikabu:initialized');
     };
 
@@ -460,7 +464,7 @@
     Pikabu.prototype.setHeights = function() {
 
         var windowHeight = $(window).height();
-        var sidebarHeight = this.$sidebars[this.activeSidebar][0].scrollHeight;
+        var sidebarHeight = 0 || this.activeSidebar && this.$sidebars[this.activeSidebar][0].scrollHeight;
         var contentHeight = this.$element[0].scrollHeight;
         var maxHeight = Math.max(windowHeight, contentHeight);
 
