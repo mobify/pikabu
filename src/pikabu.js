@@ -144,7 +144,7 @@
             $document: $('html'),
             leftVisibleClass: 'm-pikabu-left-visible',
             rightVisibleClass: 'm-pikabu-right-visible',
-            activePikabuStyles: 'm-pikabu-styles',
+            activePikabuStylesSelector: '#m-pikabu-styles',
 
             // Overridable settings
             settings: {
@@ -359,7 +359,7 @@
         // Transform to the left or the right
         transform = sidebar === 'left' ? width : '-' + width;
 
-        var styles = '<style id="' + this.activePikabuStyles + '">\n' + 
+        var styles = '<style id="' + this.activePikabuStylesSelector.slice(1) + '">\n' + 
                         this.settings.selectors['element'] + ' {\n' + 
                             '\t-webkit-transform: translate3d(' + transform + ', 0, 0);\n' + 
                             '\t-moz-transform: translate3d(' + transform + ', 0, 0);\n' + 
@@ -447,7 +447,7 @@
         this.$viewport.css('width', 'auto');
 
         // Remove sidebar, container tranform styles
-        $('#' + this.activePikabuStyles).remove();
+        $(this.activePikabuStylesSelector).remove();
 
         // 1. Removing overflow-scrolling-touch causes a content flash
         // 2. Removing height too soon causes panel with content to be 
@@ -493,4 +493,4 @@
         }
     };
 
-})($);
+})(jQuery);

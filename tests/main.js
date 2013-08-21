@@ -7,6 +7,7 @@
 		viewportSelector: '.test-viewport',
 		selectors: {
 			element: '.test-container',
+			common: '.test-sidebar',
 			left: '.test-sidebar-left',
 			right: '.test-sidebar-right',
 			navToggles: '.nav-toggle'
@@ -45,7 +46,8 @@
 	test("Pikabu sidebars visibility according to screen size", function() {
 		// TODO Find a way to simulate screen widths
 		equal(pikabuTest.$sidebars['left'].is(':visible') && 
-			pikabuTest.$sidebars['right'].is(':visible'), isWidescreen, visibilityErrors[isWidescreen]);
+			pikabuTest.$sidebars['right'].is(':visible'), isWidescreen, 
+			visibilityErrors[isWidescreen]);
 	});
 
 	test("Pikabu sidebars always shown when JS is disabled", function() {
@@ -63,10 +65,10 @@
 	// JS API and events tests
 	test("Pikabu sidebar API", function() {
 
-		if(!isWidescreen) {
+		// Confirm events work
+		equal(initSet, true, "Pikabu initialization event failed");
 
-			// Confirm events work
-			equal(initSet, true, "Pikabu initialization event failed");
+		if(!isWidescreen) {
 
 			// Test nav toggles
 			pikabuTest.$navToggles.each(function(index, el) {
@@ -78,7 +80,7 @@
 				setTimeout(function() {
 					equal(pikabuTest.$sidebars[role].is(':visible'), true, 
 						role + " sidebar open toggle not working");
-					equal(openedSet, true, "Pikabu opened event failed")
+					equal(openedSet, true, "Pikabu opened event failed");
 				});
 
 				// Verify that sidebar closes, and closed event fires
@@ -96,14 +98,14 @@
 						role + " sidebar open toggle not working");
 				});
 
-				pikabuTest.closeSidebars;
+				pikabuTest.closeSidebars();
 				setTimeout(function() {
 					equal(pikabuTest.$sidebars[role].is(':visible'), true, 
-						role + " sidebar open toggle not working");
+						role + " sidebar close toggle not working");
 				});
 			});
 			
-		}
+		} 
 
 	});
 
