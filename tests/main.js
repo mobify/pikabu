@@ -1,7 +1,7 @@
 (function($) {
 
 	// Markers for events
-	var initSet = false, openedSet = false, closedSet = false;
+	var initMarker = false, openedMarker = false, closedMarker = false;
 	// Set up settings for Pikabu object specified in tests/index.html
 	var settings = {
 		viewportSelector: '.test-viewport',
@@ -13,13 +13,13 @@
 			navToggles: '.nav-toggle'
 		},
 		onInit: function() {
-			initSet = true;
+			initMarker = true;
 		},
 		onOpened: function() {
-			openedSet = true;
+			openedMarker = true;
 		},
 		onClosed: function() {
-			closedSet = true;
+			closedMarker = true;
 		}
 	};
 	var pikabuTest = new Pikabu(settings);
@@ -29,13 +29,12 @@
 	var windowHeight = $(window).height();
 	var documentHeight = $(document).height();
 	var responsiveBreakpoint = 768; // (in px) We always show sidebar beyond this breakpoint
-
-	var isWidescreen = windowWidth > responsiveBreakpoint;
 	// Error messages for sidebar visibility tests according to screensize
 	var visibilityErrors = {
-		true: "Pikabu sidebars aren't visible on a wide screen",
-		false: "Pikabu sidebars aren't visible on a narrow screen"
+	       true: "Pikabu sidebars aren't visible on a wide screen",
+	       false: "Pikabu sidebars aren't visible on a narrow screen"
 	};
+	var isWidescreen = windowWidth > responsiveBreakpoint;
 
 	// Object creation tests
 	test("Pikabu initialization tests", function() {
@@ -43,7 +42,7 @@
 		equal(true, pikabuTest instanceof Pikabu,  "Pikabu not initialized");
 	});
 
-	test("Pikabu sidebars visibility according to screen size", function() {
+	test("Pikabu sidebars visibility on initial state", function() {
 		// TODO Find a way to simulate screen widths
 		equal(pikabuTest.$sidebars['left'].is(':visible') && 
 			pikabuTest.$sidebars['right'].is(':visible'), isWidescreen, 
@@ -62,51 +61,48 @@
 		$('html').removeClass('no-js');
 	});
 
-	// JS API and events tests
-	test("Pikabu sidebar API", function() {
+	test("Pikabu sidebar opens on clicking toggle", function() {
 
-		// Confirm events work
-		equal(initSet, true, "Pikabu initialization event failed");
-
+		// Only test if the sidebars are hidden by default
 		if(!isWidescreen) {
 
 			// Test nav toggles
 			pikabuTest.$navToggles.each(function(index, el) {
+				
 				var $el = $(el);
 				var role = $el.data('role');
 
-				// Verify that sidebar opens and event fires
+				stop(); // Stop test until async operation completes
 				$el.trigger('click'); // Open sidebar
+
+				// Verify that sidebar opens
 				setTimeout(function() {
-					equal(pikabuTest.$sidebars[role].is(':visible'), true, 
-						role + " sidebar open toggle not working");
-					equal(openedSet, true, "Pikabu opened event failed");
+					var visible = pikabuTest.$sidebars[role].is(':visible');
+					equal(visible, true, role + " sidebar not opening on clicking toggle");
+					start(); // Resume tests
 				});
 
-				// Verify that sidebar closes, and closed event fires
+				// Verify that sidebar closes
+				stop();
 				pikabuTest.$overlay.trigger('click'); // Close sidebar
 				setTimeout(function() {
-					equal(pikabuTest.$sidebars[role].is(':visible'), false, 
-						role + " sidebar close toggle not working");
-					equal(openedSet, true, "Pikabu closed event failed");
-				});
+					var visible = pikabuTest.$sidebars[role].is(':visible');
+					equal(visible, false, role + " sidebar visible after clicking on overlay");
+					start(); // Resume tests
+				}, 500);
 
-				// Verify API calls work
-				pikabuTest.openSidebar(role);
-				setTimeout(function() {
-					equal(pikabuTest.$sidebars[role].is(':visible'), true, 
-						role + " sidebar open toggle not working");
-				});
-
-				pikabuTest.closeSidebars();
-				setTimeout(function() {
-					equal(pikabuTest.$sidebars[role].is(':visible'), true, 
-						role + " sidebar close toggle not working");
-				});
 			});
 			
-		} 
+		} else {
+			equal(pikabuTest.$navToggles.is(':visible'), false, 
+				"Nav toggles should be hidden in wide screen mode");
+		}
 
+	});
+
+	test("Pikabu events", function() {
+		// Confirm events work
+		equal(initMarker, true, "Pikabu initialization event failed");
 	});
 
 })(jQuery);

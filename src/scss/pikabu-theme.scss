@@ -215,11 +215,11 @@ section ul {
     .m-pikabu-viewport {
         display: block;
         min-height: 100%;
+    }
 
-        // Hide the toggles by default, since the sidebars are always visible
-        .m-pikabu-nav-toggle {
-            display: none;
-        }
+    // Hide the toggles by default, since the sidebars are always visible
+    .m-pikabu-nav-toggle {
+        display: none;
     }
 
     .m-pikabu-left,

@@ -427,6 +427,7 @@
         this.$element.css('marginBottom', '');
 
         this.$sidebars['left'].addClass('m-pikabu-hidden');
+        this.$sidebars['right'].addClass('m-pikabu-hidden');
 
         // Mark both sidebars as closed
         this.activeSidebar = null;

@@ -54,22 +54,11 @@
   position: absolute;
 }
 
-/* line 49, ../src/scss/pikabu.scss */
-.m-pikabu-container, .test-container,
-.m-pikabu-sidebar,
-.test-sidebar {
-  -webkit-transition: -webkit-transform 0.2s ease-in;
-  -moz-transition: -moz-transform 0.2s ease-in;
-  -ms-transition: -ms-transform 0.2s ease-in;
-  -o-transition: -o-transform 0.2s ease-in;
-  transition: transform 0.2s ease-in;
-}
-
-/* line 53, ../src/scss/pikabu.scss */
+/* line 48, ../src/scss/pikabu.scss */
 .m-pikabu-overlay {
   display: none;
 }
-/* line 57, ../src/scss/pikabu.scss */
+/* line 52, ../src/scss/pikabu.scss */
 .m-pikabu-left-visible .m-pikabu-overlay, .m-pikabu-right-visible .m-pikabu-overlay {
   position: absolute;
   top: 0;
@@ -80,12 +69,12 @@
   cursor: pointer;
 }
 
-/* line 70, ../src/scss/pikabu.scss */
+/* line 65, ../src/scss/pikabu.scss */
 .m-pikabu-hidden {
   display: none;
 }
 
-/* line 75, ../src/scss/pikabu.scss */
+/* line 70, ../src/scss/pikabu.scss */
 .m-pikabu-overflow-touch {
   -webkit-overflow-scrolling: touch;
 }
@@ -134,7 +123,7 @@ header h1::before {
 }
 
 /* line 86, ../src/scss/pikabu-theme.scss */
-.m-pikabu-nav-toggle {
+.m-pikabu-nav-toggle, .nav-toggle {
   position: relative;
   float: left;
   display: block;
@@ -157,11 +146,11 @@ header h1::before {
   line-height: 29px;
 }
 /* line 106, ../src/scss/pikabu-theme.scss */
-.m-pikabu-nav-toggle[data-role="right"] {
+.m-pikabu-nav-toggle[data-role="right"], [data-role="right"].nav-toggle {
   float: right;
 }
 /* line 110, ../src/scss/pikabu-theme.scss */
-.m-pikabu-nav-toggle::after {
+.m-pikabu-nav-toggle::after, .nav-toggle::after {
   content: '☰';
   position: absolute;
   left: 0;
@@ -177,12 +166,12 @@ header h1::before {
   color: inherit;
 }
 /* line 128, ../src/scss/pikabu-theme.scss */
-.m-pikabu-nav-toggle[data-role="right"]::after {
+.m-pikabu-nav-toggle[data-role="right"]::after, [data-role="right"].nav-toggle::after {
   content: "\e705";
   font-size: 17px;
 }
 /* line 134, ../src/scss/pikabu-theme.scss */
-.m-pikabu-left-visible .m-pikabu-nav-toggle[data-role="left"], .m-pikabu-right-visible .m-pikabu-nav-toggle[data-role="right"] {
+.m-pikabu-left-visible .m-pikabu-nav-toggle[data-role="left"], .m-pikabu-left-visible [data-role="left"].nav-toggle, .m-pikabu-right-visible .m-pikabu-nav-toggle[data-role="right"], .m-pikabu-right-visible [data-role="right"].nav-toggle {
   background: rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
   -moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
@@ -274,8 +263,8 @@ section ul {
   display: block;
   min-height: 100%;
 }
-/* line 220, ../src/scss/pikabu-theme.scss */
-.no-js .m-pikabu-viewport .m-pikabu-nav-toggle, .no-js .test-viewport .m-pikabu-nav-toggle {
+/* line 221, ../src/scss/pikabu-theme.scss */
+.no-js .m-pikabu-nav-toggle, .no-js .nav-toggle {
   display: none;
 }
 /* line 226, ../src/scss/pikabu-theme.scss */
@@ -316,8 +305,9 @@ section ul {
     display: block;
     min-height: 100%;
   }
-  /* line 220, ../src/scss/pikabu-theme.scss */
-  .m-pikabu-viewport .m-pikabu-nav-toggle, .test-viewport .m-pikabu-nav-toggle {
+
+  /* line 221, ../src/scss/pikabu-theme.scss */
+  .m-pikabu-nav-toggle, .nav-toggle {
     display: none;
   }
 

@@ -18,4 +18,6 @@
 .test-container {
 	@extend .m-pikabu-container;
 }
-
+.nav-toggle {
+	@extend .m-pikabu-nav-toggle;
+}
