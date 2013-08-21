@@ -22,7 +22,10 @@
             div.style.overflowScrolling = 'touch';
 
             // Now check the properties
-            var computedStyle = window.getComputedStyle(div);
+            var computedStyle = window.getComputedStyle && window.getComputedStyle(div);
+            if(!computedStyle) {
+                computedStyle = div.currentStyle;
+            }
 
             // First non-prefixed
             hasIt = !!computedStyle.overflowScrolling;
@@ -201,8 +204,10 @@
         var duration = duration || 200;
         (typeof easingFunc === 'function') && (easing = easingFunc);
 
+        // IE < 9 doesn't have Date.now()
+        Date.now = Date.now || function() { return +new Date; };
         var startY = window.pageYOffset,
-            startT  = Date.now(),
+            startT = Date.now(),
             finishT = startT + duration;
 
         var animate = function() {
@@ -450,15 +455,23 @@
         // Remove sidebar, container tranform styles
         $(this.activePikabuStylesSelector).remove();
 
-        // 1. Removing overflow-scrolling-touch causes a content flash
-        // 2. Removing height too soon causes panel with content to be 
-        // not full height during animation, so we do these after the sidebar has closed
-        this.$element.one(this.device.transitionEvent, function(e) {
-            _this.resetSidebar($(this));
+        // Check to see if CSS transitions are supported
+        if(this.device.transitionEvent && this.activeSidebar) {
+            // 1. Removing overflow-scrolling-touch causes a content flash
+            // 2. Removing height too soon causes panel with content to be 
+            // not full height during animation, so we do these after the sidebar has closed
+            this.$element.one(this.device.transitionEvent, function(e) {
+                _this.resetSidebar($(this));
 
-            // Scroll back to where we were before we opened the sidebar
-            _this.scrollTo(_this.scrollOffset);
-        });
+                // Scroll back to where we were before we opened the sidebar
+                _this.scrollTo(_this.scrollOffset);
+            });
+        } else {
+            setTimeout(function() {
+                _this.resetSidebar($(this));
+                _this.scrollTo(_this.scrollOffset);
+            }, 250);
+        }
     };
 
     // Set width of viewport
