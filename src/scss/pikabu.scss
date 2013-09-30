@@ -21,7 +21,10 @@ $animation: true !default; // Set to false if you don't want transitions
 .m-pikabu-sidebar {
     position: absolute;
 
-    overflow: visible;
+    top: 0;
+    bottom: 0;
+
+    overflow: auto;
     display: block;
 }
 
@@ -86,12 +89,11 @@ $animation: true !default; // Set to false if you don't want transitions
     }
 }
 
-// Scrolling
-
-.m-pikabu-overflow-scrolling .m-pikabu-sidebar {
-    overflow: auto;
+.m-pikabu-hidden {
+    display: none;
 }
 
+// Scrolling
 .m-pikabu-overflow-touch {
     -webkit-overflow-scrolling: touch;
 }
