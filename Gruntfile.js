@@ -79,6 +79,9 @@ module.exports = function(grunt) {
                     rel: "build"
                 }
             ]
+        },
+        qunit: {
+            files: ['tests/**/*.html']
         }
         // TODO: upload over a LATEST version and/or create a redirect?
     });
@@ -92,10 +95,12 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-zip');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-clean');
+    grunt.loadNpmTasks('grunt-contrib-qunit');
 
     // Default task(s).
     grunt.registerTask('build', ['uglify', 'compass', 'zip', 'copy']);
     grunt.registerTask('release', ['build', 'shell:tagRelease', 's3']);
     grunt.registerTask('default', 'build');
     grunt.registerTask('serve', ['connect:server:keepalive']);
+    grunt.registerTask('test', ['connect', 'qunit']);
 };
