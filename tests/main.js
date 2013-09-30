@@ -36,6 +36,17 @@
     };
     var isWidescreen = windowWidth > responsiveBreakpoint;
 
+    //
+    // ----------------------------------------------------------------
+    // Tests
+    // ----------------------------------------------------------------
+    //
+    // jQuery / Mobify tests
+    test('Pikabu initialization tests', function() {
+        // Mobify.$ is corrected assigned to jQuery
+        equal(Mobify.$, jQuery,  'Mobify.$ is assigned to jQuery');
+    });
+
     // Object creation tests
     test('Pikabu initialization tests', function() {
         // Object created successfully
