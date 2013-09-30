@@ -1,4 +1,5 @@
-<html>
+<!doctype html>
+<html class="no-js">
     <head>
         <title>Mobify's Pikabu - a simple off-canvas flyout framework</title>
         
@@ -27,12 +28,39 @@
             <!-- the left sidebar -->
             <div class="m-pikabu-sidebar m-pikabu-left">
                 <!-- left sidebar content -->
-                Left
+                <h2>Left</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
+                    Fugiat, minus, beatae, molestias sint sunt possimus 
+                    quisquam commodi vel incidunt alias repellendus voluptatum 
+                    nisi voluptates cumque laboriosam nesciunt optio magnam 
+                    eligendi.</p>
+                <ul>
+                    <li><a href="#">This is a link</a></li>
+                    <li><a href="#">This is a link</a></li>
+                    <li><a href="#">This is a link</a></li>
+                    <li><a href="#">This is a link</a></li>
+                    <li><a href="#">This is a link</a></li>
+                </ul>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab 
+                    ipsum nisi qui odit magni atque dicta numquam sed. Consequatur, 
+                    illo, harum nulla non velit quas accusantium minus ad unde 
+                    facilis.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab 
+                    ipsum nisi qui odit magni atque dicta numquam sed. Consequatur, 
+                    illo, harum nulla non velit quas accusantium minus ad unde 
+                    facilis.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab 
+                    ipsum nisi qui odit magni atque dicta numquam sed. Consequatur, 
+                    illo, harum nulla non velit quas accusantium minus ad unde 
+                    facilis.</p>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab 
+                    ipsum nisi qui odit magni atque dicta numquam sed. Consequatur, 
+                    illo, harum nulla non velit quas accusantium minus ad unde 
+                    facilis.</p>
+                <p><a href="#">Link</a></p>
             </div>
             <!-- the main page content -->
             <div class="m-pikabu-container">
-                <!-- Overlay is needed to have a big click area to close the sidebars -->
-                <div class="m-pikabu-overlay"></div>
                 <header>
                     <a class="m-pikabu-nav-toggle" data-role="left">Left Menu</a>
                     <h1>Pikabu</h1>
@@ -62,13 +90,56 @@
 
         <!-- include zepto.js or jquery.js -->
         <!-- <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/zepto/1.0/zepto.min.js"></script> -->
-        <script src="//code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="libs/jquery/jquery.js"></script>
         <!-- include pikabu.js -->
         <script type="text/javascript" src="src/pikabu.js"></script>
         <script>
             $(function() {
-                pikabu = new Pikabu;
-                pikabu.init();
+                pikabu = new Pikabu();
+
+                /*
+                Sample usage:
+    
+                // All options are optional
+                pikabu = new Pikabu({
+                    // If you'd like to request different elements be used
+                    // as controls. 
+                    // IMPORTANT: If you change the class names here, please
+                    // remember to change the appropriate classes in the 
+                    // stylesheets as well.
+                    selectors: {
+                        element: '.main-element-container',
+                        left: '.left-sidebar',
+                        right: '.right-sidebar',
+                        navToggles: '.sidebar-opener',
+                        overlay: '.overlay'
+                    },
+                    // Specify left and right sidebar widths independently
+                    widths: {
+                        left: '70%',
+                        right: '70%'
+                    },
+                    // Functions to trigger on initializing, opening and closing the sidebar
+                    onInit: function() { ... },
+                    onOpened: function() { ... },
+                    onClosed: function() { ... }
+                });
+
+                // Once you've created the pikabu instance like shown above, 
+                // you can use it elsewhere as shown below:
+
+                pikabu.openSidebar('right');
+                pikabu.closeSidebars();
+
+                pikabu.activeSidebar // 'left' or 'right'
+                pikabu.$sidebars[pikabu.activeSidebar] // get the Zepto/jQuery active sidebar object
+
+                // Pikabu also provides some utility functions, like:
+                pikabu.scrollTo(500); // Smooth scroll to 500px in the document
+
+                // pikabu.device contains some capability information about the device, like:
+                pikabu.isAndroid; // returns true/false
+                */
             });
         </script>
     </body>
