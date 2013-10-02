@@ -126,6 +126,13 @@
             return;
         }
 
+        function isNewChrome(targetVersion) {
+            var isChrome = navigator.userAgent.match(/Chrome\/([\d\.]+)\s/);
+            var targetVersion = 29;
+            
+            return (isChrome && parseFloat(isChrome[1]) >= targetVersion);
+        }
+
         // Cache device characteristics
         return {
             'hasOverflowScrollingTouch': hasOverflowScrollingTouch(),
@@ -134,6 +141,7 @@
             'supportsTransitions': supportsTransitions(),
             'has3d': has3d(),
             'transitionEvent': transitionEvent(),
+            isNewChrome: isNewChrome(),
             // 81 is the missing height due to browser bars when recording the height in landscape
             height: window.innerHeight + 81,
             width: window.innerWidth
@@ -498,11 +506,16 @@
     // Recalculate sidebar and viewport height on opening the sidebar
     Pikabu.prototype.setHeights = function() {
 
-        var windowHeight = $(window).height();
+        // We use outerHeight for newer Androids running Chrome, because Chrome sometimes 
+        // hides the address bar, changing the height. 
+        var windowHeight = this.device.isNewChrome ? window.outerHeight : $(window).height();
+
         var $sidebar = this.activeSidebar && this.$sidebars[this.activeSidebar];
         var sidebarHeight = $sidebar.removeAttr('style')[0].scrollHeight;
         var maxHeight = Math.max(windowHeight, sidebarHeight);
 
+        // console.log("Is New Chrome: ", this.device.isNewChrome)
+        // console.log("W: ", windowHeight, "S: ", sidebarHeight);
 
         if(this.device.hasOverflowScrollingTouch) {
             // Lock viewport for devices that have overflow-scrolling: touch, eg: iOS 5 devices
