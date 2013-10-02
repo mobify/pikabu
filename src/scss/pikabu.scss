@@ -7,9 +7,6 @@
 
 .m-pikabu-viewport {
     position: relative;
-
-    @include display-box;
-    @include box-orient(horizontal);
     overflow: hidden;
 
     -webkit-perspective: 1000;
@@ -20,26 +17,21 @@
 .m-pikabu-sidebar {
     position: absolute;
 
-    overflow: visible;
+    top: 0;
+
+    overflow: auto;
     display: block;
-    width: 80%;
 
     background: #222;
+}
 
+.m-pikabu-left {
+    @include translate3d(-100%, 0, 0);
+}
 
-    &.m-pikabu-left {
-        @include translate3d(-100%, 0, 0);
-    }
-
-    &.m-pikabu-right {
-        right: 0;
-        @include translate3d(100%, 0, 0);
-    }
-
-    .m-pikabu-left-visible &.m-pikabu-left,
-    .m-pikabu-right-visible &.m-pikabu-right {
-        @include translate3d(0, 0, 0);
-    }
+.m-pikabu-right {
+    right: 0;
+    @include translate3d(100%, 0, 0);
 }
 
 .m-pikabu-container {
@@ -50,21 +42,6 @@
     .m-pikabu-right-visible &.m-pikabu-right {
         position: absolute;
     }
-
-    .m-pikabu-left-visible & {
-        @include translate3d(80%, 0, 0);
-    }
-
-    .m-pikabu-right-visible & {
-         @include translate3d(-80%, 0, 0);
-    }
-}
-
-.m-pikabu-container,
-.m-pikabu-sidebar {
-    @include transition(
-        -webkit-transform 0.2s ease-in
-    );
 }
 
 .m-pikabu-overlay {
@@ -77,7 +54,6 @@
         z-index: 30;
 
         display: block;
-        height: 100%;
         width: 100%;
 
         cursor: pointer;
@@ -89,11 +65,6 @@
 }
 
 // Scrolling
-
-.m-pikabu-overflow-scrolling .m-pikabu-sidebar {
-    overflow: auto;
-}
-
 .m-pikabu-overflow-touch {
     -webkit-overflow-scrolling: touch;
 }
