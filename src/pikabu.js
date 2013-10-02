@@ -514,9 +514,6 @@
         var sidebarHeight = $sidebar.removeAttr('style')[0].scrollHeight;
         var maxHeight = Math.max(windowHeight, sidebarHeight);
 
-        // console.log("Is New Chrome: ", this.device.isNewChrome)
-        // console.log("W: ", windowHeight, "S: ", sidebarHeight);
-
         if(this.device.hasOverflowScrollingTouch) {
             // Lock viewport for devices that have overflow-scrolling: touch, eg: iOS 5 devices
             $sidebar.height(windowHeight);
