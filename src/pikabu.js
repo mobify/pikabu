@@ -1,3 +1,6 @@
+var Mobify = window.Mobify = window.Mobify || {};
+Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
+
 // Pikabu.js
 (function($) {
 
@@ -533,4 +536,4 @@
         }
     };
 
-})(jQuery);
+})(Mobify.$);
