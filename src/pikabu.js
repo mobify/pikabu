@@ -126,6 +126,13 @@
             return;
         }
 
+        function isNewChrome(targetVersion) {
+            var isChrome = navigator.userAgent.match(/Chrome\/([\d\.]+)\s/);
+            var targetVersion = 29;
+            
+            return (isChrome && parseFloat(isChrome[1]) >= targetVersion);
+        }
+
         // Cache device characteristics
         return {
             'hasOverflowScrollingTouch': hasOverflowScrollingTouch(),
@@ -134,6 +141,7 @@
             'supportsTransitions': supportsTransitions(),
             'has3d': has3d(),
             'transitionEvent': transitionEvent(),
+            isNewChrome: isNewChrome(),
             // 81 is the missing height due to browser bars when recording the height in landscape
             height: window.innerHeight + 81,
             width: window.innerWidth
@@ -248,8 +256,6 @@
 
         this.$navToggles = $(settings.selectors['navToggles']);
 
-        this.$children = this.$viewport.children();
-
         // Create overlay if it doesn't exist
         if(!$(settings.selectors['overlay']).length) {
             this.$element
@@ -272,8 +278,7 @@
         // Assign it back to the instance
         this.settings = settings;
 
-        // Set initial heights and width
-        this.setHeights();
+        // Set initial width
         this.setViewportWidth();
 
         this.$element.trigger('pikabu:initialized');
@@ -305,9 +310,21 @@
 
         // Recalculate heights and width of viewport on size/orientation change
         $(window).on('resize orientationchange', function() {
-            // Set dimensions of elements
-            _this.setHeights();
-            _this.setViewportWidth();
+            var windowHeight = $(window).height();
+            // Only do something if a sidebar is active
+            if(_this.activeSidebar) {
+                // Set dimensions of elements
+                _this.setHeights();
+                _this.setViewportWidth();
+            } else {
+                // If we are on a wide-screen where sidebars are always visible, fix sidebar height 
+                // to window height
+                if(_this.$sidebars['left'].is(':visible') || _this.$sidebars['right'].is(':visible')) {
+                    _this.$viewport.height(windowHeight);
+                    _this.$sidebars['left'].height(windowHeight);
+                    _this.$sidebars['right'].height(windowHeight);
+                }
+            }
         });
     }
 
@@ -315,7 +332,7 @@
     Pikabu.prototype.markDeviceCharacteristics = function() {
         if (this.device.hasOverflowScrollingTouch) {
             this.$document.addClass('m-pikabu-overflow-scrolling');
-        }
+        } 
         if (this.device.isLegacyAndroid) {
             this.$document.addClass('m-pikabu-legacy-android');
         }
@@ -329,12 +346,12 @@
 
     // Styles that aren't deleted when the sidebars are closed
     Pikabu.prototype.applyPersistentStyles = function() {
-        var transitionSelector = this.settings.selectors['common'] + ', \n' + 
+        var bothSidebars = this.settings.selectors['common'] + ', \n' + 
             this.settings.selectors['element'];
         var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + this.settings.selectors['left'];
         var rightSidebarSelector = '.' + this.rightVisibleClass + ' ' + this.settings.selectors['right'];
         var styles = '<style>\n' + 
-                transitionSelector + ' {\n' + 
+                bothSidebars + ' {\n' + 
                     '-webkit-transition: -webkit-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
                     '-moz-transition: -moz-transform '+ this.settings.transitionSpeed + 's ease-in;\n' + 
                     '-ms-transition: -ms-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
@@ -416,7 +433,6 @@
     Pikabu.prototype.resetSidebar = function($sidebar) {
         
         $sidebar.removeClass('m-pikabu-overflow-touch');
-        this.$children.css('height', '');
 
         // <TODO> Check to make sure this works
         this.$viewport.css('height', '');
@@ -490,20 +506,30 @@
     // Recalculate sidebar and viewport height on opening the sidebar
     Pikabu.prototype.setHeights = function() {
 
-        var windowHeight = $(window).height();
-        var sidebarHeight = 0 || this.activeSidebar && this.$sidebars[this.activeSidebar][0].scrollHeight;
-        var contentHeight = this.$element[0].scrollHeight;
-        var maxHeight = Math.max(windowHeight, contentHeight);
+        // We use outerHeight for newer Androids running Chrome, because Chrome sometimes 
+        // hides the address bar, changing the height. 
+        var windowHeight = this.device.isNewChrome ? window.outerHeight : $(window).height();
+
+        var $sidebar = this.activeSidebar && this.$sidebars[this.activeSidebar];
+        var sidebarHeight = $sidebar.removeAttr('style')[0].scrollHeight;
+        var maxHeight = Math.max(windowHeight, sidebarHeight);
 
         if(this.device.hasOverflowScrollingTouch) {
             // Lock viewport for devices that have overflow-scrolling: touch, eg: iOS 5 devices
-            this.$children.height(windowHeight);
-            this.$viewport.height(windowHeight);
-        } else {
-            // Set viewport to tallest element height
+            $sidebar.height(windowHeight);
+            
+            this.$element.height(windowHeight);
             this.$viewport.height(windowHeight);
             this.$overlay.height(windowHeight);
-            this.$element.height(windowHeight);
+
+        } else {
+            // Set viewport to sidebar height or window height - whichever is greater, so that the 
+            // whole document scrolls revealing contents of the sidebar
+            $sidebar.height(maxHeight);
+
+            this.$viewport.height(maxHeight);
+            this.$overlay.height(maxHeight);
+            this.$element.height(maxHeight);
         }
     };
 

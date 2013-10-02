@@ -22,7 +22,6 @@ $animation: true !default; // Set to false if you don't want transitions
     position: absolute;
 
     top: 0;
-    bottom: 0;
 
     overflow: auto;
     display: block;
@@ -82,7 +81,6 @@ $animation: true !default; // Set to false if you don't want transitions
         z-index: 30;
 
         display: block;
-        height: 100%;
         width: 100%;
 
         cursor: pointer;
