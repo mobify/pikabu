@@ -28,7 +28,7 @@
         }
         /* Used to add extra height to elements for demo purposes */
         .m-dummy-height {
-            padding-bottom: 500px;
+            height: 500px;
         }
         </style>
     </head>
@@ -111,9 +111,9 @@
                     $('.is-active').removeClass('is-active');
                     $link.parents('li').addClass('is-active');
 
-                    $('.m-pikabu-container, .m-pikabu-sidebar').removeClass('m-dummy-height');
+                    $('.m-dummy-height').remove();
 
-                    target && $(target).addClass('m-dummy-height');
+                    target && $(target).append($('<div class="m-dummy-height">'));
 
                     pikabu.closeSidebars();
                     setTimeout(function() {
