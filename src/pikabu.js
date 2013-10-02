@@ -501,7 +501,8 @@
         var windowHeight = $(window).height();
         var $sidebar = this.activeSidebar && this.$sidebars[this.activeSidebar];
         var sidebarHeight = $sidebar.removeAttr('style')[0].scrollHeight;
-        var minHeight = Math.max(windowHeight, sidebarHeight);
+        var maxHeight = Math.max(windowHeight, sidebarHeight);
+
 
         if(this.device.hasOverflowScrollingTouch) {
             // Lock viewport for devices that have overflow-scrolling: touch, eg: iOS 5 devices
@@ -514,11 +515,11 @@
         } else {
             // Set viewport to sidebar height or window height - whichever is greater, so that the 
             // whole document scrolls revealing contents of the sidebar
-            $sidebar.height(minHeight);
+            $sidebar.height(maxHeight);
 
-            this.$viewport.height(minHeight);
-            this.$overlay.height(minHeight);
-            this.$element.height(minHeight);
+            this.$viewport.height(maxHeight);
+            this.$overlay.height(maxHeight);
+            this.$element.height(maxHeight);
         }
     };
 
