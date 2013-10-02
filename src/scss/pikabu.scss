@@ -2,8 +2,8 @@
 @import "compass/css3";
 
 // <TODO>: Make these javascript settings
-$leftSidebarWidth: 300px !default; // Width of the left sidebar
-$rightSidebarWidth: 300px !default; // Width of the right sidebar
+$leftSidebarWidth: 80% !default; // Width of the left sidebar
+$rightSidebarWidth: 80% !default; // Width of the right sidebar
 $animation: true !default; // Set to false if you don't want transitions
 
 .m-pikabu-viewport {
