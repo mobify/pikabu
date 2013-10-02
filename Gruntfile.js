@@ -102,5 +102,5 @@ module.exports = function(grunt) {
     grunt.registerTask('release', ['build', 'shell:tagRelease', 's3']);
     grunt.registerTask('default', 'build');
     grunt.registerTask('serve', ['connect:server:keepalive']);
-    grunt.registerTask('test', ['qunit']);
+    grunt.registerTask('test', ['connect', 'qunit']);
 };
