@@ -338,16 +338,12 @@
 
     // Styles that aren't deleted when the sidebars are closed
     Pikabu.prototype.applyPersistentStyles = function() {
-        var windowHeight = $(window).height();
         var bothSidebars = this.settings.selectors['common'] + ', \n' + 
             this.settings.selectors['element'];
         var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + this.settings.selectors['left'];
         var rightSidebarSelector = '.' + this.rightVisibleClass + ' ' + this.settings.selectors['right'];
         var styles = '<style>\n' + 
                 bothSidebars + ' {\n' + 
-
-                    'min-height: ' + windowHeight + 'px;\n' +
-
                     '-webkit-transition: -webkit-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
                     '-moz-transition: -moz-transform '+ this.settings.transitionSpeed + 's ease-in;\n' + 
                     '-ms-transition: -ms-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
