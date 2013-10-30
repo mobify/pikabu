@@ -1,6 +1,6 @@
 {
   "name": "mobify-pikabu",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "A module for creating off-canvas flyouts",
   "devDependencies": {
     "grunt": "~0.4.x",
