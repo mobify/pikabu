@@ -276,6 +276,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // Hide sidebars by default
         this.$sidebars['left'].addClass('m-pikabu-hidden');
+        this.$sidebars['right'].addClass('m-pikabu-hidden');
 
         // Assign it back to the instance
         this.settings = settings;
@@ -450,6 +451,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         this.$element.css('marginBottom', '');
 
         this.$sidebars['left'].addClass('m-pikabu-hidden');
+        this.$sidebars['right'].addClass('m-pikabu-hidden');
 
         // Mark both sidebars as closed
         this.activeSidebar = null;
