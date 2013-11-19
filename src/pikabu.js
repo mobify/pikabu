@@ -314,6 +314,11 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Recalculate heights and width of viewport on size/orientation change
         $(window).on('resize orientationchange', function() {
             var windowHeight = $(window).height();
+            // Always set viewport width on legacy Android
+            if (_this.device.isLegacyAndroid) {
+                _this.setViewportWidth();
+            }
+
             // Only do something if a sidebar is active
             if(_this.activeSidebar) {
                 // Set dimensions of elements
