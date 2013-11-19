@@ -349,28 +349,6 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
     // Styles that aren't deleted when the sidebars are closed
     Pikabu.prototype.applyPersistentStyles = function() {
-        var bothSidebars = this.settings.selectors['common'] + ', \n' + 
-            this.settings.selectors['element'];
-        var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + this.settings.selectors['left'];
-        var rightSidebarSelector = '.' + this.rightVisibleClass + ' ' + this.settings.selectors['right'];
-        var styles = '<style>\n' + 
-                bothSidebars + ' {\n' + 
-                    '-webkit-transition: -webkit-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
-                    '-moz-transition: -moz-transform '+ this.settings.transitionSpeed + 's ease-in;\n' + 
-                    '-ms-transition: -ms-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
-                    '-o-transition: -o-transform ' + this.settings.transitionSpeed +'s ease-in;\n' +
-                    'transition: transform ' + this.settings.transitionSpeed +'s ease-in;\n' +
-                '}\n' + 
-                leftSidebarSelector + ' {\n' +
-                    '\twidth: ' + this.settings.widths['left'] + ';\n' +
-                '}\n' + 
-                rightSidebarSelector + ' {\n' + 
-                    '\twidth: ' + this.settings.widths['right'] + ';\n' +
-                    '}' +
-                '</style>';
-
-        // Add styles to document
-        this.$document.find('head').append(styles);
     }
 
     // Styles applied when sidebars are opened
@@ -391,13 +369,6 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
                             '\t-ms-transform: translate3d(' + transform + ', 0, 0);\n' + 
                             '\t-o-transform: translate3d(' + transform + ', 0, 0);\n' +
                             '\ttransform: translate3d(' + transform + ', 0, 0);\n' + 
-                        '}\n' +
-                        this.settings.selectors[sidebar] + ' {\n' + 
-                        '\t-webkit-transform: translate3d(0, 0, 0);\n' + 
-                        '\t-moz-transform: translate3d(0, 0, 0);\n' + 
-                        '\t-ms-transform: translate3d(0, 0, 0);\n' + 
-                        '\t-o-transform: translate3d(0, 0, 0);\n' + 
-                        '\ttransform: translate3d(0, 0, 0);\n' + 
                         '}' +
                     '</style>';
 

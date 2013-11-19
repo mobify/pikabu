@@ -22,6 +22,7 @@ $animation: true !default; // Set to false if you don't want transitions
     position: absolute;
 
     top: 0;
+    z-index: 1;
 
     overflow: auto;
     display: block;
@@ -31,27 +32,19 @@ $animation: true !default; // Set to false if you don't want transitions
     right: 0;
 
     width: $rightSidebarWidth;
-
-    @include translate3d(100%, 0, 0);
-
-    .m-pikabu-right-visible & {
-        @include translate3d(0, 0, 0);
-    }
 }
 
 .m-pikabu-left {
     width: $leftSidebarWidth;
-
-    @include translate3d(-100%, 0, 0);
-
-    .m-pikabu-left-visible & {
-        @include translate3d(0, 0, 0);
-    }
 }
 
 .m-pikabu-container {
     width: 100%;
     @include backface-visibility(hidden);
+    position: relative;
+    
+    top: 0;
+    z-index: 2;
 
     .m-pikabu-left-visible & {
         @include translate3d($leftSidebarWidth, 0, 0);
@@ -60,11 +53,15 @@ $animation: true !default; // Set to false if you don't want transitions
     .m-pikabu-right-visible & {
          @include translate3d(-$rightSidebarWidth, 0, 0);
     }
+
+    .m-pikabu-left-visible &,
+    .m-pikabu-right-visible & {
+        position: absolute;
+    }
 }
 
 @if $animation == true {
-    .m-pikabu-container,
-    .m-pikabu-sidebar {
+    .m-pikabu-container {
         @include transition(
             transform 0.2s ease-in
         );
