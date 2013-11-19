@@ -63,7 +63,7 @@ $animation: true !default; // Set to false if you don't want transitions
 @if $animation == true {
     .m-pikabu-container {
         @include transition(
-            transform 0.2s ease-in
+            transform 0.2s ease-in-out
         );
     }
 }
