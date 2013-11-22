@@ -498,7 +498,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // Android 2.3.3 is not getting the correct portrait width
         if(this.device.isLegacyAndroid && orientation == 0) {
-            width = Math.max(this.device.height, this.device.width);
+            width = Math.min(this.device.height, this.device.width);
         }
 
         this.$viewport.css('width', width);
