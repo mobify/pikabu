@@ -5,3 +5,5 @@ localConfig.json
 node_modules/
 src/*.css
 build/
+
+tests/*.css

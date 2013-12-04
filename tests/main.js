@@ -89,7 +89,7 @@
                 // Verify that sidebar opens
                 setTimeout(function() {
                     var visible = pikabuTest.$sidebars[role].is(':visible');
-                    equal(visible, true, role + " sidebar not opening on     clicking toggle");
+                    equal(visible, true, role + " sidebar not opening on clicking toggle");
                     start(); // Resume tests
                 });
 
@@ -97,8 +97,7 @@
                 stop();
                 pikabuTest.$overlay.trigger('click'); // Close sidebar
                 setTimeout(function() {
-                    var visible = pikabuTest.$sidebars[role].is(':visible');
-                    equal(visible, false, role + " sidebar visible after clicking on overlay");
+                    equal(pikabuTest.activeSidebar, null, role + " sidebar visible after clicking on overlay");
                     start(); // Resume tests
                 }, 500);
 

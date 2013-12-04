@@ -34,9 +34,9 @@
     </head>
     <body>
         <!-- the viewport -->
-        <div class="m-pikabu-viewport">
+        <div class="pikabu-viewport">
             <!-- the left sidebar -->
-            <div class="m-pikabu-sidebar m-pikabu-left">
+            <div class="pikabu-sidebar pikabu-sidebar--left">
                 <!-- left sidebar content -->
                 <h2>Left</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
@@ -58,11 +58,11 @@
                 <p><a href="#">Link</a></p>
             </div>
             <!-- the main page content -->
-            <div class="m-pikabu-container">
+            <div class="pikabu-container">
                 <header>
-                    <a class="m-pikabu-nav-toggle" data-role="left">Left Menu</a>
+                    <a class="pikabu-nav-toggle" data-role="left">Left Menu</a>
                     <h1>Pikabu</h1>
-                    <a class="m-pikabu-nav-toggle" data-role="right">Right Menu</a>
+                    <a class="pikabu-nav-toggle" data-role="right">Right Menu</a>
                 </header>
                 <section>
                     <!-- Body content goes in here -->
@@ -75,7 +75,7 @@
                 </section>
             </div>
             <!-- the right sidebar -->
-            <div class="m-pikabu-sidebar m-pikabu-right">
+            <div class="pikabu-sidebar pikabu-sidebar--right">
                 <!-- right sidebar content -->
                 <h2>Height Demos</h2>
                 <p>Here's what Pikabu looks with content of differing heights:</p>
@@ -84,10 +84,10 @@
                         <a href="#" data-target="">Layout Demo 1: Default</a>
                     </li>
                     <li>
-                        <a href="#" data-target=".m-pikabu-container">Layout Demo 2: Taller content</a>
+                        <a href="#" data-target=".pikabu-container">Layout Demo 2: Taller content</a>
                     </li>
                     <li>
-                        <a href="#" data-target=".m-pikabu-left">Layout 3: Taller Sidebar</a>
+                        <a href="#" data-target=".pikabu-sidebar--left">Layout 3: Taller Sidebar</a>
                     </li>
                 </ul>
             </div>
@@ -114,11 +114,6 @@
                     $('.m-dummy-height').remove();
 
                     target && $(target).append($('<div class="m-dummy-height">'));
-
-                    pikabu.closeSidebars();
-                    setTimeout(function() {
-                        pikabu.openSidebar('left');
-                    }, 1000);
                 });
 
                 /*

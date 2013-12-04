@@ -6,7 +6,7 @@ $leftSidebarWidth: 80% !default; // Width of the left sidebar
 $rightSidebarWidth: 80% !default; // Width of the right sidebar
 $animation: true !default; // Set to false if you don't want transitions
 
-.m-pikabu-viewport {
+.pikabu-viewport {
     position: relative;
 
     overflow: hidden;
@@ -18,7 +18,7 @@ $animation: true !default; // Set to false if you don't want transitions
     @include backface-visibility(hidden);
 }
 
-.m-pikabu-sidebar {
+.pikabu-sidebar {
     position: absolute;
 
     top: 0;
@@ -27,55 +27,55 @@ $animation: true !default; // Set to false if you don't want transitions
     display: block;
 }
 
-.m-pikabu-right {
+.pikabu-sidebar--right {
     right: 0;
 
     width: $rightSidebarWidth;
 
     @include translate3d(100%, 0, 0);
 
-    .m-pikabu-right-visible & {
+    .pikabu-sidebar--right-visible & {
         @include translate3d(0, 0, 0);
     }
 }
 
-.m-pikabu-left {
+.pikabu-sidebar--left {
     width: $leftSidebarWidth;
 
     @include translate3d(-100%, 0, 0);
 
-    .m-pikabu-left-visible & {
+    .pikabu-sidebar--left-visible & {
         @include translate3d(0, 0, 0);
     }
 }
 
-.m-pikabu-container {
+.pikabu-container {
     width: 100%;
     @include backface-visibility(hidden);
 
-    .m-pikabu-left-visible & {
+    .pikabu--left-sidebar-visible & {
         @include translate3d($leftSidebarWidth, 0, 0);
     }
 
-    .m-pikabu-right-visible & {
+    .pikabu--right-sidebar-visible & {
          @include translate3d(-$rightSidebarWidth, 0, 0);
     }
 }
 
 @if $animation == true {
-    .m-pikabu-container,
-    .m-pikabu-sidebar {
+    .pikabu-container,
+    .pikabu-sidebar {
         @include transition(
             transform 0.2s ease-in
         );
     }
 }
 
-.m-pikabu-overlay {
+.pikabu-overlay {
     display: none;
 
-    .m-pikabu-left-visible &,
-    .m-pikabu-right-visible & {
+    .pikabu--left-sidebar-visible &,
+    .pikabu--right-sidebar-visible & {
         position: absolute;
         top: 0;
         z-index: 30;
@@ -87,11 +87,11 @@ $animation: true !default; // Set to false if you don't want transitions
     }
 }
 
-.m-pikabu-hidden {
+.pikabu-sidebar--is-hidden {
     display: none;
 }
 
 // Scrolling
-.m-pikabu-overflow-touch {
+.pikabu--has-overflow-touch {
     -webkit-overflow-scrolling: touch;
 }
