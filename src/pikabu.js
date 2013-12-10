@@ -247,7 +247,13 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         this.markDeviceCharacteristics();
 
         // Set any custom options
-        $.extend(true, settings, options);
+        // We don't use deep copy, because Mobify.$ uses an old copy of
+        // Zepto, which doesn't have deep copy
+        options && $.each(options, function(key, value) {
+            $.extend(settings[key], value);
+        });
+
+        $.extend(settings, options);
 
         // Set up elements
         this.$viewport = $(this.settings.viewportSelector);
