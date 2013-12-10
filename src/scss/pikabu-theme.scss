@@ -85,6 +85,7 @@ header h1 {
 
 .pikabu-nav-toggle {
     position: relative;
+    @include backface-visibility(hidden);
     float: left;
 
     display: block;
