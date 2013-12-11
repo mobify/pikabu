@@ -162,10 +162,10 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
             // Overridable settings
             settings: {
-                // Main Pikabu viewport
-                viewportSelector: '.pikabu-viewport',
                 // The sidebar content containers
                 selectors: {
+                    // Main Pikabu viewport
+                    viewportSelector: '.pikabu-viewport',
                     // The main content container
                     element: '.pikabu-container',
                     // Sidebars
@@ -247,16 +247,16 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         this.markDeviceCharacteristics();
 
         // Set any custom options
-        // We don't use deep copy, because Mobify.$ uses an old copy of
+        $.extend(settings, options);
+
+        // We can't use deep copy, because Mobify.$ uses an old copy of
         // Zepto, which doesn't have deep copy
         options && $.each(options, function(key, value) {
             $.extend(settings[key], value);
         });
 
-        $.extend(settings, options);
-
         // Set up elements
-        this.$viewport = $(this.settings.viewportSelector);
+        this.$viewport = $(settings.selectors['viewportSelector']);
         this.$element = $(settings.selectors['element']);
         this.$sidebars = {
             left: $(settings.selectors['left']),
