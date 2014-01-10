@@ -41,31 +41,31 @@ Once you've created the pikabu instance as shown above,
 you can use it elsewhere like this:
 
     
-    $('.pikabu').pikabu({
+    $('m-pikabu').pikabu({
         viewportSelector: '.pikabu-viewport'
     });
 
 ## Basic HTML
 Pikabu assumes a containing viewport, one or two sidebars and a 
 main content container. By default these are prefixed with
-'pikabu-', but you can easily set your own classes.
+'m-pikabu-', but you can easily set your own classes.
 
     <!-- the viewport -->
-    <div class="pikabu-viewport">
+    <div class="m-pikabu-viewport">
         <!-- the left sidebar -->
-        <div class="pikabu-sidebar pikabu-sidebar--left">
+        <div class="m-pikabu-sidebar m-pikabu-left">
             <!-- left sidebar content -->
             <h2>Left Sidebar Content</h2>
         </div>
         
         <!-- the main page content -->
-        <div class="pikabu-container">
+        <div class="m-pikabu-container">
             <header>
-                <a class="pikabu-nav-toggle" data-role="left">
+                <a class="m-pikabu-nav-toggle" data-role="left">
                     Left Menu
                 </a>
                 <h1>Pikabu</h1>
-                <a class="pikabu-nav-toggle" data-role="right">
+                <a class="m-pikabu-nav-toggle" data-role="right">
                     Right Menu
                 </a>
             </header>
@@ -84,7 +84,7 @@ main content container. By default these are prefixed with
         </div>
         
         <!-- the right sidebar -->
-        <div class="pikabu-sidebar pikabu-sidebar--right">
+        <div class="m-pikabu-sidebar m-pikabu-right">
             <!-- right sidebar content -->
             Right 
         </div>
@@ -102,15 +102,15 @@ stylesheets as well.
     pikabu = new Pikabu({
         viewportSelector: [viewport-selector],
         selectors: {
-            element: '.pikabu-container',
+            element: '.m-pikabu-container',
             // Sidebars
-            common: '.pikabu-sidebar',
-            left: '.pikabu-sidebar--left',
-            right: '.pikabu-sidebar--right',
+            common: '.m-pikabu-sidebar',
+            left: '.m-pikabu-left',
+            right: '.m-pikabu-right',
             // Click-to-close overlay
-            overlay: '.pikabu-overlay',
+            overlay: '.m-pikabu-overlay',
             // Controls that trigger the sidebar
-            navToggles: '.pikabu-nav-toggle'
+            navToggles: '.m-pikabu-nav-toggle'
         }
     }
 

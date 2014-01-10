@@ -4,20 +4,20 @@
 
 // Extend Pikabu functionality to renamed classes
 .test-viewport {
-	@extend .pikabu-viewport;
+	@extend .m-pikabu-viewport;
 }
 .test-sidebar {
-	@extend .pikabu-sidebar;
+	@extend .m-pikabu-sidebar;
 }
 .test-sidebar-left {
-	@extend .pikabu-sidebar--left;
+	@extend .m-pikabu-left;
 }
 .test-sidebar-right {
-	@extend .pikabu-sidebar--right;
+	@extend .m-pikabu-right;
 }
 .test-container {
-	@extend .pikabu-container;
+	@extend .m-pikabu-container;
 }
 .nav-toggle {
-	@extend .pikabu-nav-toggle;
+	@extend .m-pikabu-nav-toggle;
 }

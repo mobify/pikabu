@@ -156,9 +156,9 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         var self = $.extend(this, {
             $document: $('html'),
-            leftVisibleClass: 'pikabu--left-sidebar-visible',
-            rightVisibleClass: 'pikabu--right-sidebar-visible',
-            activePikabuStylesSelector: '#pikabu-styles',
+            leftVisibleClass: 'm-pikabu-left-visible',
+            rightVisibleClass: 'm-pikabu-right-visible',
+            activePikabuStylesSelector: '#m-pikabu-styles',
 
             // Overridable settings
             settings: {
@@ -167,15 +167,15 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
                     // Main Pikabu viewport
                     viewportSelector: '.pikabu-viewport',
                     // The main content container
-                    element: '.pikabu-container',
+                    element: '.m-pikabu-container',
                     // Sidebars
-                    common: '.pikabu-sidebar',
-                    left: '.pikabu-sidebar--left',
-                    right: '.pikabu-sidebar--right',
+                    common: '.m-pikabu-sidebar',
+                    left: '.m-pikabu-left',
+                    right: '.m-pikabu-right',
                     // Click-to-close overlay
-                    overlay: '.pikabu-overlay',
+                    overlay: '.m-pikabu-overlay',
                     // Controls that trigger the sidebar
-                    navToggles: '.pikabu-nav-toggle'
+                    navToggles: '.m-pikabu-nav-toggle'
                 },
 
                 widths: {
@@ -281,7 +281,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         this.bindEvents();
 
         // Hide sidebars by default
-        this.$sidebars['left'].addClass('pikabu-sidebar--is-hidden');
+        this.$sidebars['left'].addClass('m-pikabu-hidden');
 
         // Assign it back to the instance
         this.settings = settings;
@@ -335,16 +335,16 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         var classesToApply = '';
 
         if (this.device.hasOverflowScrollingTouch) {
-            classesToApply = 'pikabu--has-overflow-scrolling';
+            classesToApply = 'm-pikabu-overflow-scrolling';
         } 
         if (this.device.isLegacyAndroid) {
-            classesToApply += ' pikabu--is-legacy-android';
+            classesToApply += ' m-pikabu-legacy-android';
         }
         if (this.device.supportsTransitions) {
-            classesToApply += ' pikabu--has-transitions';
+            classesToApply += ' m-pikabu-transitions';
         }
         if (this.device.has3d) {
-            classesToApply += ' pikabu--has-translate3d';
+            classesToApply += ' m-pikabu-translate3d';
         }
 
         this.$document.addClass(classesToApply);
@@ -414,14 +414,14 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Store scroll offset for later use
         this.scrollOffset = window.pageYOffset;
 
-        this.$sidebars[target].removeClass('pikabu-sidebar--is-hidden');
+        this.$sidebars[target].removeClass('m-pikabu-hidden');
 
         // Mark the chosen sidebar as being open
         this.activeSidebar = target;
 
         // Add support classes
-        this.$sidebars[target].addClass('pikabu--has-overflow-touch');
-        this.$document.addClass('pikabu--' + target + '-sidebar-visible');
+        this.$sidebars[target].addClass('m-pikabu-overflow-touch');
+        this.$document.addClass('m-pikabu-' + target + '-visible');
 
         // Set dimensions of elements
         this.setHeights();
@@ -438,7 +438,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
     // Reset sidebar classes on closing
     Pikabu.prototype.resetSidebar = function($sidebar) {
         
-        $sidebar.removeClass('pikabu--has-overflow-touch');
+        $sidebar.removeClass('m-pikabu-overflow-touch');
 
         // <TODO> Check to make sure this works
         this.$viewport.css('height', 'auto');
@@ -454,7 +454,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // recalculate the height of this container
         this.$element.css('marginBottom', '');
 
-        this.$sidebars['left'].addClass('pikabu-sidebar--is-hidden');
+        this.$sidebars['left'].addClass('m-pikabu-hidden');
 
         // Mark both sidebars as closed
         this.activeSidebar = null;
