@@ -319,6 +319,15 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Recalculate heights and width of viewport on size/orientation change
         $(window).on('resize orientationchange', function() {
             var windowHeight = $(window).height();
+
+            // Fix for https://github.com/mobify/pikabu/issues/14
+            // iOS6 and below don't get their heights calculated correctly on
+            // orientationchange. We toggle this property off and on to
+            // restore correct height
+            this.$document
+                .toggleClass('m-pikabu-overflow-touch')
+                .toggleClass('m-pikabu-overflow-touch');
+
             // Only do something if a sidebar is active
             if(_this.activeSidebar) {
                 // Set dimensions of elements
