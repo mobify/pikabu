@@ -1,17 +1,11 @@
 (function($) {
 
     // Markers for events
-    var initMarker = false, openedMarker = false, closedMarker = false;
-    // Set up settings for Pikabu object specified in tests/index.html
-    var settings = {
-        viewportSelector: '.test-viewport',
-        selectors: {
-            element: '.test-container',
-            common: '.test-sidebar',
-            left: '.test-sidebar-left',
-            right: '.test-sidebar-right',
-            navToggles: '.nav-toggle'
-        },
+    var initMarker = false,
+        openedMarker = false,
+        closedMarker = false;
+
+    var pikabuTest = $('#mainPikabu').pikabu({
         onInit: function() {
             initMarker = true;
         },
@@ -21,13 +15,10 @@
         onClosed: function() {
             closedMarker = true;
         }
-    };
-    var pikabuTest = new Pikabu(settings);
+    }).data('pikabu');
 
     // Test fixture variables
     var windowWidth = $(window).width();
-    var windowHeight = $(window).height();
-    var documentHeight = $(document).height();
     var responsiveBreakpoint = 768; // (in px) We always show sidebar beyond this breakpoint
     // Error messages for sidebar visibility tests according to screensize
     var visibilityErrors = {
@@ -50,7 +41,7 @@
     // Object creation tests
     test('Pikabu initialization tests', function() {
         // Object created successfully
-        equal(true, pikabuTest instanceof Pikabu,  'Pikabu not initialized');
+        equal(true, pikabuTest instanceof $.fn.pikabu.Constructor,  'Pikabu not initialized');
     });
 
     test('Pikabu sidebars visibility on initial state', function() {
