@@ -20,8 +20,6 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
     var Pikabu = function(element, options) {
         this.init(element, options);
-
-        return this;
     };
 
     Pikabu.DEFAULTS = {
