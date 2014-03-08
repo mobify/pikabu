@@ -74,7 +74,6 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // Bind Pikabu events and event handlers
         this.bindHandlers();
-        this.bindEvents();
 
         // Hide sidebars by default
         this.$sidebars.left.addClass('m-pikabu-hidden');
@@ -83,16 +82,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Set initial width
         this.setViewportWidth();
 
-        this.$element.trigger('pikabu:initialized');
-    };
-
-    Pikabu.prototype.bindEvents = function() {
-        this.$element
-            .on('pikabu:initialized', this.options.initialized)
-            .on('pikabu:beforeOpened', this.options.beforeOpened)
-            .on('pikabu:afterOpened', this.options.afterOpened)
-            .on('pikabu:beforeClosed', this.options.beforeClosed)
-            .on('pikabu:afterClosed', this.options.afterClosed);
+        this._trigger('initialized');
     };
 
     Pikabu.prototype.bindHandlers = function() {
@@ -102,7 +92,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Shows sidebar on clicking/tapping nav toggles
         this.$navToggles.on('pikabu:click', function(e) {
             e.stopPropagation();
-            pikabu.openSidebar($(this).attr('data-role'));
+            pikabu.openSidebar($(this));
         });
 
         // Closes sidebar on clicking/tapping overlay
@@ -221,35 +211,37 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         this.$document.find('head').append(styles);
     };
 
-    Pikabu.prototype.openSidebar = function(target) {
-        this.$element.trigger('pikabu:beforeOpened');
+    Pikabu.prototype.openSidebar = function($sidebar) {
+        var role = $sidebar.attr('data-role');
+
+        this._trigger('beforeOpened', {sidebar: $sidebar});
 
         // Store scroll offset for later use
         this.scrollOffset = window.pageYOffset;
 
-        this.$sidebars[target].removeClass('m-pikabu-hidden');
+        $sidebar.removeClass('m-pikabu-hidden');
 
         // Mark the chosen sidebar as being open
-        this.activeSidebar = target;
+        this.activeSidebar = role;
 
         // Add support classes
-        this.$sidebars[target].addClass('m-pikabu-overflow-touch');
-        this.$document.addClass('m-pikabu-' + target + '-visible');
+        $sidebar.addClass('m-pikabu-overflow-touch');
+        this.$document.addClass('m-pikabu-' + role + '-visible');
 
         // Set dimensions of elements
         this.recalculateHeights();
         this.setViewportWidth();
 
-        this.applyTransformations(target);
+        this.applyTransformations(role);
 
         // Scroll to the top of the sidebar
         this.scrollTo(0);
 
-        this.$element.trigger('pikabu:afterOpened');
+        this._trigger('afterOpened', {sidebar: $sidebar});
     };
 
     Pikabu.prototype.resetSidebar = function($sidebar) {
-        this.$element.trigger('pikabu:beforeClosed');
+        this._trigger('beforeClosed', {sidebar: $sidebar});
 
         $sidebar.removeClass('m-pikabu-overflow-touch');
 
@@ -272,7 +264,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Mark both sidebars as closed
         this.activeSidebar = null;
 
-        this.$element.trigger('pikabu:afterClosed');
+        this._trigger('afterClosed', {sidebar: $sidebar});
     };
 
     Pikabu.prototype.closeSidebars = function() {
@@ -347,6 +339,10 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
             this.$overlay.height(maxHeight);
             this.$element.height(maxHeight);
         }
+    };
+
+    Pikabu.prototype._trigger = function(eventName, data) {
+        this.options[eventName].call(this, $.Event('pikabu:' + eventName, { bubbles: false }), data);
     };
 
     // PIKABU PLUGIN

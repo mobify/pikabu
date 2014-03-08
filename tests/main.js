@@ -5,11 +5,13 @@
         beforeOpenedCalled = false,
         afterOpenedCalled = false,
         beforeClosedCalled = false,
-        afterClosedCalled = false;
+        afterClosedCalled = false,
+        initializedEventName;
 
     var pikabuTest = $('#mainPikabu').pikabu({
-        initialized: function() {
+        initialized: function(e) {
             initializedCalled = true;
+            initializedEventName = e.type;
         },
         beforeOpened: function() {
             beforeOpenedCalled = true;
@@ -50,6 +52,7 @@
     test('Pikabu initialization event called', function() {
         // Confirm events work
         equal(initializedCalled, true, "Pikabu initialization event called successfully");
+        equal(initializedEventName, 'pikabu:initialized', "Pikabu initialization event name is correct");
     });
 
 
