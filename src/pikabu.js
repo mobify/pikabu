@@ -37,11 +37,11 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         transitionSpeed: 0.2,
         scrollDuration: 200,
 
-        'initialized': noop,
-        'beforeOpened': noop,
-        'afterOpened': noop,
-        'beforeClosed': noop,
-        'afterClosed': noop
+        initialized: noop,
+        beforeOpened: noop,
+        afterOpened: noop,
+        beforeClosed: noop,
+        afterClosed: noop
     };
 
     Pikabu.prototype.init = function(element, options) {
