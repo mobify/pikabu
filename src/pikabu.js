@@ -173,10 +173,10 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
             'transition: transform ' + this.options.transitionSpeed + 's ease-in;\n' +
             '}\n' +
             leftSidebarSelector + ' {\n' +
-            '\twidth: ' + this.options.widths['left'] + ';\n' +
+            '\twidth: ' + this.options.widths.left + ';\n' +
             '}\n' +
             rightSidebarSelector + ' {\n' +
-            '\twidth: ' + this.options.widths['right'] + ';\n' +
+            '\twidth: ' + this.options.widths.right + ';\n' +
             '}' +
             '</style>';
 
@@ -189,7 +189,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
             transform = sidebar === 'left' ? width : '-' + width;
 
         var styles = '<style id="' + this.options.activePikabuStylesSelector.slice(1) + '">\n' +
-            selectors['element'] + ' {\n' +
+            selectors.element + ' {\n' +
             '\t-webkit-transform: translate3d(' + transform + ', 0, 0);\n' +
             '\t-moz-transform: translate3d(' + transform + ', 0, 0);\n' +
             '\t-ms-transform: translate3d(' + transform + ', 0, 0);\n' +
@@ -302,7 +302,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         var width = 'auto';
 
         // Android 2.3.3 is not getting the correct portrait width
-        if (this.device.isLegacyAndroid && orientation == 0) {
+        if (this.device.isLegacyAndroid && orientation === 0) {
             width = Math.max(this.device.height, this.device.width);
         }
 
@@ -357,7 +357,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
             if (typeof option == 'string') {
                 data[option].call($this);
             }
-        })
+        });
     };
 
     $.fn.pikabu.Constructor = Pikabu;
