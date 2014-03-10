@@ -8,8 +8,8 @@
         <script src="../libs/qunit/qunit.js"></script>
     
         <!-- Pikabu -->
-        <link rel="stylesheet" href="../src/pikabu.css">
-        <link rel="stylesheet" href="../src/pikabu-theme.css">
+        <link rel="stylesheet" href="../build/pikabu.css">
+        <link rel="stylesheet" href="../build/pikabu-theme.css">
 
         <link rel="stylesheet" href="test-theme.css">
 
@@ -21,16 +21,16 @@
         <div id="qunit"></div>
         <div id="qunit-fixture"></div>
 
-        <div class="test-viewport">
-            <div class="test-sidebar test-sidebar-left">Left</div>
-            <div class="test-container">
-                <a class="nav-toggle" data-role="left" href="#">Left Menu</a>
-                <a class="nav-toggle" data-role="right" href="#">Right Menu</a>
+        <div id="mainPikabu" class="m-pikabu-viewport">
+            <div class="m-pikabu-sidebar m-pikabu-left">Left</div>
+            <div class="m-pikabu-container">
+                <a class="m-pikabu-nav-toggle" data-role="left" href="#">Left Menu</a>
+                <a class="m-pikabu-nav-toggle" data-role="right" href="#">Right Menu</a>
                 <div class="contents">
                     Main Content
                 </div>
             </div>
-            <div class="test-sidebar test-sidebar-right">Right</div>
+            <div class="m-pikabu-sidebar m-pikabu-right">Right</div>
         </div>
 
         <div id="fixtures">

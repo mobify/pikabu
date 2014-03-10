@@ -3,7 +3,7 @@
   "version": "0.2.1",
   "description": "A module for creating off-canvas flyouts",
   "devDependencies": {
-    "grunt": "~0.4.x",
+    "grunt": "^0.4.3",
     "grunt-contrib-uglify": "~0.1.1",
     "grunt-contrib-compass": "0.4.0",
     "grunt-contrib-connect": "0.3.0",
@@ -12,7 +12,8 @@
     "grunt-s3": "~0.1.0",
     "grunt-shell": "~0.2.1",
     "grunt-zip": "~0.4.2",
-    "grunt-clean": "~0.4.0"
+    "grunt-clean": "~0.4.0",
+    "grunt-contrib-jshint": "^0.8.0"
   },
   "license": "MIT"
 }

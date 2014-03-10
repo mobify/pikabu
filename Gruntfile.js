@@ -80,6 +80,9 @@ module.exports = function(grunt) {
                 }
             ]
         },
+        jshint: {
+            all: ['src/**/*.js']
+        },
         qunit: {
             files: ['tests/**/*.html']
         }
@@ -96,6 +99,7 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-clean');
     grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-contrib-jshint');
 
     // Default task(s).
     grunt.registerTask('build', ['uglify', 'compass', 'zip', 'copy']);

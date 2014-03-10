@@ -1,33 +1,34 @@
 (function($) {
 
     // Markers for events
-    var initMarker = false, openedMarker = false, closedMarker = false;
-    // Set up settings for Pikabu object specified in tests/index.html
-    var settings = {
-        viewportSelector: '.test-viewport',
-        selectors: {
-            element: '.test-container',
-            common: '.test-sidebar',
-            left: '.test-sidebar-left',
-            right: '.test-sidebar-right',
-            navToggles: '.nav-toggle'
+    var initializedCalled = false,
+        beforeOpenedCalled = false,
+        afterOpenedCalled = false,
+        beforeClosedCalled = false,
+        afterClosedCalled = false,
+        initializedEventName;
+
+    var pikabuTest = $('#mainPikabu').pikabu({
+        initialized: function(e) {
+            initializedCalled = true;
+            initializedEventName = e.type;
         },
-        onInit: function() {
-            initMarker = true;
+        beforeOpened: function() {
+            beforeOpenedCalled = true;
         },
-        onOpened: function() {
-            openedMarker = true;
+        afterOpened: function() {
+            afterOpenedCalled = true;
         },
-        onClosed: function() {
-            closedMarker = true;
+        beforeClosed: function() {
+            beforeClosedCalled = true;
+        },
+        afterClosed: function() {
+            afterClosedCalled = true;
         }
-    };
-    var pikabuTest = new Pikabu(settings);
+    }).data('pikabu');
 
     // Test fixture variables
     var windowWidth = $(window).width();
-    var windowHeight = $(window).height();
-    var documentHeight = $(document).height();
     var responsiveBreakpoint = 768; // (in px) We always show sidebar beyond this breakpoint
     // Error messages for sidebar visibility tests according to screensize
     var visibilityErrors = {
@@ -42,15 +43,23 @@
     // ----------------------------------------------------------------
     //
     // jQuery / Mobify tests
-    test('Pikabu initialization tests', function() {
+    test('Pikabu selector library correctly assigned', function() {
         // Mobify.$ is corrected assigned to jQuery
-        equal(Mobify.$, jQuery,  'Mobify.$ is assigned to jQuery');
+        equal(Mobify.$, jQuery, 'Selector library is correctly assigned to Mobify.$');
     });
 
+
+    test('Pikabu initialization event called', function() {
+        // Confirm events work
+        equal(initializedCalled, true, "Pikabu initialization event called successfully");
+        equal(initializedEventName, 'pikabu:initialized', "Pikabu initialization event name is correct");
+    });
+
+
     // Object creation tests
-    test('Pikabu initialization tests', function() {
+    test('Pikabu instance created successfully', function() {
         // Object created successfully
-        equal(true, pikabuTest instanceof Pikabu,  'Pikabu not initialized');
+        equal(true, pikabuTest instanceof $.fn.pikabu.Constructor,  'Pikabu instance created');
     });
 
     test('Pikabu sidebars visibility on initial state', function() {
@@ -67,7 +76,7 @@
 
         equal(pikabuTest.$sidebars['left'].is(':visible') && 
             pikabuTest.$sidebars['right'].is(':visible'), true, 
-            "Pikabu sidebars aren't visible with JS disabled");
+            "Pikabu sidebars are visible with JS disabled");
 
         $('html').removeClass('no-js');
     });
@@ -84,21 +93,25 @@
                 var role = $el.data('role');
 
                 stop(); // Stop test until async operation completes
-                $el.trigger('click'); // Open sidebar
+                $el.trigger('pikabu:click'); // Open sidebar
 
                 // Verify that sidebar opens
                 setTimeout(function() {
                     var visible = pikabuTest.$sidebars[role].is(':visible');
-                    equal(visible, true, role + " sidebar not opening on     clicking toggle");
+                    equal(visible, true, role + " sidebar not opening on clicking toggle");
+                    equal(beforeOpenedCalled, true, role + " sidebar didn't trigger the beforeOpen event");
+                    equal(afterOpenedCalled, true, role + " sidebar didn't trigger the beforeOpen event");
                     start(); // Resume tests
                 });
 
                 // Verify that sidebar closes
                 stop();
-                pikabuTest.$overlay.trigger('click'); // Close sidebar
+                pikabuTest.$overlay.trigger('pikabu:click'); // Close sidebar
                 setTimeout(function() {
                     var visible = pikabuTest.$sidebars[role].is(':visible');
                     equal(visible, false, role + " sidebar visible after clicking on overlay");
+                    equal(beforeClosedCalled, true, role + " sidebar didn't trigger the beforeClose event");
+                    equal(afterClosedCalled, true, role + " sidebar didn't trigger the afterClose event");
                     start(); // Resume tests
                 }, 500);
 
@@ -110,10 +123,4 @@
         }
 
     });
-
-    test('Pikabu events', function() {
-        // Confirm events work
-        equal(initMarker, true, "Pikabu initialization event failed");
-    });
-
 })(jQuery);
