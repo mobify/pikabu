@@ -4,8 +4,8 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 ;(function($) {
 
     var selectors = {
+            pikabu: '.m-pikabu-container',
             viewport: '.m-pikabu-viewport',
-            element: '.m-pikabu-container',
             common: '.m-pikabu-sidebar',
             left: '.m-pikabu-left',
             right: '.m-pikabu-right',
@@ -49,7 +49,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         this.$document = $('html').removeClass('no-js');
         this.$viewport = $(element).addClass('m-pikabu-viewport');
-        this.$element = $(selectors.element);
+        this.$pikabu = $(selectors.pikabu);
         this.$sidebars = {
             left: $(selectors.left),
             right: $(selectors.right)
@@ -58,22 +58,19 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // Create overlay if it doesn't exist
         if (!$(selectors.overlay).length) {
-            this.$element
+            this.$pikabu
                 .prepend('<div class="' + selectors.overlay.slice(1) + '">');
         }
 
         this.$overlay = $(selectors.overlay);
 
         // Get device characteristics
-        this.device = Pikabu.prototype.device || deviceCharacteristics();
+        this.device = getDeviceCharacteristics();
         this.markDeviceCharacteristics();
-        // Add persistent styles for sidebars
-        this.applyPersistentStyles();
+        this.applyPersistentSidebarStyles();
 
-        // Bind Pikabu events and event handlers
         this.bindHandlers();
 
-        // Hide sidebars by default
         this.$sidebars.left.addClass('m-pikabu-hidden');
         this.$sidebars.right.addClass('m-pikabu-hidden');
 
@@ -87,14 +84,14 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         var pikabu = this;
 
-        // Shows sidebar on clicking/tapping nav toggles
-        this.$navToggles.on('pikabu:click', function(e) {
+        this.$navToggles.on('click', function(e) {
             e.stopPropagation();
-            pikabu.openSidebar($(this));
+
+            var role = $(this).data('role');
+            pikabu.openSidebar(pikabu.$sidebars[role], role);
         });
 
-        // Closes sidebar on clicking/tapping overlay
-        this.$overlay.on('pikabu:click', function(e) {
+        this.$overlay.on('click', function(e) {
             e.stopPropagation();
             pikabu.closeSidebars();
         });
@@ -159,7 +156,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         }
     };
 
-    Pikabu.prototype.applyPersistentStyles = function() {
+    Pikabu.prototype.applyPersistentSidebarStyles = function() {
         var bothSidebars = selectors.common + ', \n' +
             selectors.element;
         var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + selectors.left;
@@ -209,9 +206,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         this.$document.find('head').append(styles);
     };
 
-    Pikabu.prototype.openSidebar = function($sidebar) {
-        var role = $sidebar.attr('data-role');
-
+    Pikabu.prototype.openSidebar = function($sidebar, role) {
         this._trigger('beforeOpened', {sidebar: $sidebar});
 
         // Store scroll offset for later use
@@ -245,16 +240,16 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // <TODO> Check to make sure this works
         this.$viewport.css('height', '');
-        this.$element.css('height', '');
+        this.$pikabu.css('height', '');
 
         // add this arbitrary margin-bottom to force a reflow when we remove it
-        this.$element.css('marginBottom', 1);
+        this.$pikabu.css('marginBottom', 1);
 
         // Not sure why but we need a scrollTo here to get the reflow to work
         this.scrollTo(0);
 
         // Remove the unnecessary margin-bottom to force reflow and properly recalculate the height of this container
-        this.$element.css('marginBottom', '');
+        this.$pikabu.css('marginBottom', '');
 
         this.$sidebars.left.addClass('m-pikabu-hidden');
         this.$sidebars.right.addClass('m-pikabu-hidden');
@@ -270,20 +265,20 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         var pikabu = this;
 
         // Add class to body to indicate currently open sidebars
-        this.$document.removeClass(this.leftVisibleClass + ' ' + this.rightVisibleClass);
+        this.$document.removeClass(this.options.leftVisibleClass + ' ' + this.options.rightVisibleClass);
 
         // Reset viewport
         this.$viewport.css('width', 'auto');
 
         // Remove sidebar, container tranform styles
-        $(this.activePikabuStylesSelector).remove();
+        $(this.options.activePikabuStylesSelector).remove();
 
         // Check to see if CSS transitions are supported
         if (this.device.transitionEvent && this.activeSidebar) {
             // 1. Removing overflow-scrolling-touch causes a content flash
             // 2. Removing height too soon causes panel with content to be
             // not full height during animation, so we do these after the sidebar has closed
-            this.$element.one(this.device.transitionEvent, function(e) {
+            this.$pikabu.one(this.device.transitionEvent, function(e) {
                 pikabu.resetSidebar($(this));
 
                 // Scroll back to where we were before we opened the sidebar
@@ -324,7 +319,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
             // Lock viewport for devices that have overflow-scrolling: touch, eg: iOS 5 devices
             $sidebar.height(windowHeight);
 
-            this.$element.height(windowHeight);
+            this.$pikabu.height(windowHeight);
             this.$viewport.height(windowHeight);
             this.$overlay.height(windowHeight);
 
@@ -335,7 +330,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
             this.$viewport.height(maxHeight);
             this.$overlay.height(maxHeight);
-            this.$element.height(maxHeight);
+            this.$pikabu.height(maxHeight);
         }
     };
 
@@ -355,7 +350,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
                 $this.data('pikabu', (data = new Pikabu(this, option)));
             }
             if (typeof option == 'string') {
-                data[option].call($this);
+                data[option]();
             }
         });
     };
@@ -365,7 +360,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
     // DEVICE CHARACTERISTICS
     // =========================
 
-    function deviceCharacteristics() {
+    function getDeviceCharacteristics() {
 
         // Do we have overflow scrolling?
         function hasOverflowScrollingTouch() {
