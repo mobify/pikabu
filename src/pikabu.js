@@ -156,12 +156,12 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         var self = $.extend(this, {
             $document: $('html'),
-            leftVisibleClass: 'm-pikabu-left-visible',
-            rightVisibleClass: 'm-pikabu-right-visible',
             activePikabuStylesSelector: '#m-pikabu-styles',
 
             // Overridable settings
             settings: {
+                leftVisibleClass: 'm-pikabu-left-visible',
+                rightVisibleClass: 'm-pikabu-right-visible',
                 // The sidebar content containers
                 selectors: {
                     // Main Pikabu viewport
@@ -363,8 +363,8 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
     Pikabu.prototype.applyPersistentStyles = function() {
         var bothSidebars = this.settings.selectors['common'] + ', \n' + 
             this.settings.selectors['element'];
-        var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + this.settings.selectors['left'];
-        var rightSidebarSelector = '.' + this.rightVisibleClass + ' ' + this.settings.selectors['right'];
+        var leftSidebarSelector = '.' + this.settings.leftVisibleClass + ' ' + this.settings.selectors['left'];
+        var rightSidebarSelector = '.' + this.settings.rightVisibleClass + ' ' + this.settings.selectors['right'];
         var styles = '<style>\n' + 
                 bothSidebars + ' {\n' + 
                     '-webkit-transition: -webkit-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
@@ -430,7 +430,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // Add support classes
         this.$sidebars[target].addClass('m-pikabu-overflow-touch');
-        this.$document.addClass('m-pikabu-' + target + '-visible');
+        this.$document.addClass(this.settings[target + 'VisibleClass']);
 
         // Set dimensions of elements
         this.setHeights();
@@ -478,7 +478,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // Add class to body to indicate currently open sidebars
         this.$document
-            .removeClass(this.leftVisibleClass + ' ' + this.rightVisibleClass);
+            .removeClass(this.settings.leftVisibleClass + ' ' + this.settings.rightVisibleClass);
         
         // Reset viewport
         this.$viewport.width('auto');
