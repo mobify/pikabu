@@ -114,17 +114,12 @@
                     $('.m-dummy-height').remove();
 
                     target && $(target).append($('<div class="m-dummy-height">'));
-
                     pikabu.closeSidebars();
-                    setTimeout(function() {
-                        pikabu.openSidebar('left');
-                    }, 1000);
                 });
 
                 /*
                 Sample usage:
     
-                // All options are optional
                 pikabu = new Pikabu({
                     // If you'd like to request different elements be used
                     // as controls. 

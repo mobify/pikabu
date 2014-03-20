@@ -156,16 +156,16 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         var self = $.extend(this, {
             $document: $('html'),
-            leftVisibleClass: 'm-pikabu-left-visible',
-            rightVisibleClass: 'm-pikabu-right-visible',
             activePikabuStylesSelector: '#m-pikabu-styles',
 
             // Overridable settings
             settings: {
-                // Main Pikabu viewport
-                viewportSelector: '.m-pikabu-viewport',
+                leftVisibleClass: 'm-pikabu-left-visible',
+                rightVisibleClass: 'm-pikabu-right-visible',
                 // The sidebar content containers
                 selectors: {
+                    // Main Pikabu viewport
+                    viewportSelector: '.pikabu-viewport',
                     // The main content container
                     element: '.m-pikabu-container',
                     // Sidebars
@@ -247,10 +247,16 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         this.markDeviceCharacteristics();
 
         // Set any custom options
-        $.extend(true, settings, options);
+        $.extend(settings, options);
+
+        // We can't use deep copy, because Mobify.$ uses an old copy of
+        // Zepto, which doesn't have deep copy
+        options && $.each(options, function(key, value) {
+            $.extend(settings[key], value);
+        });
 
         // Set up elements
-        this.$viewport = $(this.settings.viewportSelector);
+        this.$viewport = $(settings.selectors['viewportSelector']);
         this.$element = $(settings.selectors['element']);
         this.$sidebars = {
             left: $(settings.selectors['left']),
@@ -276,7 +282,6 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // Hide sidebars by default
         this.$sidebars['left'].addClass('m-pikabu-hidden');
-        this.$sidebars['right'].addClass('m-pikabu-hidden');
 
         // Assign it back to the instance
         this.settings = settings;
@@ -314,45 +319,52 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Recalculate heights and width of viewport on size/orientation change
         $(window).on('resize orientationchange', function() {
             var windowHeight = $(window).height();
+
+            // Fix for https://github.com/mobify/pikabu/issues/14
+            // iOS6 and below don't get their heights calculated correctly on
+            // orientationchange. We toggle this property off and on to
+            // restore correct height
+            _this.$document
+                .toggleClass('m-pikabu-overflow-touch')
+                .toggleClass('m-pikabu-overflow-touch');
+
             // Only do something if a sidebar is active
             if(_this.activeSidebar) {
                 // Set dimensions of elements
                 _this.setHeights();
                 _this.setViewportWidth();
-            } else {
-                // If we are on a wide-screen where sidebars are always visible, fix sidebar height 
-                // to window height
-                if(_this.$sidebars['left'].is(':visible') || _this.$sidebars['right'].is(':visible')) {
-                    _this.$viewport.height(windowHeight);
-                    _this.$sidebars['left'].height(windowHeight);
-                    _this.$sidebars['right'].height(windowHeight);
-                }
-            }
+            } 
         });
     }
 
     // Set classes to identify features
     Pikabu.prototype.markDeviceCharacteristics = function() {
+
+        // We apply all classes in one go to avoid multiple repaints
+        var classesToApply = '';
+
         if (this.device.hasOverflowScrollingTouch) {
-            this.$document.addClass('m-pikabu-overflow-scrolling');
+            classesToApply = 'm-pikabu-overflow-scrolling';
         } 
         if (this.device.isLegacyAndroid) {
-            this.$document.addClass('m-pikabu-legacy-android');
+            classesToApply += ' m-pikabu-legacy-android';
         }
         if (this.device.supportsTransitions) {
-            this.$document.addClass('m-pikabu-transitions');
+            classesToApply += ' m-pikabu-transitions';
         }
         if (this.device.has3d) {
-            this.$document.addClass('m-pikabu-translate3d');
+            classesToApply += ' m-pikabu-translate3d';
         }
+
+        this.$document.addClass(classesToApply);
     }
 
     // Styles that aren't deleted when the sidebars are closed
     Pikabu.prototype.applyPersistentStyles = function() {
         var bothSidebars = this.settings.selectors['common'] + ', \n' + 
             this.settings.selectors['element'];
-        var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + this.settings.selectors['left'];
-        var rightSidebarSelector = '.' + this.rightVisibleClass + ' ' + this.settings.selectors['right'];
+        var leftSidebarSelector = '.' + this.settings.leftVisibleClass + ' ' + this.settings.selectors['left'];
+        var rightSidebarSelector = '.' + this.settings.rightVisibleClass + ' ' + this.settings.selectors['right'];
         var styles = '<style>\n' + 
                 bothSidebars + ' {\n' + 
                     '-webkit-transition: -webkit-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
@@ -418,7 +430,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // Add support classes
         this.$sidebars[target].addClass('m-pikabu-overflow-touch');
-        this.$document.addClass('m-pikabu-' + target + '-visible');
+        this.$document.addClass(this.settings[target + 'VisibleClass']);
 
         // Set dimensions of elements
         this.setHeights();
@@ -438,8 +450,8 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         $sidebar.removeClass('m-pikabu-overflow-touch');
 
         // <TODO> Check to make sure this works
-        this.$viewport.css('height', '');
-        this.$element.css('height', '');
+        this.$viewport.css('height', 'auto');
+        this.$element.css('height', 'auto');
 
         // add this arbitrary margin-bottom to force a reflow when we remove it
         this.$element.css('marginBottom', 1);
@@ -447,11 +459,11 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Not sure why but we need a scrollTo here to get the reflow to work
         this.scrollTo(0);
 
-        // Remove the unnecessary margin-bottom to force reflow and properly recalculate the height of this container
+        // Remove the unnecessary margin-bottom to force reflow and properly 
+        // recalculate the height of this container
         this.$element.css('marginBottom', '');
 
         this.$sidebars['left'].addClass('m-pikabu-hidden');
-        this.$sidebars['right'].addClass('m-pikabu-hidden');
 
         // Mark both sidebars as closed
         this.activeSidebar = null;
@@ -466,10 +478,10 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // Add class to body to indicate currently open sidebars
         this.$document
-            .removeClass(this.leftVisibleClass + ' ' + this.rightVisibleClass);
+            .removeClass(this.settings.leftVisibleClass + ' ' + this.settings.rightVisibleClass);
         
         // Reset viewport
-        this.$viewport.css('width', 'auto');
+        this.$viewport.width('auto');
 
         // Remove sidebar, container tranform styles
         $(this.activePikabuStylesSelector).remove();
@@ -500,18 +512,16 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // Android 2.3.3 is not getting the correct portrait width
         if(this.device.isLegacyAndroid && orientation == 0) {
-            width = Math.max(this.device.height, this.device.width);
+            width = Math.min(this.device.height, this.device.width);
         }
 
-        this.$viewport.css('width', width);
+        this.$viewport.width(width);
     }
 
     // Recalculate sidebar and viewport height on opening the sidebar
     Pikabu.prototype.setHeights = function() {
 
-        // We use outerHeight for newer Androids running Chrome, because Chrome sometimes 
-        // hides the address bar, changing the height. 
-        var windowHeight = this.device.isNewChrome ? window.outerHeight : $(window).height();
+        var windowHeight = $(window).height();
 
         var $sidebar = this.activeSidebar && this.$sidebars[this.activeSidebar];
         var sidebarHeight = $sidebar.removeAttr('style')[0].scrollHeight;
@@ -519,20 +529,20 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         if(this.device.hasOverflowScrollingTouch) {
             // Lock viewport for devices that have overflow-scrolling: touch, eg: iOS 5 devices
-            $sidebar.height(windowHeight);
+            $sidebar.css('height', windowHeight);
             
-            this.$element.height(windowHeight);
-            this.$viewport.height(windowHeight);
-            this.$overlay.height(windowHeight);
+            this.$element.css('height', windowHeight);
+            this.$viewport.css('height', windowHeight);
+            this.$overlay.css('height', windowHeight);
 
         } else {
             // Set viewport to sidebar height or window height - whichever is greater, so that the 
             // whole document scrolls revealing contents of the sidebar
-            $sidebar.height(maxHeight);
+            $sidebar.css('height', maxHeight);
 
-            this.$viewport.height(maxHeight);
-            this.$overlay.height(maxHeight);
-            this.$element.height(maxHeight);
+            this.$viewport.css('height', maxHeight);
+            this.$overlay.css('height', maxHeight);
+            this.$element.css('height', maxHeight);
         }
     };
 
