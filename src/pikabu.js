@@ -324,7 +324,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
             // iOS6 and below don't get their heights calculated correctly on
             // orientationchange. We toggle this property off and on to
             // restore correct height
-            this.$document
+            _this.$document
                 .toggleClass('m-pikabu-overflow-touch')
                 .toggleClass('m-pikabu-overflow-touch');
 
