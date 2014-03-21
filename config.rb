@@ -7,4 +7,4 @@ css_dir = "css"
 sass_dir = "scss"
 images_dir = "i"
 javascripts_dir = "."
-
+line_comments = false
