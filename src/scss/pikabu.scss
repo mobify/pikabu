@@ -8,8 +8,6 @@ $animation: true !default; // Set to false if you don't want transitions
 
     overflow: hidden;
 
-    @include display-box;
-
     html:not(.pikabu--is-legacy-android) & {
         @include perspective(1000);
         @include transform(translateZ(0));

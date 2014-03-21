@@ -4,8 +4,8 @@
         <title>Mobify's Pikabu - a simple off-canvas flyout framework</title>
         
         <!-- include pikabu.css -->
-        <link rel="stylesheet" href="src/pikabu.css">
-        <link rel="stylesheet" href="src/pikabu-theme.css">
+        <link rel="stylesheet" href="src/css/pikabu.css">
+        <link rel="stylesheet" href="src/css/pikabu-theme.css">
         <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -59,6 +59,9 @@
             </div>
             <!-- the main page content -->
             <div class="m-pikabu-container">
+                <!-- Overlay is needed to have a big click area to close the sidebars -->
+                <div class="m-pikabu-overlay"></div>
+
                 <header>
                     <a class="m-pikabu-nav-toggle" data-role="left">Left Menu</a>
                     <h1>Pikabu</h1>
