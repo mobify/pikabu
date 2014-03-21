@@ -7,7 +7,6 @@
   src: url("http://weloveiconfonts.com/api/fonts/entypo/entypo.eot?#iefix") format("eot"), url("http://weloveiconfonts.com/api/fonts/entypo/entypo.woff") format("woff"), url("http://weloveiconfonts.com/api/fonts/entypo/entypo.ttf") format("truetype"), url("http://weloveiconfonts.com/api/fonts/entypo/entypo.svg#entypo") format("svg");
 }
 
-/* line 49, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 body {
   margin: 0;
   padding: 0;
@@ -16,7 +15,6 @@ body {
   font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
 }
 
-/* line 59, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 header {
   overflow: hidden;
   background: #fee65e;
@@ -25,7 +23,6 @@ header {
   text-shadow: 1px 1px 0 #fcfdf4;
 }
 
-/* line 69, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 header h1 {
   display: inline-block;
   margin: 0;
@@ -35,15 +32,13 @@ header h1 {
   line-height: 50px;
   color: #e64a33;
 }
-/* line 79, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 header h1::before {
   content: "\26a1";
   margin-right: 15px;
   font-family: 'entypo', sans-serif;
 }
 
-/* line 86, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-.m-pikabu-nav-toggle {
+.pikabu-nav-toggle {
   position: relative;
   -webkit-backface-visibility: hidden;
   -moz-backface-visibility: hidden;
@@ -70,12 +65,10 @@ header h1::before {
   color: #e64a33;
   line-height: 29px;
 }
-/* line 107, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-.m-pikabu-nav-toggle[data-role="right"] {
+.pikabu-nav-toggle[data-role="right"] {
   float: right;
 }
-/* line 111, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-.m-pikabu-nav-toggle::after {
+.pikabu-nav-toggle::after {
   content: '☰';
   position: absolute;
   left: 0;
@@ -90,40 +83,47 @@ header h1::before {
   font-weight: bold;
   color: inherit;
 }
-/* line 129, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-.m-pikabu-nav-toggle[data-role="right"]::after {
+.pikabu-nav-toggle[data-role="right"]::after {
   content: "\e705";
   font-size: 17px;
 }
-/* line 134, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-.m-pikabu-left-visible .m-pikabu-nav-toggle[data-role="left"], .m-pikabu-right-visible .m-pikabu-nav-toggle[data-role="right"] {
+.pikabu--left-sidebar-visible .pikabu-nav-toggle[data-role="left"], .pikabu--right-sidebar-visible .pikabu-nav-toggle[data-role="right"] {
   background: rgba(0, 0, 0, 0.1);
   -webkit-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
   -moz-box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
   box-shadow: inset 0 1px 0 rgba(0, 0, 0, 0.1);
 }
 
-/* line 141, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 section {
   padding: 20px;
 }
 
-/* line 145, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-.m-pikabu-sidebar {
+.pikabu-sidebar {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   padding: 10px;
-  background: #6b645c;
-  color: white;
+  background: #ddd;
+  color: #666;
+}
+.pikabu-sidebar a {
+  color: #e64a33;
 }
 
-/* line 154, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-.m-pikabu-container {
+.pikabu-container {
   background: #fcfdf4;
 }
+.pikabu--left-sidebar-visible .pikabu-container {
+  -webkit-box-shadow: -5px 0px 15px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: -5px 0px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: -5px 0px 15px rgba(0, 0, 0, 0.15);
+}
+.pikabu--right-sidebar-visible .pikabu-container {
+  -webkit-box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.15);
+  box-shadow: 5px 0px 15px rgba(0, 0, 0, 0.15);
+}
 
-/* line 158, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 section h2 {
   display: block;
   margin: 0;
@@ -133,7 +133,6 @@ section h2 {
   line-height: 1.4;
 }
 
-/* line 169, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 section h3 {
   display: block;
   margin: 20px -20px 10px;
@@ -145,24 +144,20 @@ section h3 {
   font-weight: normal;
 }
 
-/* line 182, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 section p {
   margin-bottom: 15px;
   font-size: 16px;
   line-height: 1.4;
 }
 
-/* line 189, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 section p em {
   color: #e64a33;
   font-style: normal;
 }
 
-/* line 194, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 section a {
   color: #e64a33;
 }
-/* line 196, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 section a:hover {
   color: black;
   -webkit-transition: color 0.1s linear;
@@ -171,90 +166,25 @@ section a:hover {
   transition: color 0.1s linear;
 }
 
-/* line 202, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 section ul {
   margin: 15px 0;
 }
 
-/* line 208, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 .no-js html {
   position: relative;
   height: 100%;
 }
-/* line 214, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
 .no-js body {
   min-height: 100%;
 }
-/* line 218, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-.no-js .m-pikabu-viewport {
-  display: block;
-  min-height: 100%;
-}
-/* line 224, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-.no-js .m-pikabu-nav-toggle {
-  display: none;
-}
-/* line 228, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-.no-js .m-pikabu-left,
-.no-js .m-pikabu-right {
-  display: block;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  width: 20%;
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
-  transform: translate3d(0, 0, 0);
-}
-/* line 243, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-.no-js .m-pikabu-container {
-  margin-left: 20%;
-  width: 60%;
-}
 
 @media all and (min-width: 769px) {
-  /* line 208, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
   html {
     position: relative;
     height: 100%;
   }
 
-  /* line 214, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
   body {
     min-height: 100%;
-  }
-
-  /* line 218, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-  .m-pikabu-viewport {
-    display: block;
-    min-height: 100%;
-  }
-
-  /* line 224, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-  .m-pikabu-nav-toggle {
-    display: none;
-  }
-
-  /* line 228, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-  .m-pikabu-left,
-  .m-pikabu-right {
-    display: block;
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    width: 20%;
-    -webkit-transform: translate3d(0, 0, 0);
-    -moz-transform: translate3d(0, 0, 0);
-    -ms-transform: translate3d(0, 0, 0);
-    -o-transform: translate3d(0, 0, 0);
-    transform: translate3d(0, 0, 0);
-  }
-
-  /* line 243, /ude/mi/repos/mobifyjs-inkcartridges-mobile/src/js/includes/vendor/pikabu/src/scss/pikabu-theme.scss */
-  .m-pikabu-container {
-    margin-left: 20%;
-    width: 60%;
   }
 }

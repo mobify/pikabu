@@ -1,7 +1,13 @@
-$leftSidebarWidth: 85% !default; // Width of the left sidebar
-$rightSidebarWidth: 85% !default; // Width of the right sidebar
+@charset "UTF-8";
+@import "compass";
+
+$leftSidebarWidth: 80% !default; // Width of the left sidebar
+$rightSidebarWidth: 80% !default; // Width of the right sidebar
 $animation: true !default; // Set to false if you don't want transitions
 
+$layer-overlay:  1000; // "overlay" to communicate that this must go above EVERYTHING
+$layer-content:   100; // "content" to communicate that this is the shuffling of ordinary content
+$layer-backdrop:    1; // "floor" communicates ABSOLUTE BOTTOM
 
 .pikabu-viewport {
     position: relative;
@@ -14,7 +20,7 @@ $animation: true !default; // Set to false if you don't want transitions
         @include backface-visibility(hidden);
     }
 
-    
+
 }
 
 .pikabu-sidebar {
@@ -57,7 +63,6 @@ $animation: true !default; // Set to false if you don't want transitions
 
     .pikabu--left-sidebar-visible & {
         @include translate3d($leftSidebarWidth, 0, 0);
-        @include box-shadow(-5px 0px 15px rgba(0, 0, 0, 0.15));
     }
 
     .pikabu--right-sidebar-visible & {
