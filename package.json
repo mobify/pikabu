@@ -12,7 +12,9 @@
     "grunt-s3": "~0.1.0",
     "grunt-shell": "~0.2.1",
     "grunt-zip": "~0.4.2",
-    "grunt-clean": "~0.4.0"
+    "grunt-clean": "~0.4.0",
+    "nightwatch": "git+https://github.com/beatfactor/nightwatch.git",
+    "nightwatch-commands": "git+https://github.com/mobify/nightwatch-commands.git"
   },
   "license": "MIT"
 }
