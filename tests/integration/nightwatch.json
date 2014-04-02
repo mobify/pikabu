@@ -1,0 +1,67 @@
+{
+    "src_folders": ["./tests"],
+    "output_folder": "./reports",
+    "custom_commands_path": "./node_modules/nightwatch-commands/commands",
+    "custom_assertions_path": "./node_modules/nightwatch-commands/assertions",
+
+    "selenium": {
+        "start_process": false,
+        "server_path": "",
+        "log_path": "",
+        "host": "127.0.0.1",
+        "port": 4444
+    },
+
+    "test_settings": {
+        "default": {
+            "launch_url": "http://localhost",
+            "selenium_host": "127.0.0.1",
+            "selenium_port": 4444,
+            "silent": true,
+            "output": true,
+            "firefox_profile": false,
+            "chrome_driver": "lib/chromedriver",
+            "screenshots": {
+                "enabled": false,
+                "path": ""
+            },
+            "desiredCapabilities": {
+                "browserName": "chrome",
+                "chromeOptions": {
+                    "args": [
+                        "--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_2 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A4449d Safari/9537.53",
+                        "--window-size=320,640"
+                    ]
+                },
+                "javascriptEnabled": true,
+                "acceptSslCerts": true
+            }
+        },
+
+        "saucelabs": {
+            "selenium_host": "ondemand.saucelabs.com",
+            "selenium_port": 80,
+            "username": "${SAUCE_USERNAME}",
+            "access_key": "${SAUCE_ACCESS_KEY}",
+            "use_ssl": false,
+            "silent": true,
+            "output": true,
+            "screenshots": {
+                "enabled": false,
+                "path": ""
+            },
+            "desiredCapabilities": {
+                "name": "test-example",
+                "browserName": "chrome",
+                "chromeOptions": {
+                    "args": [
+                        "--user-agent=Mozilla/5.0 (iPhone; CPU iPhone OS 7_0_2 like Mac OS X) AppleWebKit/537.51.1 (KHTML, like Gecko) Version/7.0 Mobile/11A4449d Safari/9537.53",
+                        "--window-size=320,640"
+                    ]
+                },
+                "javascriptEnabled": true,
+                "acceptSslCerts": true
+            }
+        }
+    }
+}

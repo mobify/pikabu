@@ -1,4 +1,5 @@
 module.exports = function(grunt) {
+    var child;
 
     // Project configuration.
     grunt.initConfig({
@@ -103,4 +104,17 @@ module.exports = function(grunt) {
     grunt.registerTask('default', 'build');
     grunt.registerTask('serve', ['connect:server:keepalive']);
     grunt.registerTask('test', ['connect', 'qunit']);
+
+    grunt.registerTask('nightwatch', 'Nightwatch', function () {
+        var callback = this.async();
+
+        grunt.util.spawn({
+            cmd: 'node',
+            args: [].concat(['node_modules/nightwatch/bin/runner.js', '-c', 'tests/integration/nightwatch.json'], grunt.option.flags()),
+            opts: {stdio: 'inherit'}
+        },
+        function() {
+            callback();
+        });
+    });
 };
