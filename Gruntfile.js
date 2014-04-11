@@ -82,6 +82,8 @@ module.exports = function(grunt) {
                 folder: '.',
                 npm: false,
                 bump: false,
+                add: false,
+                commit: false,
                 file: 'bower.json',
                 github: {
                     repo: 'mobify/bellows',
