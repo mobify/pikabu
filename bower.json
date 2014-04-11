@@ -1,0 +1,25 @@
+{
+  "name": "pikabu",
+  "version": "0.2.1",
+  "homepage": "https://github.com/mobify/pikabu",
+  "authors": [
+    "Mobify <jobs@mobify.com>"
+  ],
+  "description": "A Javascript plugin for creating off-canvas flyouts",
+  "main": "build/pikabu.min.js",
+  "keywords": [
+    "off-canvas",
+    "flyout",
+    "mobify",
+    "sidebar",
+    "facebook nav"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
