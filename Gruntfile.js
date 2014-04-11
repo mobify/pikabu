@@ -56,12 +56,6 @@ module.exports = function(grunt) {
                 ]  
             }  
         },
-        shell: {
-            tagRelease: {
-                command: 'git tag -a <%= releaseName %> -m "<%= releaseMessage %>" &&' +
-                  'git push origin <%= releaseName %>'
-            }
-        },
         zip: {
             "build/pikabu.zip": ["src/pikabu.js", "src/pikabu.css", 
             "src/pikabu-theme.css"]
@@ -82,8 +76,18 @@ module.exports = function(grunt) {
         },
         qunit: {
             files: ['tests/**/*.html']
+        },
+        release: {
+            options: {
+                folder: '.',
+                npm: false,
+                github: {
+                    repo: 'mobify/bellows',
+                    usernameVar: 'GITHUB_USERNAME',
+                    passwordVar: 'GITHUB_TOKEN'
+                }
+            }
         }
-        // TODO: upload over a LATEST version and/or create a redirect?
     });
 
     // Load the task plugins
@@ -91,15 +95,15 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-contrib-connect');
     grunt.loadNpmTasks('grunt-contrib-compass');
     grunt.loadNpmTasks('grunt-contrib-copy');
-    grunt.loadNpmTasks('grunt-shell');
     grunt.loadNpmTasks('grunt-zip');
     grunt.loadNpmTasks('grunt-s3');
     grunt.loadNpmTasks('grunt-clean');
     grunt.loadNpmTasks('grunt-contrib-qunit');
+    grunt.loadNpmTasks('grunt-release');
 
     // Default task(s).
     grunt.registerTask('build', ['uglify', 'compass', 'zip', 'copy']);
-    grunt.registerTask('release', ['build', 'shell:tagRelease', 's3']);
+    grunt.registerTask('publish', ['build', 'release', 's3']);
     grunt.registerTask('default', 'build');
     grunt.registerTask('serve', ['connect:server:keepalive']);
     grunt.registerTask('test', ['connect', 'qunit']);
