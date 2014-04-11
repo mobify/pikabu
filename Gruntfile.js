@@ -86,7 +86,7 @@ module.exports = function(grunt) {
                 commit: false,
                 file: 'bower.json',
                 github: {
-                    repo: 'mobify/bellows',
+                    repo: 'mobify/pikabu',
                     usernameVar: 'GITHUB_USERNAME',
                     passwordVar: 'GITHUB_TOKEN'
                 }
