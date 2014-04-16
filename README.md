@@ -112,7 +112,7 @@ stylesheets as well.
             // Controls that trigger the sidebar
             navToggles: '.m-pikabu-nav-toggle'
         }
-    }
+    });
 
 ## Available Methods
 
