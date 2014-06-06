@@ -322,14 +322,6 @@ if (Adaptive.$ === undefined) {
                 // Set dimensions of elements
                 _this.setHeights();
                 _this.setViewportWidth();
-            } else {
-                // If we are on a wide-screen where sidebars are always visible, fix sidebar height 
-                // to window height
-                if(_this.$sidebars['left'].is(':visible') || _this.$sidebars['right'].is(':visible')) {
-                    _this.$viewport.height(windowHeight);
-                    _this.$sidebars['left'].height(windowHeight);
-                    _this.$sidebars['right'].height(windowHeight);
-                }
             }
         });
     }
