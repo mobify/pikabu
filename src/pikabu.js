@@ -302,17 +302,33 @@ if (Adaptive.$ === undefined) {
 
         var _this = this;
 
-        // Shows sidebar on clicking/tapping nav toggles
-        this.$navToggles.on('click', function(e) {
-            e.stopPropagation();
-            _this.openSidebar($(this).attr('data-role'));
-        });
+        if ($.fn.fasttap) {
+            // Shows sidebar on fasttaping nav toggles
+            this.$navToggles.fasttap(function(e) {
+                e.stopPropagation();
+                _this.openSidebar($(this.element).attr('data-role'));
+            });
 
-        // Closes sidebar on clicking/tapping overlay
-        this.$overlay.on('click', function(e) {
-            e.stopPropagation();
-            _this.closeSidebars();
-        });
+            // Closes sidebar on fasttaping overlay
+            this.$overlay.fasttap(function(e) {
+                e.stopPropagation();
+                _this.closeSidebars();
+            });
+
+        } else {
+            // Shows sidebar on clicking/tapping nav toggles
+            this.$navToggles.on('click', function(e) {
+                e.stopPropagation();
+                _this.openSidebar($(this).attr('data-role'));
+            });
+
+            // Closes sidebar on clicking/tapping overlay
+            this.$overlay.on('click', function(e) {
+                e.stopPropagation();
+                _this.closeSidebars();
+            });
+        }
+
 
         // Recalculate heights and width of viewport on size/orientation change
         $(window).on('resize orientationchange', function() {
