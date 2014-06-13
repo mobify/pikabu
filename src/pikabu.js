@@ -299,8 +299,8 @@ if (Adaptive.$ === undefined) {
 
     // Bind nav toggles and overlay handlers
     Pikabu.prototype.bindHandlers = function() {
-
         var _this = this;
+        $.fn.tap = $.fn.tap || $.fn.fasttap || $.fn.click;
 
         // Shows sidebar on tapping nav toggles
         this.$navToggles.tap(function(e) {
