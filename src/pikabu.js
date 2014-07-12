@@ -85,10 +85,10 @@ if (Adaptive.$ === undefined) {
                 has3d,
                 transforms = {
                     'webkitTransform':'-webkit-transform',
+                    'transform':'transform',
                     'OTransform':'-o-transform',
                     'msTransform':'-ms-transform',
-                    'MozTransform':'-moz-transform',
-                    'transform':'transform'
+                    'MozTransform':'-moz-transform'
                 };
 
             // Add it to the body to get the computed style.
