@@ -85,10 +85,10 @@ if (Adaptive.$ === undefined) {
                 has3d,
                 transforms = {
                     'webkitTransform':'-webkit-transform',
-                    'transform':'transform',
                     'OTransform':'-o-transform',
                     'msTransform':'-ms-transform',
-                    'MozTransform':'-moz-transform'
+                    'MozTransform':'-moz-transform',
+                    'transform':'transform'
                 };
 
             // Add it to the body to get the computed style.
@@ -116,11 +116,11 @@ if (Adaptive.$ === undefined) {
 
             var el = document.createElement('fakeelement');
             var transitions = {
+                'WebkitTransition':'webkitTransitionEnd',
                 'transition':'transitionEnd transitionend',
                 'OTransition':'oTransitionEnd',
                 'MSTransition':'msTransitionEnd',
-                'MozTransition':'transitionend',
-                'WebkitTransition':'webkitTransitionEnd'
+                'MozTransition':'transitionend'
             }
 
             var t;
