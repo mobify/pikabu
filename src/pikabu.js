@@ -520,7 +520,7 @@ if (Adaptive.$ === undefined) {
         var windowHeight = this.device.isNewChrome ? window.outerHeight : $(window).height();
 
         var $sidebar = this.activeSidebar && this.$sidebars[this.activeSidebar];
-        var sidebarHeight = $sidebar.removeAttr('style')[0].scrollHeight;
+        var sidebarHeight = $sidebar.height('auto').get(0).scrollHeight;
         var maxHeight = Math.max(windowHeight, sidebarHeight);
 
         if(this.device.hasOverflowScrollingTouch) {
