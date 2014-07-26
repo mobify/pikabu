@@ -531,6 +531,12 @@ if (Adaptive.$ === undefined) {
             this.$viewport.height(windowHeight);
             this.$overlay.height(windowHeight);
 
+            // Forces reflowing to prevent occasional scroll locking
+            $sidebar.css('-webkit-overflow-scrolling', 'auto');
+            window.setTimeout(function() {
+                $sidebar.css('-webkit-overflow-scrolling', 'touch');
+            }, 0);
+
         } else {
             // Set viewport to sidebar height or window height - whichever is greater, so that the
             // whole document scrolls revealing contents of the sidebar
