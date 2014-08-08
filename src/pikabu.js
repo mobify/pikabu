@@ -183,9 +183,9 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
                     right: '80%'
                 },
 
-                // Scroll back to previous position when pikabu is closed
+                // Reset scroll to top position when pikabu is closed
                 // intended to fix reflowing, however this introduces UX issues
-                scrollBack: true,
+                resetScroll: true,
 
 
                 // Transition speeds for open/close animation
@@ -432,7 +432,9 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         this.applyTransformations(target);
 
         // Scroll to the top of the sidebar
-        this.scrollTo(0);
+        if (this.resetScroll) {
+            this.scrollTo(0);
+        }
 
         this.$element.trigger('pikabu:opened');
     };
@@ -450,7 +452,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         this.$element.css('marginBottom', 1);
 
         // Not sure why but we need a scrollTo here to get the reflow to work
-        if(this.scrollBack) {
+        if (this.resetScroll) {
             this.scrollTo(0);
         }
 
@@ -490,14 +492,14 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
                 _this.resetSidebar($(this));
 
                 // Scroll back to where we were before we opened the sidebar
-                if(this.scrollBack) {
+                if (this.resetScroll) {
                     _this.scrollTo(_this.scrollOffset);
                 }
             });
         } else {
             setTimeout(function() {
                 _this.resetSidebar($(this));
-                if(this.scrollBack) {
+                if (this.resetScroll) {
                     _this.scrollTo(_this.scrollOffset);
                 }
             }, 250);
