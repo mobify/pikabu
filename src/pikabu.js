@@ -190,6 +190,10 @@ if (Adaptive.$ === undefined) {
                 // intended to fix reflowing, however this introduces UX issues
                 resetScroll: true,
 
+                // Apply internal pikabu logics to animate sidebar
+                // Note: this may be slow on Android when pushing css properties to DOM
+                // Alternatively you can disable this and style animation in CSS
+                useDefaultAnimation: true,
 
                 // Transition speeds for open/close animation
                 transitionSpeed: 0.2,
@@ -349,6 +353,10 @@ if (Adaptive.$ === undefined) {
 
     // Styles that aren't deleted when the sidebars are closed
     Pikabu.prototype.applyPersistentStyles = function() {
+        if(!this.settings.useDefaultAnimation) {
+            return false;
+        }
+
         var bothSidebars = this.settings.selectors['common'] + ', \n' +
             this.settings.selectors['element'];
         var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + this.settings.selectors['left'];
@@ -375,6 +383,9 @@ if (Adaptive.$ === undefined) {
 
     // Styles applied when sidebars are opened
     Pikabu.prototype.applyTransformations = function(sidebar) {
+        if(!this.settings.useDefaultAnimation) {
+            return false;
+        }
 
         var width;
         var transform;
@@ -476,7 +487,9 @@ if (Adaptive.$ === undefined) {
         this.$viewport.css('width', 'auto');
 
         // Remove sidebar, container tranform styles
-        $(this.activePikabuStylesSelector).remove();
+        if(this.settings.useDefaultAnimation) {
+            $(this.activePikabuStylesSelector).remove();
+        }
 
         // Check to see if CSS transitions are supported
         if(this.device.transitionEvent && this.activeSidebar) {
