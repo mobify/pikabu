@@ -1,6 +1,6 @@
 # Pikabu
 
-### Simple markup 
+### Simple markup
 Few containers and classes means implementation is a breeze.
 
 ### Native scrolling
@@ -35,18 +35,18 @@ First create an instance of Pikabu like this:
             right: '70%'
         }
     });
-    
 
-Once you've created the pikabu instance as shown above, 
+
+Once you've created the pikabu instance as shown above,
 you can use it elsewhere like this:
 
-    
+
     $('m-pikabu').pikabu({
         viewportSelector: '.pikabu-viewport'
     });
 
 ## Basic HTML
-Pikabu assumes a containing viewport, one or two sidebars and a 
+Pikabu assumes a containing viewport, one or two sidebars and a
 main content container. By default these are prefixed with
 'm-pikabu-', but you can easily set your own classes.
 
@@ -57,7 +57,7 @@ main content container. By default these are prefixed with
             <!-- left sidebar content -->
             <h2>Left Sidebar Content</h2>
         </div>
-        
+
         <!-- the main page content -->
         <div class="m-pikabu-container">
             <header>
@@ -77,26 +77,26 @@ main content container. By default these are prefixed with
                     for off-canvas flyout panels.
                 </h2>
                 <p>
-                    Lorem ipsum dolor sit amet, 
+                    Lorem ipsum dolor sit amet,
                     consectetur adipisicing elit.
                 </p>
             </section>
         </div>
-        
+
         <!-- the right sidebar -->
         <div class="m-pikabu-sidebar m-pikabu-right">
             <!-- right sidebar content -->
-            Right 
+            Right
         </div>
     </div>
 
-## Custom CSS Class Names   
+## Custom CSS Class Names
 If you'd like to request different elements be used
 as controls, you can easily override any of the default
 pikabu class names.
 
 IMPORTANT: If you change the class names here, please
-remember to change the appropriate classes in the 
+remember to change the appropriate classes in the
 stylesheets as well.
 
     pikabu = new Pikabu({
@@ -120,7 +120,7 @@ stylesheets as well.
 window smooth scrolling
 
     pikabu.scrollTo(500);
-    
+
 ### .device()
 Returns information about the device, such as:
 
@@ -131,6 +131,7 @@ Returns information about the device, such as:
         isAndroid: [returns true if the device is an Android],
         isLegacyAndroid: [returns true if the android < 2.3],
         supportsTransitions: [true for transitions],
+        useDefaultAnimation: [true to use pikabu logics for animation, false to describe your own in CSS],
         transitionEvent: [event fired on transition],
         width: [returns document width]
     });
@@ -153,7 +154,7 @@ returns the active sidebar
 ### .$sidebars
 get the Zepto/jQuery active sidebar object
 
-    pikabu.$sidebars[pikabu.activeSidebar] // 
+    pikabu.$sidebars[pikabu.activeSidebar] //
 
 ## Events
 
@@ -214,7 +215,7 @@ The following desktop browsers have degraded support:
 
 Please see the project's
 <a href="//github.com/mobify/pikabu" title="Mobify on Github">GitHub page</a>
-for details contributing. In order to build the files, you will need 
+for details contributing. In order to build the files, you will need
 [node.js 0.8.x and npm](http://nodejs.org/download/).
 
 ### Steps
@@ -222,7 +223,7 @@ for details contributing. In order to build the files, you will need
     npm install
     grunt
 
-The build directory will be populated with minified versions of the css and 
+The build directory will be populated with minified versions of the css and
 javascript files and a .zip of the original source files (for distribution and
 use with whatever build system you might use).
 
