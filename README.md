@@ -32,17 +32,18 @@ First create an instance of Pikabu like this:
         viewportSelector: '.m-pikabu-viewport',
         // Specify left and right sidebar widths independently
         widths: {
-            left: '70%',
-            right: '70%'
+            left: '70%', // slide-in from left
+            right: '70%' // slide-in from right
         }
     });
 
+Next create the following markup...
 
 ## Basic HTML
 
-Pikabu assumes a containing viewport, one or two sidebars and a 
-main content container. By default these are prefixed with
-'m-pikabu-', but you can easily set your own classes.
+Pikabu assumes a containing viewport, one or two sidebars and a main content 
+container. By default these are prefixed with 'm-pikabu-', but you can easily 
+set your own classes (see options below).
 
     <!-- the viewport -->
     <div class="m-pikabu-viewport">
@@ -89,7 +90,7 @@ main content container. By default these are prefixed with
 
     var pikabu = new Pikabu({
         
-        // The viewport encapsulates all content & pikabu side-ins on the page.
+        // The viewport encapsulates all content & pikabu sidebars on the page.
         viewportSelector: '.m-pikabu-viewport',
 
         // If you'd like to request different elements be used as controls, you 
