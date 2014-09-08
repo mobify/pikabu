@@ -29,26 +29,21 @@ First create an instance of Pikabu like this:
 
     // All options are optional
     var pikabu = new Pikabu({
+        viewportSelector: '.m-pikabu-viewport',
         // Specify left and right sidebar widths independently
         widths: {
-            left: '70%',
-            right: '70%'
+            left: '70%', // slide-in from left
+            right: '70%' // slide-in from right
         }
     });
-    
 
-Once you've created the pikabu instance as shown above, 
-you can use it elsewhere like this:
-
-    
-    $('m-pikabu').pikabu({
-        viewportSelector: '.pikabu-viewport'
-    });
+Next create the following markup...
 
 ## Basic HTML
-Pikabu assumes a containing viewport, one or two sidebars and a 
-main content container. By default these are prefixed with
-'m-pikabu-', but you can easily set your own classes.
+
+Pikabu assumes a containing viewport, one or two sidebars and a main content 
+container. By default these are prefixed with 'm-pikabu-', but you can easily 
+set your own classes (see options below).
 
     <!-- the viewport -->
     <div class="m-pikabu-viewport">
@@ -90,29 +85,46 @@ main content container. By default these are prefixed with
         </div>
     </div>
 
-## Custom CSS Class Names   
-If you'd like to request different elements be used
-as controls, you can easily override any of the default
-pikabu class names.
 
-IMPORTANT: If you change the class names here, please
-remember to change the appropriate classes in the 
-stylesheets as well.
+## All Available Options 
 
-    pikabu = new Pikabu({
-        viewportSelector: [viewport-selector],
+    var pikabu = new Pikabu({
+        
+        // The viewport encapsulates all content & pikabu sidebars on the page.
+        viewportSelector: '.m-pikabu-viewport',
+
+        // If you'd like to request different elements be used as controls, you 
+        // can easily override any of the default pikabu class names.
+
+        // IMPORTANT: If you change the class names here, please remember to 
+        // change the appropriate classes in the stylesheets as well.
+
         selectors: {
-            element: '.m-pikabu-container',
+            
+            element: '.m-pikabu-container', // Selector for page content
+            navToggles: '.m-pikabu-nav-toggle', // Pikabu toggle button
+            overlay: '.m-pikabu-overlay',   // Click-to-close overlay
+            
             // Sidebars
-            common: '.m-pikabu-sidebar',
-            left: '.m-pikabu-left',
-            right: '.m-pikabu-right',
-            // Click-to-close overlay
-            overlay: '.m-pikabu-overlay',
-            // Controls that trigger the sidebar
-            navToggles: '.m-pikabu-nav-toggle'
-        }
-    }
+            common: '.m-pikabu-sidebar',    // Base class for either sidebar
+            left: '.m-pikabu-left',         // Left sidebar class
+            right: '.m-pikabu-right'        // Right sidebar class
+            
+        },
+        
+        // Specify left and right sidebar widths independently
+        widths: {
+            left: '70%',
+            right: '70%'
+        },
+       
+        // Functions to trigger on initializing, opening and closing the sidebar
+        onInit: function() { ... },
+        onOpened: function() { ... },
+        onClosed: function() { ... }
+
+    });
+
 
 ## Available Methods
 
