@@ -141,12 +141,16 @@ section {
     padding: $margin*2;
 }
 
-.m-pikabu-sidebar{
+.m-pikabu-sidebar {
     @include box-sizing(border-box);
 
     padding: $margin;
     background: $gray;
     color: white;
+    
+    a {
+        color: $dark-accent;
+    }
 }
 
 // <TODO> Why do we need this?

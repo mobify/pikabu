@@ -1,29 +1,72 @@
 @charset "UTF-8";
 @import "compass/css3";
 
+// VARIABLES
+// ---------
+//
 // <TODO>: Make these javascript settings
 $leftSidebarWidth: 80% !default; // Width of the left sidebar
 $rightSidebarWidth: 80% !default; // Width of the right sidebar
+
+// No point in an animation variable in here since the speed is set via Javascript
 $animation: true !default; // Set to false if you don't want transitions
+
+
+// MIXINS
+// ------
+
+@mixin m-sidebar-overlay($opacity: 0.75, $color: black) {
+    &::after {
+        content: '';
+        
+        position: absolute;
+        top: 0;
+        left: 0;
+        
+        display: block;
+        height: 100%;
+        width: 100%;
+        
+        background: $color;
+        opacity: $opacity;
+        @include transition(opacity 0.5s);
+        
+        pointer-events: none;
+    }
+
+    .m-pikabu-left-visible &::after {
+        opacity: 0;
+    }
+}
+html,
+body {
+    height: 100%;
+}
+.m-pikabu-container {
+    position: relative;
+}
 
 .m-pikabu-viewport {
     position: relative;
 
     overflow: hidden;
 
-    @include display-box;
-
-    @include perspective(1000);
+    @include perspective(1500);
     @include transform(translateZ(0));
     @include backface-visibility(hidden);
+    
+    background: #222;
 }
 
 .m-pikabu-sidebar {
     position: absolute;
-
     top: 0;
+    left: 0;
+    z-index: 1;
+    
+    height: 100%;
+    width: 80%;
 
-    overflow: auto;
     display: block;
 }
 
@@ -41,7 +84,6 @@ $animation: true !default; // Set to false if you don't want transitions
 
 .m-pikabu-left {
     width: $leftSidebarWidth;
-
     @include translate3d(-100%, 0, 0);
 
     .m-pikabu-left-visible & {
@@ -50,7 +92,10 @@ $animation: true !default; // Set to false if you don't want transitions
 }
 
 .m-pikabu-container {
-    width: 100%;
+    position:relative;
+    left: 0;
+    z-index: 90;
+    
     @include backface-visibility(hidden);
 
     .m-pikabu-left-visible & {
@@ -66,7 +111,7 @@ $animation: true !default; // Set to false if you don't want transitions
     .m-pikabu-container,
     .m-pikabu-sidebar {
         @include transition(
-            transform 0.2s ease-in
+            transform 0.5s ease
         );
     }
 }
@@ -87,11 +132,53 @@ $animation: true !default; // Set to false if you don't want transitions
     }
 }
 
-.m-pikabu-hidden {
-    display: none;
-}
-
 // Scrolling
 .m-pikabu-overflow-touch {
     -webkit-overflow-scrolling: touch;
+}
+// EFFECTS
+// -------
+//
+// Note: Push is the default behaviour
+
+
+.m-pikabu-reveal {
+    @include translate3d(0, 0, 0);
+    @include m-sidebar-overlay($opacity: 0.5);
+}
+
+.m-pikabu-shutter {
+    @include transform(translate3d(-50%, 0, 0));
+    @include m-sidebar-overlay($opacity: 0.5);
+}
+
+.m-pikabu-swing-in {
+    @include transform(
+        translate3d(-100%, 0, 0)
+        rotateY(-90deg)
+    );
+    @include transform-origin(100%, 50%);
+    @include transform-style(preserve-3d);
+    @include m-sidebar-overlay;
+        
+    .m-pikabu-left-visible & {
+        @include transform(
+            translate3d(0, 0, 0)
+            rotateY(0deg)
+        );
+    }
+}
+
+.m-pikabu-swing-out {
+    @include transform(
+        translate3d(-100%, 0, 0)
+        rotateY(90deg)
+    );
+    @include transform-origin(100%, 50%);
+    @include transform-style(preserve-3d);
+    @include m-sidebar-overlay($color: #fcfdf4);
+        
+    .m-pikabu-left-visible & {
+        @include transform(translate3d(0, 0, 0) rotateY(0deg));
+    }
 }
