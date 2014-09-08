@@ -2,10 +2,10 @@
 <html class="no-js">
     <head>
         <title>Mobify's Pikabu - a simple off-canvas flyout framework</title>
-        
+
         <!-- include pikabu.css -->
-        <link rel="stylesheet" href="src/pikabu.css">
-        <link rel="stylesheet" href="src/pikabu-theme.css">
+        <link rel="stylesheet" href="src/css/pikabu.css">
+        <link rel="stylesheet" href="src/css/pikabu-theme.css">
         <link href='http://fonts.googleapis.com/css?family=Roboto:300,400,700' rel='stylesheet' type='text/css'>
 
         <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no" />
@@ -34,15 +34,15 @@
     </head>
     <body>
         <!-- the viewport -->
-        <div class="m-pikabu-viewport">
+        <div class="pikabu-viewport">
             <!-- the left sidebar -->
-            <div class="m-pikabu-sidebar m-pikabu-left">
+            <div class="pikabu-sidebar pikabu-sidebar--left">
                 <!-- left sidebar content -->
                 <h2>Left</h2>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. 
-                    Fugiat, minus, beatae, molestias sint sunt possimus 
-                    quisquam commodi vel incidunt alias repellendus voluptatum 
-                    nisi voluptates cumque laboriosam nesciunt optio magnam 
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                    Fugiat, minus, beatae, molestias sint sunt possimus
+                    quisquam commodi vel incidunt alias repellendus voluptatum
+                    nisi voluptates cumque laboriosam nesciunt optio magnam
                     eligendi.</p>
                 <ul>
                     <li><a href="#">This is a link</a></li>
@@ -51,18 +51,21 @@
                     <li><a href="#">This is a link</a></li>
                     <li><a href="#">This is a link</a></li>
                 </ul>
-                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab 
-                    ipsum nisi qui odit magni atque dicta numquam sed. Consequatur, 
-                    illo, harum nulla non velit quas accusantium minus ad unde 
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab
+                    ipsum nisi qui odit magni atque dicta numquam sed. Consequatur,
+                    illo, harum nulla non velit quas accusantium minus ad unde
                     facilis.</p>
                 <p><a href="#">Link</a></p>
             </div>
             <!-- the main page content -->
-            <div class="m-pikabu-container">
+            <div class="pikabu-container">
+                <!-- Overlay is needed to have a big click area to close the sidebars -->
+                <div class="pikabu-overlay"></div>
+
                 <header>
-                    <a class="m-pikabu-nav-toggle" data-role="left">Left Menu</a>
+                    <a class="pikabu-nav-toggle" data-role="left">Left Menu</a>
                     <h1>Pikabu</h1>
-                    <a class="m-pikabu-nav-toggle" data-role="right">Right Menu</a>
+                    <a class="pikabu-nav-toggle" data-role="right">Right Menu</a>
                 </header>
                 <section>
                     <!-- Body content goes in here -->
@@ -75,7 +78,7 @@
                 </section>
             </div>
             <!-- the right sidebar -->
-            <div class="m-pikabu-sidebar m-pikabu-right">
+            <div class="pikabu-sidebar pikabu-sidebar--right">
                 <!-- right sidebar content -->
                 <h2>Height Demos</h2>
                 <p>Here's what Pikabu looks with content of differing heights:</p>
@@ -84,10 +87,10 @@
                         <a href="#" data-target="">Layout Demo 1: Default</a>
                     </li>
                     <li>
-                        <a href="#" data-target=".m-pikabu-container">Layout Demo 2: Taller content</a>
+                        <a href="#" data-target=".pikabu-container">Layout Demo 2: Taller content</a>
                     </li>
                     <li>
-                        <a href="#" data-target=".m-pikabu-left">Layout 3: Taller Sidebar</a>
+                        <a href="#" data-target=".pikabu-left">Layout 3: Taller Sidebar</a>
                     </li>
                 </ul>
             </div>
@@ -105,7 +108,7 @@
                 // Script to adjust element heights for demo
                 $('.m-heights-demo').on('click', 'a', function(e) {
                     var $link = $(this), target = $link.data('target');
-                    
+
                     e.preventDefault();
 
                     $('.is-active').removeClass('is-active');
@@ -114,22 +117,17 @@
                     $('.m-dummy-height').remove();
 
                     target && $(target).append($('<div class="m-dummy-height">'));
-
                     pikabu.closeSidebars();
-                    setTimeout(function() {
-                        pikabu.openSidebar('left');
-                    }, 1000);
                 });
 
                 /*
                 Sample usage:
-    
-                // All options are optional
+
                 pikabu = new Pikabu({
                     // If you'd like to request different elements be used
-                    // as controls. 
+                    // as controls.
                     // IMPORTANT: If you change the class names here, please
-                    // remember to change the appropriate classes in the 
+                    // remember to change the appropriate classes in the
                     // stylesheets as well.
                     selectors: {
                         element: '.main-element-container',
@@ -149,7 +147,7 @@
                     onClosed: function() { ... }
                 });
 
-                // Once you've created the pikabu instance like shown above, 
+                // Once you've created the pikabu instance like shown above,
                 // you can use it elsewhere as shown below:
 
                 pikabu.openSidebar('right');

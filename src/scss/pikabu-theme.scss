@@ -83,8 +83,9 @@ header h1 {
     }
 }
 
-.m-pikabu-nav-toggle {
+.pikabu-nav-toggle {
     position: relative;
+    @include backface-visibility(hidden);
     float: left;
 
     display: block;
@@ -130,8 +131,8 @@ header h1 {
          font-size: 17px;
     }
 
-    .m-pikabu-left-visible &[data-role="left"],
-    .m-pikabu-right-visible &[data-role="right"] {
+    .pikabu--left-sidebar-visible &[data-role="left"],
+    .pikabu--right-sidebar-visible &[data-role="right"] {
         background: rgba(black,.1);
         @include box-shadow(inset 0 1px 0 rgba(black,.1));
     }
@@ -141,17 +142,28 @@ section {
     padding: $margin*2;
 }
 
-.m-pikabu-sidebar{
+.pikabu-sidebar {
     @include box-sizing(border-box);
 
     padding: $margin;
-    background: $gray;
-    color: white;
+    background: #ddd;
+    color: #666;
+
+    a {
+        color: $brand;
+    }
 }
 
-// <TODO> Why do we need this?
-.m-pikabu-container {
+.pikabu-container {
     background: $background;
+
+    .pikabu--left-sidebar-visible & {
+        @include box-shadow(-5px 0px 15px rgba(0, 0, 0, 0.15));
+    }
+
+    .pikabu--right-sidebar-visible & {
+        @include box-shadow(5px 0px 15px rgba(0, 0, 0, 0.15));
+    }
 }
 
 section h2 {
@@ -212,36 +224,6 @@ section ul {
 
     body {
         min-height: 100%;
-    }
-
-    .m-pikabu-viewport {
-        display: block;
-        min-height: 100%;
-    }
-
-    // Hide the toggles by default, since the sidebars are always visible
-    .m-pikabu-nav-toggle {
-        display: none;
-    }
-
-    .m-pikabu-left,
-    .m-pikabu-right {
-        display: block;
-
-        // Force full height
-        position: absolute;
-        top: 0;
-        bottom: 0;
-
-        width: 20%;
-
-        @include translate3d(0, 0, 0);
-    }
-
-    // Dependent upon the width of the sidebars
-    .m-pikabu-container {
-        margin-left: 20%;
-        width: 60%;
     }
 }
 

@@ -17,11 +17,11 @@ This thing works on everything. We progressively enhance the experience for devi
 This module is also hosted on Mobify's CDN
 
 ### CSS
-    <link rel="stylesheet" href="//cdn.mobify.com/modules/pikabu/0.2.1/pikabu.css">
-    <link rel="stylesheet" href="//cdn.mobify.com/modules/pikabu/0.2.1/pikabu-theme.css">
+    <link rel="stylesheet" href="//cdn.mobify.com/modules/pikabu/0.2.2/pikabu.css">
+    <link rel="stylesheet" href="//cdn.mobify.com/modules/pikabu/0.2.2/pikabu-theme.css">
 
 ### JavaScript
-    <script src="//cdn.mobify.com/modules/pikabu/0.2.1/pikabu.min.js"></script>
+    <script src="//cdn.mobify.com/modules/pikabu/0.2.2/pikabu.min.js"></script>
 
 ## Basic Usage
 
