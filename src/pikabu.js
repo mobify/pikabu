@@ -132,7 +132,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         function isNewChrome(targetVersion) {
             var isChrome = navigator.userAgent.match(/Chrome\/([\d\.]+)\s/);
             var targetVersion = 29;
-            
+
             return (isChrome && parseFloat(isChrome[1]) >= targetVersion);
         }
 
@@ -250,12 +250,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         $.extend(true, settings, options);
 
         // Set up elements
-        this.$viewport = $(this.settings.viewportSelector);
-        this.$element = $(settings.selectors['element']);
-        this.$sidebars = {
-            left: $(settings.selectors['left']),
-            right: $(settings.selectors['right'])
-        };
+        this.setupElements();
 
         this.$navToggles = $(settings.selectors['navToggles']);
 
@@ -287,8 +282,19 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         this.$element.trigger('pikabu:initialized');
     };
 
+    Pikabu.prototype.setupElements = function() {
+
+        this.$viewport = $(this.settings.viewportSelector);
+        this.$element = $(this.settings.selectors['element']);
+        this.$sidebars = {
+            left: $(this.settings.selectors['left']),
+            right: $(this.settings.selectors['right'])
+        };
+    }
+
     // Bind Pikabu events
     Pikabu.prototype.bindEvents = function() {
+
         this.$element.on('pikabu:initialized', this.settings.onInit);
         this.$element.on('pikabu:opened', this.settings.onOpened);
         this.$element.on('pikabu:closed', this.settings.onClosed);
@@ -320,7 +326,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
                 _this.setHeights();
                 _this.setViewportWidth();
             } else {
-                // If we are on a wide-screen where sidebars are always visible, fix sidebar height 
+                // If we are on a wide-screen where sidebars are always visible, fix sidebar height
                 // to window height
                 if(_this.$sidebars['left'].is(':visible') || _this.$sidebars['right'].is(':visible')) {
                     _this.$viewport.height(windowHeight);
@@ -333,9 +339,10 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
     // Set classes to identify features
     Pikabu.prototype.markDeviceCharacteristics = function() {
+
         if (this.device.hasOverflowScrollingTouch) {
             this.$document.addClass('m-pikabu-overflow-scrolling');
-        } 
+        }
         if (this.device.isLegacyAndroid) {
             this.$document.addClass('m-pikabu-legacy-android');
         }
@@ -349,22 +356,23 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
     // Styles that aren't deleted when the sidebars are closed
     Pikabu.prototype.applyPersistentStyles = function() {
-        var bothSidebars = this.settings.selectors['common'] + ', \n' + 
+
+        var bothSidebars = this.settings.selectors['common'] + ', \n' +
             this.settings.selectors['element'];
         var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + this.settings.selectors['left'];
         var rightSidebarSelector = '.' + this.rightVisibleClass + ' ' + this.settings.selectors['right'];
-        var styles = '<style>\n' + 
-                bothSidebars + ' {\n' + 
-                    '-webkit-transition: -webkit-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
-                    '-moz-transition: -moz-transform '+ this.settings.transitionSpeed + 's ease-in;\n' + 
-                    '-ms-transition: -ms-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
+        var styles = '<style>\n' +
+                bothSidebars + ' {\n' +
+                    '-webkit-transition: -webkit-transform ' + this.settings.transitionSpeed + 's ease-in;\n' +
+                    '-moz-transition: -moz-transform '+ this.settings.transitionSpeed + 's ease-in;\n' +
+                    '-ms-transition: -ms-transform ' + this.settings.transitionSpeed + 's ease-in;\n' +
                     '-o-transition: -o-transform ' + this.settings.transitionSpeed +'s ease-in;\n' +
                     'transition: transform ' + this.settings.transitionSpeed +'s ease-in;\n' +
-                '}\n' + 
+                '}\n' +
                 leftSidebarSelector + ' {\n' +
                     '\twidth: ' + this.settings.widths['left'] + ';\n' +
-                '}\n' + 
-                rightSidebarSelector + ' {\n' + 
+                '}\n' +
+                rightSidebarSelector + ' {\n' +
                     '\twidth: ' + this.settings.widths['right'] + ';\n' +
                     '}' +
                 '</style>';
@@ -375,7 +383,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
     // Styles applied when sidebars are opened
     Pikabu.prototype.applyTransformations = function(sidebar) {
-        
+
         var width;
         var transform;
 
@@ -384,20 +392,20 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Transform to the left or the right
         transform = sidebar === 'left' ? width : '-' + width;
 
-        var styles = '<style id="' + this.activePikabuStylesSelector.slice(1) + '">\n' + 
-                        this.settings.selectors['element'] + ' {\n' + 
-                            '\t-webkit-transform: translate3d(' + transform + ', 0, 0);\n' + 
-                            '\t-moz-transform: translate3d(' + transform + ', 0, 0);\n' + 
-                            '\t-ms-transform: translate3d(' + transform + ', 0, 0);\n' + 
+        var styles = '<style id="' + this.activePikabuStylesSelector.slice(1) + '">\n' +
+                        this.settings.selectors[sidebar] + ' {\n' +
+                            '\t-webkit-transform: translate3d(' + transform + ', 0, 0);\n' +
+                            '\t-moz-transform: translate3d(' + transform + ', 0, 0);\n' +
+                            '\t-ms-transform: translate3d(' + transform + ', 0, 0);\n' +
                             '\t-o-transform: translate3d(' + transform + ', 0, 0);\n' +
-                            '\ttransform: translate3d(' + transform + ', 0, 0);\n' + 
+                            '\ttransform: translate3d(' + transform + ', 0, 0);\n' +
                         '}\n' +
-                        this.settings.selectors[sidebar] + ' {\n' + 
-                        '\t-webkit-transform: translate3d(0, 0, 0);\n' + 
-                        '\t-moz-transform: translate3d(0, 0, 0);\n' + 
-                        '\t-ms-transform: translate3d(0, 0, 0);\n' + 
-                        '\t-o-transform: translate3d(0, 0, 0);\n' + 
-                        '\ttransform: translate3d(0, 0, 0);\n' + 
+                        this.settings.selectors['element'] + ' {\n' +
+                        '\t-webkit-transform: translate3d(0, 0, 0);\n' +
+                        '\t-moz-transform: translate3d(0, 0, 0);\n' +
+                        '\t-ms-transform: translate3d(0, 0, 0);\n' +
+                        '\t-o-transform: translate3d(0, 0, 0);\n' +
+                        '\ttransform: translate3d(0, 0, 0);\n' +
                         '}' +
                     '</style>';
 
@@ -423,7 +431,6 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Set dimensions of elements
         this.setHeights();
         this.setViewportWidth();
-
         this.applyTransformations(target);
 
         // Scroll to the top of the sidebar
@@ -434,7 +441,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
     // Reset sidebar classes on closing
     Pikabu.prototype.resetSidebar = function($sidebar) {
-        
+
         $sidebar.removeClass('m-pikabu-overflow-touch');
 
         // <TODO> Check to make sure this works
@@ -467,7 +474,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Add class to body to indicate currently open sidebars
         this.$document
             .removeClass(this.leftVisibleClass + ' ' + this.rightVisibleClass);
-        
+
         // Reset viewport
         this.$viewport.css('width', 'auto');
 
@@ -477,7 +484,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         // Check to see if CSS transitions are supported
         if(this.device.transitionEvent && this.activeSidebar) {
             // 1. Removing overflow-scrolling-touch causes a content flash
-            // 2. Removing height too soon causes panel with content to be 
+            // 2. Removing height too soon causes panel with content to be
             // not full height during animation, so we do these after the sidebar has closed
             this.$element.one(this.device.transitionEvent, function(e) {
                 _this.resetSidebar($(this));
@@ -509,24 +516,27 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
     // Recalculate sidebar and viewport height on opening the sidebar
     Pikabu.prototype.setHeights = function() {
 
-        // We use outerHeight for newer Androids running Chrome, because Chrome sometimes 
-        // hides the address bar, changing the height. 
+        // We use outerHeight for newer Androids running Chrome, because Chrome sometimes
+        // hides the address bar, changing the height.
         var windowHeight = this.device.isNewChrome ? window.outerHeight : $(window).height();
 
+        // var $sidebar = this.$sidebars[this.activeSidebar];
         var $sidebar = this.activeSidebar && this.$sidebars[this.activeSidebar];
-        var sidebarHeight = $sidebar.removeAttr('style')[0].scrollHeight;
-        var maxHeight = Math.max(windowHeight, sidebarHeight);
 
         if(this.device.hasOverflowScrollingTouch) {
+            $sidebar.removeAttr('style');
             // Lock viewport for devices that have overflow-scrolling: touch, eg: iOS 5 devices
             $sidebar.height(windowHeight);
-            
+
             this.$element.height(windowHeight);
             this.$viewport.height(windowHeight);
             this.$overlay.height(windowHeight);
 
         } else {
-            // Set viewport to sidebar height or window height - whichever is greater, so that the 
+            var sidebarHeight = $sidebar.removeAttr('style')[0].scrollHeight || $sidebar.removeAttr('style').height() || $(window).height();
+            var maxHeight = Math.max(windowHeight, sidebarHeight);
+
+            // Set viewport to sidebar height or window height - whichever is greater, so that the
             // whole document scrolls revealing contents of the sidebar
             $sidebar.height(maxHeight);
 
