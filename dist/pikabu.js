@@ -1,24 +1,26 @@
 (function(factory) {
     if (typeof define === 'function' && define.amd) {
-        /*
-         In AMD environments, you will need to define an alias
-         to your selector engine. i.e. either zepto or jQuery.
-         */
         define([
             '$',
+            'plugin',
+            'bouncefix',
             'velocity',
-            'plugin'
+            'lockup',
+            'shade'
         ], factory);
     } else {
-        /*
-         Browser globals
-         */
         var framework = window.Zepto || window.jQuery;
-        factory(framework, framework.Velocity);
+        factory(framework, window.Plugin, window.bouncefix, window.Velocity);
     }
-}(function($, Velocity) {
-    var cssClasses = {
-
+}(function($, Plugin, bouncefix, Velocity) {
+    var classes = {
+        PINNY: 'pinny',
+        WRAPPER: 'pinny__wrapper',
+        TITLE: 'pinny__title',
+        CLOSE: 'pinny__close',
+        CONTENT: 'pinny__content',
+        OPENED: 'pinny--is-open',
+        SCROLLABLE: 'pinny--is-scrollable'
     };
 
     var selectors = {
@@ -26,7 +28,7 @@
     };
 
     function Pikabu(element, options) {
-        Pikabu._super.call(this, element, options, Pikabu.DEFAULTS);
+        Pikabu.__super__.call(this, element, options, Pikabu.DEFAULTS);
     }
 
     Pikabu.VERSION = '2.0.0';
@@ -40,9 +42,9 @@
         closed: $.noop
     };
 
-    $.plugin('pikabu', Pikabu, {
+    Plugin.create('pikabu', Pikabu, {
         _init: function(element) {
-            this.$pikabu = $(element);
+            this.$pikabu = $('<div class="pikabu"></div>').append($(element));
 
             this._bindEvents();
         },

@@ -47,10 +47,10 @@ module.exports = function(grunt) {
         }
     });
 
-    grunt.registerTask('serve', ['build-dist', 'connect:server', 'watch']);
-    grunt.registerTask('build-dist', ['lint:dev', 'copy', 'uglify', 'version:all', 'sass', 'autoprefixer', 'cssmin']);
+    grunt.registerTask('serve', ['build', 'connect:server', 'watch']);
+    grunt.registerTask('build', ['lint:dev', 'copy', 'uglify', 'version:all', 'sass', 'autoprefixer', 'cssmin']);
     grunt.registerTask('release', ['lint:dev', 'test', 'shell:tagRelease']);
-    grunt.registerTask('test', ['build-dist', 'connect:test', 'mocha_phantomjs']);
-    grunt.registerTask('test:browser', ['build-dist', 'connect:test:keepalive']);
-    grunt.registerTask('default', 'build-dist');
+    grunt.registerTask('test', ['build', 'connect:test', 'mocha_phantomjs']);
+    grunt.registerTask('test:browser', ['build', 'connect:test:keepalive']);
+    grunt.registerTask('default', 'build');
 };

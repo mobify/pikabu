@@ -1,6 +1,6 @@
 module.exports = {
     targets: [
-        'src/js/pikabu.js'
+        'src/js/**/*.js'
     ],
     excludes: []
 };

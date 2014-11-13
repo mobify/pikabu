@@ -1,7 +1,6 @@
 define([
     'text!fixtures/pikabu.html',
     '$',
-    'velocity',
     'pikabu'
 ], function(fixture, $) {
     var Pikabu;

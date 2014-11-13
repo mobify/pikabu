@@ -3,7 +3,6 @@ machine:
     version: 0.10.21
 
 test:
-
     pre:
         - bower install
     override:
