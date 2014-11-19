@@ -330,8 +330,8 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
             } else {
                 // If we are on a wide-screen where sidebars are always visible, fix sidebar height 
                 // to window height
-                if( _this.$sidebars['left'].offset().left < 0 
-                    || _this.$sidebars['right'].offset().left >= _viewportWidth
+                if( _this.$sidebars['left'].offset().left > -_this.$sidebars['left'].width() 
+                    || _this.$sidebars['right'].offset().left < _viewportWidth
                   ) {
                     _this.$viewport.height(windowHeight);
                     _this.$sidebars['left'].height(windowHeight);
