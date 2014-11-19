@@ -113,11 +113,11 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
             var el = document.createElement('fakeelement');
             var transitions = {
+                'WebkitTransition':'webkitTransitionEnd',
                 'transition':'transitionEnd transitionend',
                 'OTransition':'oTransitionEnd',
                 'MSTransition':'msTransitionEnd',
-                'MozTransition':'transitionend',
-                'WebkitTransition':'webkitTransitionEnd'
+                'MozTransition':'transitionend'
             }
 
             var t;
