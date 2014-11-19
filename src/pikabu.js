@@ -298,7 +298,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
     Pikabu.prototype.bindHandlers = function() {
 
         var _this  = this,
-            _width = $(window).width();
+            _viewportWidth = $(window).width();
 
         // Shows sidebar on clicking/tapping nav toggles
         this.$navToggles.on('click', function(e) {
@@ -316,10 +316,10 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         $(window).on('resize orientationchange', function() {
             // iOS seems to sometimes unnecessarily fire a `resize` event on scrolling,
             // let's check if a resize really happened
-            if( $(window).width() === _width )
+            if( $(window).width() === _viewportWidth )
                 return
             else
-                _width = $(window).width; // recache the window width for further checks
+                _viewportWidth = $(window).width; // recache the window width for further checks
 
             var windowHeight = $(window).height();
             // Only do something if a sidebar is active
@@ -330,7 +330,9 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
             } else {
                 // If we are on a wide-screen where sidebars are always visible, fix sidebar height 
                 // to window height
-                if(_this.$sidebars['left'].is(':visible') || _this.$sidebars['right'].is(':visible')) {
+                if( _this.$sidebars['left'].offset().left < 0 
+                    || _this.$sidebars['right'].offset().left >= _viewportWidth
+                  ) {
                     _this.$viewport.height(windowHeight);
                     _this.$sidebars['left'].height(windowHeight);
                     _this.$sidebars['right'].height(windowHeight);
