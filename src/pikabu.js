@@ -297,7 +297,8 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
     // Bind nav toggles and overlay handlers
     Pikabu.prototype.bindHandlers = function() {
 
-        var _this = this;
+        var _this  = this,
+            _width = $(window).width();
 
         // Shows sidebar on clicking/tapping nav toggles
         this.$navToggles.on('click', function(e) {
@@ -313,6 +314,13 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
         // Recalculate heights and width of viewport on size/orientation change
         $(window).on('resize orientationchange', function() {
+            // iOS seems to sometimes unnecessarily fire a `resize` event on scrolling,
+            // let's check if a resize really happened
+            if( $(window).width() === _width )
+                return
+            else
+                _width = $(window).width; // recache the window width for further checks
+
             var windowHeight = $(window).height();
             // Only do something if a sidebar is active
             if(_this.activeSidebar) {
