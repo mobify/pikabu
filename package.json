@@ -1,10 +1,10 @@
 {
-  "name": "pinny",
+  "name": "pikabu",
   "repository" : {
     "type" : "git",
-    "url" : "https://github.com/mobify/pinny.git"
+    "url" : "https://github.com/mobify/pikabu.git"
   },
-  "version": "1.1.2",
+  "version": "2.0.0",
   "description": "A mobile first content fly-in UI plugin",
   "devDependencies": {
     "chai": "~1.9.0",

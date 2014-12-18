@@ -14,7 +14,7 @@ require.config({
         'shade': 'bower_components/shade/dist/shade.min',
         'lockup': 'bower_components/lockup/dist/lockup',
         'deckard': 'bower_components/deckard/dist/deckard.min',
-        'pinny': 'dist/pinny'
+        'pikabu': 'dist/pikabu'
     },
     'shim': {
         '$': {

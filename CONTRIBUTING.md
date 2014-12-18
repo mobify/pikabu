@@ -4,14 +4,14 @@ We love pull requests, and other people helping maintain our code. If you want t
 
 ### Bugfixes
 
-Create an issue in our [issue tracker](https://github.com/mobify/pinny/issues) describing the problem. Follow the steps below, fixing the bug in your fork. Don't forget to add tests!
+Create an issue in our [issue tracker](https://github.com/mobify/pikabu/issues) describing the problem. Follow the steps below, fixing the bug in your fork. Don't forget to add tests!
 
 ### General Contribution Guidelines
 
 Fork, then clone the repo:
 
 ```
-git clone https://github.com/your-username/pinny.git
+git clone https://github.com/your-username/pikabu.git
 ```
 
 Ensure the tests pass:
@@ -38,6 +38,6 @@ Run the following `grunt` task to build the dist:
 grunt build
 ```
 
-Push to your fork, and open a [pull request](https://github.com/mobify/pinny/compare). Please ensure you describe your changes in your pull request, as they have a higher liklihood of being merged. 
+Push to your fork, and open a [pull request](https://github.com/mobify/pikabu/compare). Please ensure you describe your changes in your pull request, as they have a higher liklihood of being merged.
 
 

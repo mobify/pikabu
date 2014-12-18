@@ -2,11 +2,11 @@
 
 A mobile-first content fly-in UI plugin.
 
-[![Bower version](https://badge.fury.io/bo/pinny.svg)](http://badge.fury.io/bo/pinny)
+[![Bower version](https://badge.fury.io/bo/pikabu.svg)](http://badge.fury.io/bo/pikabu)
 [![Dependency Status](https://www.versioneye.com/user/projects/54512dcb9fc4d548ec000380/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54512dcb9fc4d548ec000380)
-[![Circle CI](https://circleci.com/gh/mobify/pinny.png?style=shield&circle-token=7f052e50aabb80c939303cc2f5118aa92ca502fa)](https://circleci.com/gh/mobify/pinny)
+[![Circle CI](https://circleci.com/gh/mobify/pikabu.png?style=shield&circle-token=7f052e50aabb80c939303cc2f5118aa92ca502fa)](https://circleci.com/gh/mobify/pikabu)
 
-![Pikabu in action](https://raw.githubusercontent.com/mobify/pinny/master/examples/assets/i/pinny.gif "Pikabu in action")
+![Pikabu in action](https://raw.githubusercontent.com/mobify/pikabu/master/examples/assets/i/pikabu.gif "Pikabu in action")
 
 ## Dependencies
 
@@ -31,7 +31,7 @@ Pikabu supports jQuery but is not actively developed for it. You should be able 
 Pikabu can be installed using bower:
 
 ```
-bower install pinny
+bower install pikabu
 ```
 
 ## Usage with Require.js
@@ -43,12 +43,12 @@ We highly recommend using Require.js with Pikabu. To use Require, you have to re
 {
     'paths': {
     	'plugin': 'bower_components/plugin/dist/plugin.min',
-        'pinny': 'bower_components/pinny/dist/pinny.min',
-        'modal-center': 'bower_components/pinny/dist/effect/modal-center',
-        'sheet-bottom': 'bower_components/pinny/dist/effect/sheet-bottom',
-        'sheet-left': 'bower_components/pinny/dist/effect/sheet-left',
-        'sheet-right': 'bower_components/pinny/dist/effect/sheet-right',
-        'sheet-top': 'bower_components/pinny/dist/effect/sheet-top',
+        'pikabu': 'bower_components/pikabu/dist/pikabu.min',
+        'modal-center': 'bower_components/pikabu/dist/effect/modal-center',
+        'sheet-bottom': 'bower_components/pikabu/dist/effect/sheet-bottom',
+        'sheet-left': 'bower_components/pikabu/dist/effect/sheet-left',
+        'sheet-right': 'bower_components/pikabu/dist/effect/sheet-right',
+        'sheet-top': 'bower_components/pikabu/dist/effect/sheet-top',
         'shade': 'bower_components/shade/dist/shade.min',
         'lockup': 'bower_components/lockup/dist/lockup.min',
         'deckard': 'bower_components/deckard/dist/deckard.min',
@@ -64,10 +64,10 @@ And then require Pikabu in as needed:
 define([
     'zepto',
     'modal-center',
-    'pinny'
+    'pikabu'
     ],
     function($, modalCenter) {
-        $('.pinny').pinny({
+        $('.pikabu').pikabu({
         	effect: modalCenter
         });
     }
@@ -81,23 +81,23 @@ Pikabu requires very minimal markup. All Pikabu needs is a div with your content
 
 > To avoid any unwanted FOUT, decorate the content you will be passing to Pikabu with the `hidden` attribute. We will remove that attribute when Pikabu is initialized.
 
-For accessibility and functional purposes, Pikabu will wrap all of your body content in a wrapping container. This could conflict with other plugins that alter your page's markup. If you're seeing issues, try initializing Pikabu after your other plugins. If you want to specify your own wrapping container, add a class of `lockup__container` to the element. This element should be a root level element to be effective. You can also [pass Pikabu a `container` parameter](https://github.com/mobify/pinny/tree/1.0-alpha#container).
+For accessibility and functional purposes, Pikabu will wrap all of your body content in a wrapping container. This could conflict with other plugins that alter your page's markup. If you're seeing issues, try initializing Pikabu after your other plugins. If you want to specify your own wrapping container, add a class of `lockup__container` to the element. This element should be a root level element to be effective. You can also [pass Pikabu a `container` parameter](https://github.com/mobify/pikabu/tree/1.0-alpha#container).
 
 ```html
 <!-- Include the CSS -->
-<link rel="stylesheet" href="pinny.min.css">
+<link rel="stylesheet" href="pikabu.min.css">
 
 <!-- Optionally include the Theme file -->
-<link rel="stylesheet" href="pinny-style.min.css">
+<link rel="stylesheet" href="pikabu-style.min.css">
 
 <!-- Optionally include a wrapping container -->
-<div id="bodyContent" class="pinny__body-wrapper">
+<div id="bodyContent" class="pikabu__body-wrapper">
     Your specified body content
 </div>
 
 <!-- Include the markup -->
 <div id="yourPikabu" hidden>
-	Your pinny content
+	Your pikabu content
 </div>
 
 <!-- Include dependencies -->
@@ -110,22 +110,22 @@ For accessibility and functional purposes, Pikabu will wrap all of your body con
 <script src="bouncefix.min.js"></script>
 
 <!-- Include the effect module you want to use -->
-<script src="effect/modal-center.js"></script>
-<!-- Include pinny.js -->
-<script src="pinny.min.js"></script>
+<script src="effect/drawer-left.js"></script>
+<!-- Include pikabu.js -->
+<script src="pikabu.min.js"></script>
 
 <!-- Construct Pikabu -->
-<script>$('#yourPikabu').pinny()</script>
+<script>$('#yourPikabu').pikabu()</script>
 ```
 
 ## Initializing the plugin
 
-### pinny()
+### pikabu()
 
-Initializes the pinny.
+Initializes the pikabu.
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
 	effect: modalCenter
 });
 ```
@@ -133,17 +133,17 @@ $('#myPikabu').pinny({
 You can also initialize the Pikabu through the use of a data attribute. The attribute takes a value equal to the effect you want to use.
 
 ```html
-<div id="myPikabu" data-pinny="sheet-bottom">
+<div id="myPikabu" data-pikabu="sheet-bottom">
 ```
 
 _You *must* pass Pikabu an effect for it to work._
 
-### pinny(options)
+### pikabu(options)
 
 Initialize with options.
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     effect: sheetBottom,
     container: '#container',
     structure: {
@@ -151,7 +151,7 @@ $('#myPikabu').pinny({
         footer: false
     },
     zIndex: 2,
-    cssClass: 'my-pinny-class',
+    cssClass: 'my-pikabu-class',
     coverage: '100%',
     easing: 'swing',
     duration: 200,
@@ -183,7 +183,7 @@ Specifies which `effect` module Pikabu should use when opening. `Effect` modules
 - Sheet Right - slides in from the right of the screen
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     effect: sheetLeft
 });
 ```
@@ -195,7 +195,7 @@ default: `$container` (lockup's container)
 Specify the container Pikabu will be created within
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     container: $('#mainForm') // or container: '#mainForm'
 });
 ```
@@ -210,7 +210,7 @@ to the lockup container. If you want it to be appended outside the lockup contai
 specify that element here.
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     appendTo: 'body'
 });
 ```
@@ -225,17 +225,17 @@ default: `{
 
 Defines the structure to use for Pikabu. Specifically, Pikabu tries to build its own HTML structure if passed the default options.
 
-**If you want to have full control over the HTML of your Pikabu, including the header, footer, and content section, set `structure: false`**. Setting `structure: false` will still allow the `close` event to be bound to any element that has the `pinny__close` class, allowing you to specify the element that should trigger closing your Pikabu.
+**If you want to have full control over the HTML of your Pikabu, including the header, footer, and content section, set `structure: false`**. Setting `structure: false` will still allow the `close` event to be bound to any element that has the `pikabu__close` class, allowing you to specify the element that should trigger closing your Pikabu.
 
 If you are using `structure: false`, you will need to structure your HTML to include the following elements (*missing any elements will cause Pikabu to not function*):
 
 ```html
-<div id="myPikabu" class="pinny__wrapper" role="document" hidden>
-    <div class="pinny__header">
-    	<a class="pinny__close">close</a>
+<div id="myPikabu" class="pikabu__wrapper" role="document" hidden>
+    <div class="pikabu__header">
+    	<a class="pikabu__close">close</a>
     </div>
-    <div class="pinny__content pinny--is-scrollable"></div>
-    <div class="pinny__footer"></div>
+    <div class="pikabu__content pikabu--is-scrollable"></div>
+    <div class="pikabu__footer"></div>
 </div>
 ```
 
@@ -247,13 +247,13 @@ default: `''`
 
 Sets the header that Pikabu should use in its header bar. Valid values are:
 
-- `boolean` - specifies no default header generated. If chosen, the user is required to specify the header markup themselves, including the appropriate class, `pinny__header`. It will be expected that this will be a part of the element that is used to invoke pinny.
+- `boolean` - specifies no default header generated. If chosen, the user is required to specify the header markup themselves, including the appropriate class, `pikabu__header`. It will be expected that this will be a part of the element that is used to invoke pikabu.
 - `string` - specifies the title text used in the header. The header structure will be generated automatically.
 - `html|element` - specifies the HTML to be used for the header.
 
 ```js
 // generates no header
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
 	structure: {
 		header: false
 	}
@@ -263,7 +263,7 @@ or
 
 ```js
 // generates a default header with the title "My Pikabu"
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
 		structure: {
 			header: 'My Pikabu'
 		}
@@ -273,9 +273,9 @@ $('#myPikabu').pinny({
 or
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
 	structure: {
-		header: '<header class="pinny__header">My Pikabu<button class="pinny__close">Close</button></header>'
+		header: '<header class="pikabu__header">My Pikabu<button class="pikabu__close">Close</button></header>'
 	}
 });
 ```
@@ -286,13 +286,13 @@ default: `false`
 
 Sets the footer that Pikabu should use in its footer. Valid values are:
 
-- `boolean` - specifies no default footer generated. If chosen, the user is required to specify the footer markup themselves, including the appropriate class, `pinny__footer`.
+- `boolean` - specifies no default footer generated. If chosen, the user is required to specify the footer markup themselves, including the appropriate class, `pikabu__footer`.
 - `string` - specifies the title text used in the footer. The footer structure will be generated automatically.
 - `html|element` - specifies the HTML to be used for the footer.
 
 ```js
 // generates no footer
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
 	structure: {
 		footer: false
 	}
@@ -302,7 +302,7 @@ or
 
 ```js
 // generates a default footer with the contents "My Footer"
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
 	structure: {
 		footer: 'My Footer'
 	}
@@ -312,9 +312,9 @@ $('#myPikabu').pinny({
 or
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
 	structure: {
-		footer: '<footer class="pinny__footer">My Footer</footer>'
+		footer: '<footer class="pikabu__footer">My Footer</footer>'
 	}
 });
 ```
@@ -326,7 +326,7 @@ default: `2`
 Sets the z-index value for Pikabu. Use this value if you need to specify a specific stacking order.
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     zIndex: 10
 });
 ```
@@ -338,8 +338,8 @@ default: `''`
 Sets a class to apply to the main Pikabu parent element for ease of styling.
 
 ```js
-#('#myPikabu').pinny({
-    cssClass: 'my-pinny-class'
+#('#myPikabu').pikabu({
+    cssClass: 'my-pikabu-class'
 });
 ```
 
@@ -347,10 +347,10 @@ Sets a class to apply to the main Pikabu parent element for ease of styling.
 
 default: `80%`
 
-Sets the coverage value. This will allow you to specify that the pinny covers only a portion of the screen.
+Sets the coverage value. This will allow you to specify that the pikabu covers only a portion of the screen.
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     coverage: '80%'
 });
 ```
@@ -362,7 +362,7 @@ default: `200`
 Sets the duration for the animation.
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     duration: 600
 });
 ```
@@ -371,12 +371,12 @@ $('#myPikabu').pinny({
 
 default: `{}`
 
-Specifies whether pinny should use the shade overlay. You can pass options through to [Shade](http://github.com/mobify/shade) using this property. For more information on available options, see the [Shade documentation](http://github.com/mobify/shade).
+Specifies whether pikabu should use the shade overlay. You can pass options through to [Shade](http://github.com/mobify/shade) using this property. For more information on available options, see the [Shade documentation](http://github.com/mobify/shade).
 
 > **Warning:** We currently force Shade's duration to match the one provided to Pikabu. This is to limit DOM thrashing as much as possible during Pikabu's animation. Pikabu hitches a little if we don't do this.
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     shade: {
         color: '#333333'
     }
@@ -397,7 +397,7 @@ Sets the easing for the animation. Pikabu takes all of the same easing propertie
 For more information, check out [Velocity's docs on easing](http://julian.com/research/velocity/#easing).
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     easing: 'ease-in-out'
 });
 ```
@@ -406,7 +406,7 @@ $('#myPikabu').pinny({
 
 default: `function(e, ui) {}`
 
-Triggered every time the selected pinny item is starting to open.
+Triggered every time the selected pikabu item is starting to open.
 
 **Parameters**
 
@@ -416,7 +416,7 @@ Triggered every time the selected pinny item is starting to open.
 | **ui** | An object containing any associated data for use inside the callback |
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     open: function(e, ui) {
         // ui.item contains the item opening
     }
@@ -427,7 +427,7 @@ $('#myPikabu').pinny({
 
 default: `function(e, ui) {}`
 
-Triggered every time the selected pinny item has finished opening.
+Triggered every time the selected pikabu item has finished opening.
 
 **Parameters**
 
@@ -437,7 +437,7 @@ Triggered every time the selected pinny item has finished opening.
 | **ui** | An object containing any associated data for use inside the callback |
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     opened: function(e, ui) {
         // ui.item contains the item that opened
     }
@@ -448,7 +448,7 @@ $('#myPikabu').pinny({
 
 default: `function(e, ui) {}`
 
-Triggered every time an pinny item is starting to close.
+Triggered every time an pikabu item is starting to close.
 
 | Parameter name | Description |
 |----------------|-------------|
@@ -456,7 +456,7 @@ Triggered every time an pinny item is starting to close.
 | **ui** | An object containing any associated data for use inside the callback |
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     close: function(e, ui) {
         // ui.item contains the item closing
     }
@@ -467,7 +467,7 @@ $('#myPikabu').pinny({
 
 default: `function(e, ui) {}`
 
-Triggered every time an pinny item is finished closing.
+Triggered every time an pikabu item is finished closing.
 
 | Parameter name | Description |
 |----------------|-------------|
@@ -475,7 +475,7 @@ Triggered every time an pinny item is finished closing.
 | **ui** | An object containing any associated data for use inside the callback |
 
 ```js
-$('#myPikabu').pinny({
+$('#myPikabu').pikabu({
     closed: function(e, ui) {
         // ui.item contains the item that closed
     }
@@ -486,24 +486,24 @@ $('#myPikabu').pinny({
 
 ### Open
 
-Open the selected pinny item by element reference
+Open the selected pikabu item by element reference
 
 ```js
-$pinny.pinny('open');
+$pikabu.pikabu('open');
 ```
 
 ### Close
 
-Close the selected pinny item by element reference
+Close the selected pikabu item by element reference
 
 ```js
-$pinny.pinny('close');
+$pikabu.pikabu('close');
 ```
 
-> Pikabu will automatically trigger `close` on elements decorated with the class name `pinny__close`.
+> Pikabu will automatically trigger `close` on elements decorated with the class name `pikabu__close`.
 
 ```html
-<button class="pinny__close">Close</button>
+<button class="pikabu__close">Close</button>
 ```
 
 ## Browser Compatibility

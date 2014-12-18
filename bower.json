@@ -1,14 +1,14 @@
 {
-  "name": "pinny",
-  "version": "1.1.2",
-  "homepage": "https://github.com/mobify/pinny",
+  "name": "pikabu",
+  "version": "2.0.0",
+  "homepage": "https://github.com/mobify/pikabu",
   "authors": [
     "Mobify <jobs@mobify.com>"
   ],
   "description": "A mobile first content fly-in UI plugin",
-  "main": "dist/pinny.min.js",
+  "main": "dist/pikabu.min.js",
   "keywords": [
-    "pinny",
+    "pikabu",
     "fly-in",
     "modal",
     "mobile",

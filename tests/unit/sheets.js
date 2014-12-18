@@ -1,12 +1,8 @@
 define([
-    'text!fixtures/pinny.html',
+    'text!fixtures/pikabu.html',
     '$',
     'modal-center',
-    'sheet-top',
-    'sheet-bottom',
-    'sheet-left',
-    'sheet-right',
-    'pinny'
+    'pikabu'
 ], function(fixture, $, modalCenter, sheetTop, sheetBottom, sheetLeft, sheetRight) {
     var element;
 
@@ -23,58 +19,58 @@ define([
         });
 
         it('opens correctly using modal-center', function() {
-            var $pinny = element.pinny({
+            var $pikabu = element.pikabu({
                 effect: modalCenter,
                 opened: function() {
-                    assert.isTrue($pinny.closest('.pinny').hasClass('pinny--is-open'));
+                    assert.isTrue($pikabu.closest('.pikabu').hasClass('pikabu--is-open'));
                 }
             });
 
-            $pinny.pinny('open');
+            $pikabu.pikabu('open');
         });
 
         it('opens correctly using sheet-top', function() {
-            var $pinny = element.pinny({
+            var $pikabu = element.pikabu({
                 effect: sheetTop,
                 opened: function() {
-                    assert.isTrue($pinny.closest('.pinny').hasClass('pinny--is-open'));
+                    assert.isTrue($pikabu.closest('.pikabu').hasClass('pikabu--is-open'));
                 }
             });
 
-            $pinny.pinny('open');
+            $pikabu.pikabu('open');
         });
 
         it('opens correctly using sheet-bottom', function() {
-            var $pinny = element.pinny({
+            var $pikabu = element.pikabu({
                 effect: sheetBottom,
                 opened: function() {
-                    assert.isTrue($pinny.closest('.pinny').hasClass('pinny--is-open'));
+                    assert.isTrue($pikabu.closest('.pikabu').hasClass('pikabu--is-open'));
                 }
             });
 
-            $pinny.pinny('open');
+            $pikabu.pikabu('open');
         });
 
         it('opens correctly using sheet-left', function() {
-            var $pinny = element.pinny({
+            var $pikabu = element.pikabu({
                 effect: sheetLeft,
                 opened: function() {
-                    assert.isTrue($pinny.closest('.pinny').hasClass('pinny--is-open'));
+                    assert.isTrue($pikabu.closest('.pikabu').hasClass('pikabu--is-open'));
                 }
             });
 
-            $pinny.pinny('open');
+            $pikabu.pikabu('open');
         });
 
         it('opens correctly using sheet-right', function() {
-            var $pinny = element.pinny({
+            var $pikabu = element.pikabu({
                 effect: sheetRight,
                 opened: function() {
-                    assert.isTrue($pinny.closest('.pinny').hasClass('pinny--is-open'));
+                    assert.isTrue($pikabu.closest('.pikabu').hasClass('pikabu--is-open'));
                 }
             });
 
-            $pinny.pinny('open');
+            $pikabu.pikabu('open');
         });
     });
 });

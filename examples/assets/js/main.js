@@ -6,7 +6,7 @@ require(['config'], function() {
         'sheet-right',
         'sheet-left',
         'sheet-bottom',
-        'pinny'
+        'pikabu'
     ],
     function(
         $,
@@ -16,16 +16,16 @@ require(['config'], function() {
         sheetLeft,
         sheetBottom
     ) {
-        var $modalCenter = $('#modalCenterPikabu').pinny({
+        var $modalCenter = $('#modalCenterPikabu').pikabu({
             effect: modalCenter,
             coverage: '80%'
         });
 
         $('#modalCenter').on('click', function() {
-            $modalCenter.pinny('toggle');
+            $modalCenter.pikabu('toggle');
         });
 
-        var $sheetTop = $('#sheetTopPikabu').pinny({
+        var $sheetTop = $('#sheetTopPikabu').pikabu({
             effect: sheetTop,
             coverage: '80%',
             shade: {
@@ -34,34 +34,34 @@ require(['config'], function() {
         });
 
         $('#sheetTop').on('click', function() {
-            $sheetTop.pinny('toggle');
+            $sheetTop.pikabu('toggle');
         });
 
-        var $sheetRight = $('#sheetRightPikabu').pinny({
+        var $sheetRight = $('#sheetRightPikabu').pikabu({
             effect: sheetRight,
             coverage: '80%'
         });
 
         $('#sheetRight').on('click', function() {
-            $sheetRight.pinny('toggle');
+            $sheetRight.pikabu('toggle');
         });
 
-        var $sheetLeft = $('#sheetLeftPikabu').pinny({
+        var $sheetLeft = $('#sheetLeftPikabu').pikabu({
             effect: sheetLeft,
             coverage: '80%'
         });
 
         $('#sheetLeft').on('click', function() {
-            $sheetLeft.pinny('toggle');
+            $sheetLeft.pikabu('toggle');
         });
 
-        var $sheetBottom = $('#sheetBottomPikabu').pinny({
+        var $sheetBottom = $('#sheetBottomPikabu').pikabu({
             effect: sheetBottom,
             coverage: '100%'
         });
 
         $('#sheetBottom').on('click', function() {
-            $sheetBottom.pinny('toggle');
+            $sheetBottom.pikabu('toggle');
         });
 
         // Enable active states

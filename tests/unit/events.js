@@ -1,8 +1,8 @@
 define([
-    'text!fixtures/pinny.html',
+    'text!fixtures/pikabu.html',
     '$',
     'modal-center',
-    'pinny'
+    'pikabu'
 ], function(fixture, $, modalCenter) {
     var element;
 
@@ -18,82 +18,82 @@ define([
             }
         });
 
-        it('fires the open event when pinny is opened', function(done) {
-            element.pinny({
+        it('fires the open event when pikabu is opened', function(done) {
+            element.pikabu({
                 effect: modalCenter,
                 open: function() {
                     done();
                 }
             });
 
-            element.pinny('open');
+            element.pikabu('open');
         });
 
-        it('fires the opened event when pinny is opened', function(done) {
-            element.pinny({
+        it('fires the opened event when pikabu is opened', function(done) {
+            element.pikabu({
                 effect: modalCenter,
                 opened: function() {
                     done();
                 }
             });
-            element.pinny('open');
+            element.pikabu('open');
         });
 
-        it('does not fire the open event when pinny is already open', function() {
+        it('does not fire the open event when pikabu is already open', function() {
             var openCount = 0;
-            element.pinny({
+            element.pikabu({
                 effect: modalCenter,
                 open: function() {
                     openCount++;
                 }
             });
 
-            element.pinny('open');
-            element.pinny('open');
+            element.pikabu('open');
+            element.pikabu('open');
 
             assert.equal(openCount, 1);
         });
 
-        it('fires the close event when pinny is closed', function(done) {
-            element.pinny({
+        it('fires the close event when pikabu is closed', function(done) {
+            element.pikabu({
                 effect: modalCenter,
                 opened: function() {
-                    element.pinny('close');
+                    element.pikabu('close');
                 },
                 close: function() {
                     done();
                 }
             });
 
-            element.pinny('open');
+            element.pikabu('open');
         });
 
-        it('fires the closed event when pinny is closed', function(done) {
-            element.pinny({
+        it('fires the closed event when pikabu is closed', function(done) {
+            element.pikabu({
                 effect: modalCenter,
                 opened: function() {
-                    element.pinny('close');
+                    element.pikabu('close');
                 },
                 closed: function() {
                     done();
                 }
             });
 
-            element.pinny('open');
+            element.pikabu('open');
         });
 
-        it('does not fire the close event when pinny is already closed', function(done) {
+        it('does not fire the close event when pikabu is already closed', function(done) {
             var closeCount = 0;
 
             this.timeout(5000);
 
-            element.pinny({
+            element.pikabu({
                 effect: modalCenter,
                 opened: function() {
-                    element.pinny('close');
+                    element.pikabu('close');
 
                     setTimeout(function() {
-                        element.pinny('close');
+                        element.pikabu('close');
 
                         assert.equal(closeCount, 1);
 
@@ -106,7 +106,7 @@ define([
                 }
             });
 
-            element.pinny('open');
+            element.pikabu('open');
         });
     });
 });
