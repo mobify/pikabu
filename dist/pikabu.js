@@ -36,6 +36,7 @@
 
     var classes = {
         PIKABU: 'pikabu',
+        CONTAINER: 'pikabu__container',
         HEADER: 'pikabu__header',
         WRAPPER: 'pikabu__wrapper',
         SPACER: 'pikabu__spacer',
@@ -221,7 +222,7 @@
                     }
                 });
 
-            this.$container = this.$pikabu.data('lockup').$container;
+            this.$container = this.$pikabu.data('lockup').$container.addClass(classes.CONTAINER);
 
             this.$pikabu.appendTo(this.options.appendTo ? $(this.options.appendTo) : this.$container);
 
@@ -257,7 +258,7 @@
 
             if (this.options.shade) {
                 this.$shade = this.$container.shade($.extend(true, {}, {
-                    zIndex: 0,
+                    zIndex: 2,
                     click: function() {
                         plugin.close();
                     }

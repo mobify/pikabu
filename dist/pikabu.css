@@ -5,6 +5,11 @@
   outline: none;
   -webkit-tap-highlight-color: transparent; }
 
+.pikabu__container {
+  position: relative;
+  z-index: 2;
+  background: #fff; }
+
 .pikabu__wrapper {
   display: -webkit-box;
   display: -webkit-flex;

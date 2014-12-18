@@ -24,6 +24,13 @@
     -webkit-tap-highlight-color: rgba(black, 0); // 5
 }
 
+.pikabu__container {
+    position: relative;
+    z-index: 2;
+
+    background: #fff;
+}
+
 // Pikabu: Wrapper
 // --------------
 //
