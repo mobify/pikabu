@@ -11,7 +11,8 @@ require(['config'], function() {
                 '../../tests/unit/constructor.js',
                 '../../tests/unit/plugin.js',
                 '../../tests/unit/options.js',
-                '../../tests/unit/events.js'
+                '../../tests/unit/events.js',
+                '../../tests/unit/sheets.js'
             ];
 
             require(tests, function() {

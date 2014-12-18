@@ -1,12 +1,12 @@
 module.exports = function(grunt) {
     return {
         core: {
-            src: 'dist/pikabu.css',
-            dest: 'dist/pikabu.min.css'
+            src: 'dist/pinny.css',
+            dest: 'dist/pinny.min.css'
         },
         style: {
-            src: 'dist/pikabu-theme.css',
-            dest: 'dist/pikabu-theme.min.css'
+            src: 'dist/pinny-theme.css',
+            dest: 'dist/pinny-theme.min.css'
         }
     };
 };

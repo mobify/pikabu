@@ -1,11 +1,17 @@
 module.exports = function(grunt) {
     return {
         options: {
-            banner: '/*! <%= pkg.name %> <%= pkg.version %> <%= grunt.template.today("yyyy-mm-dd") %> */\n'
+            banner: '/*! <%= pkg.name %> <%= pkg.version %> (<%= pkg.repository.url%>) */\n'
         },
         build: {
-            src: 'src/js/pikabu.js',
-            dest: 'dist/pikabu.min.js'
+            files: {
+                'dist/pinny.min.js': 'src/js/pinny.js',
+                'dist/effect/modal-center.min.js': 'src/js/effect/modal-center.js',
+                'dist/effect/sheet-top.min.js': 'src/js/effect/sheet-top.js',
+                'dist/effect/sheet-bottom.min.js': 'src/js/effect/sheet-bottom.js',
+                'dist/effect/sheet-left.min.js': 'src/js/effect/sheet-left.js',
+                'dist/effect/sheet-right.min.js': 'src/js/effect/sheet-right.js'
+            }
         }
     };
 };

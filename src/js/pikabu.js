@@ -3,28 +3,20 @@
         define([
             '$',
             'plugin',
-            'bouncefix',
-            'velocity',
-            'lockup',
-            'shade'
+            'pikabu'
         ], factory);
     } else {
         var framework = window.Zepto || window.jQuery;
         factory(framework, window.Plugin, window.bouncefix, window.Velocity);
     }
-}(function($, Plugin, bouncefix, Velocity) {
+}(function($, Plugin) {
     var classes = {
-        PINNY: 'pinny',
-        WRAPPER: 'pinny__wrapper',
-        TITLE: 'pinny__title',
-        CLOSE: 'pinny__close',
-        CONTENT: 'pinny__content',
-        OPENED: 'pinny--is-open',
-        SCROLLABLE: 'pinny--is-scrollable'
-    };
-
-    var selectors = {
-
+        PIKABU: 'pikabu',
+        WRAPPER: 'pikabu__wrapper',
+        CLOSE: 'pikabu__close',
+        CONTENT: 'pikabu__content',
+        OPENED: 'pikabu--is-open',
+        SCROLLABLE: 'pikabu--is-scrollable'
     };
 
     function Pikabu(element, options) {
@@ -34,6 +26,10 @@
     Pikabu.VERSION = '0';
 
     Pikabu.DEFAULTS = {
+        effect: null,
+        container: null,
+        cssClass: '',
+        coverage: '100%',
         duration: 200,
         easing: 'swing',
         open: $.noop,
@@ -44,13 +40,19 @@
 
     Plugin.create('pikabu', Pikabu, {
         _init: function(element) {
-            this.$pikabu = $('<div class="pikabu"></div>').append($(element));
-
-            this._bindEvents();
+            this.$pikabu = $(element).pikabu(this.options);
         },
 
-        _bindEvents: function() {
+        toggle: function() {
+            this[this.$pikabu.hasClass(classes.OPENED) ? 'close' : 'open']();
+        },
 
+        open: function() {
+            this.$pikabu.pikabu('open');
+        },
+
+        close: function() {
+            this.$pikabu.pikabu('close');
         }
     });
 

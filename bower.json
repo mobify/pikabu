@@ -1,17 +1,18 @@
 {
-  "name": "pikabu",
-  "version": "2.0.0",
-  "homepage": "https://github.com/mobify/pikabu",
+  "name": "pinny",
+  "version": "1.1.2",
+  "homepage": "https://github.com/mobify/pinny",
   "authors": [
     "Mobify <jobs@mobify.com>"
   ],
-  "description": "A mobile first off-canvas UI plugin",
-  "main": "dist/pikabu.min.js",
+  "description": "A mobile first content fly-in UI plugin",
+  "main": "dist/pinny.min.js",
   "keywords": [
-    "off-canvas",
-    "flyout",
-    "mobify",
-    "sidebar"
+    "pinny",
+    "fly-in",
+    "modal",
+    "mobile",
+    "mobify"
   ],
   "license": "MIT",
   "ignore": [
@@ -24,6 +25,7 @@
     "requirejs": "~2.1.14",
     "bouncefix.js": "~0.3.0",
     "shade": "~1.0.5",
-    "lockup": "~0.0.5"
+    "lockup": "~1.0.0",
+    "deckard": "~1.0.0"
   }
 }

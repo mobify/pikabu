@@ -1,0 +1,120 @@
+// Pikabu Theme
+// ===========
+//
+// This is the defauly Pikabu Theme!
+//
+// This theme is OPTIONAL
+
+.pikabu {
+    box-shadow: 0 0 5px 2px rgba(black, 0.25);
+}
+
+
+// Pikabu: Header
+// -------------
+
+.pikabu__header {
+    position: relative;
+
+    display: flex;
+    padding: 0 5px;
+    border-bottom: 1px solid #ededed;
+
+    background: white;
+}
+
+
+// Pikabu: Title
+// ------------
+
+.pikabu__title {
+    flex: 1;
+    margin: 0;
+    padding: 10px;
+
+    font-size: 1.2em;
+}
+
+
+// Pikabu: Close Button
+// -------------------
+//
+// Notes:
+//
+// 1. Hide the "close" text, visually
+
+.pikabu__close {
+    overflow: hidden;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    padding: 0;
+    border: 0;
+
+    background: none;
+
+    text-indent: 100%; // 1
+
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(black, 0);
+}
+
+
+// Pikabu: Close Button Icon
+// ------------------------
+//
+// This creates the "X" shape
+//
+//
+// Notes:
+//
+// 1. Pseudo elements absolutely positioned relative to the parent `.pikabu__close`
+// 2. Center vertically and horizontally
+
+.pikabu__close {
+    position: relative; // 1
+
+    &::before,
+    &::after {
+        content: '';
+
+        position: absolute; // 1
+        top: 50%; // 2
+        left: 50%; // 2
+        z-index: 2;
+
+        display: block;
+        width: 20px;
+        height: 2px;
+        margin-top: -1px; // 2
+        margin-left: -10px; // 2
+
+        border-radius: 2px;
+        background: #59adeb;
+
+        pointer-events: none;
+    }
+
+    &::before {
+        transform: rotate(-45deg);
+    }
+
+    &::after {
+        transform: rotate(45deg);
+    }
+
+    &:active {
+        &::before,
+        &::after {
+            background: #3e7cc6;
+        }
+    }
+}
+
+
+// Pikabu: Content
+// --------------
+
+.pikabu__content {
+    padding: 10px;
+}

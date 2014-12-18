@@ -4,7 +4,7 @@ module.exports = function(grunt) {
             options: {
                 prefix: 'VERSION\\s*=\\s*[\\\'|"]'
             },
-            src: ['dist/pikabu.js', 'dist/pikabu.min.js']
+            src: ['dist/pinny.js', 'dist/pinny.min.js']
         },
         bower: {
             options: {

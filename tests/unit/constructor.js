@@ -1,21 +1,24 @@
 define([
-    'text!fixtures/pikabu.html',
+    'text!fixtures/pinny.html',
     '$',
-    'pikabu'
-], function(fixture, $) {
+    'modal-center',
+    'pinny'
+], function(fixture, $, modalCenter) {
     var Pikabu;
     var element;
 
     describe('Pikabu constructor', function() {
         beforeEach(function() {
-            Pikabu = $.fn.pikabu.Constructor;
+            Pikabu = $.fn.pinny.Constructor;
             element = $(fixture);
         });
 
-        it('creates a pikabu instance', function() {
-            var pikabu = new Pikabu(element);
+        it('creates a pinny instance', function() {
+            var pinny = new Pikabu(element, {
+                effect: modalCenter
+            });
 
-            assert.isDefined(pikabu);
+            assert.isDefined(pinny);
         });
     });
 });

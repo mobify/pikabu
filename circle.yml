@@ -4,6 +4,7 @@ machine:
 
 test:
     pre:
+        - gem install sass -v 3.4
         - bower install
     override:
         - grunt test 
