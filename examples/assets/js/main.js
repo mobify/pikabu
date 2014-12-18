@@ -1,67 +1,20 @@
 require(['config'], function() {
     require([
         '$',
-        'modal-center',
-        'sheet-top',
-        'sheet-right',
-        'sheet-left',
-        'sheet-bottom',
+        'drawer-left',
         'pikabu'
     ],
     function(
         $,
-        modalCenter,
-        sheetTop,
-        sheetRight,
-        sheetLeft,
-        sheetBottom
+        drawerLeft
     ) {
-        var $modalCenter = $('#modalCenterPikabu').pikabu({
-            effect: modalCenter,
+        var $drawerLeft = $('#drawerLeftPikabu').pikabu({
+            effect: drawerLeft,
             coverage: '80%'
         });
 
-        $('#modalCenter').on('click', function() {
-            $modalCenter.pikabu('toggle');
-        });
-
-        var $sheetTop = $('#sheetTopPikabu').pikabu({
-            effect: sheetTop,
-            coverage: '80%',
-            shade: {
-                duration: 200
-            }
-        });
-
-        $('#sheetTop').on('click', function() {
-            $sheetTop.pikabu('toggle');
-        });
-
-        var $sheetRight = $('#sheetRightPikabu').pikabu({
-            effect: sheetRight,
-            coverage: '80%'
-        });
-
-        $('#sheetRight').on('click', function() {
-            $sheetRight.pikabu('toggle');
-        });
-
-        var $sheetLeft = $('#sheetLeftPikabu').pikabu({
-            effect: sheetLeft,
-            coverage: '80%'
-        });
-
-        $('#sheetLeft').on('click', function() {
-            $sheetLeft.pikabu('toggle');
-        });
-
-        var $sheetBottom = $('#sheetBottomPikabu').pikabu({
-            effect: sheetBottom,
-            coverage: '100%'
-        });
-
-        $('#sheetBottom').on('click', function() {
-            $sheetBottom.pikabu('toggle');
+        $('#drawerLeft').on('click', function() {
+            $drawerLeft.pikabu('toggle');
         });
 
         // Enable active states

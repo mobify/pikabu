@@ -70,12 +70,12 @@
     Pikabu.DEFAULTS = {
         effect: null,
         container: null,
-        appendTo: null,
+        appendTo: document.body,
         structure: {
             header: '',
             footer: false
         },
-        zIndex: 2,
+        zIndex: 0,
         cssClass: '',
         coverage: '100%',
         easing: 'swing',
@@ -256,7 +256,8 @@
             this._addAccessibility();
 
             if (this.options.shade) {
-                this.$shade = this.$pikabu.shade($.extend(true, {}, {
+                this.$shade = this.$container.shade($.extend(true, {}, {
+                    zIndex: 0,
                     click: function() {
                         plugin.close();
                     }

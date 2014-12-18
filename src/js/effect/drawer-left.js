@@ -30,22 +30,23 @@
                     plugin.$container,
                     { translateX: ['100%', '0'] },
                     {
+                        begin: function() {
+                            plugin.$pikabu.show();
+                        },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
-                        display: 'block',
                         complete: plugin.animation.openComplete.bind(this)
                     }
                 );
             },
             close: function() {
                 Velocity.animate(
-                    plugin.$pikabu,
+                    plugin.$container,
                     'reverse',
                     {
                         begin: plugin.animation.beginClose.bind(this),
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
-                        display: 'none',
                         complete: plugin.animation.closeComplete.bind(this)
                     }
                 );
