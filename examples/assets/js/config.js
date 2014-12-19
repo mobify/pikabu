@@ -7,7 +7,7 @@ require.config({
         'velocity': 'bower_components/mobify-velocity/velocity',
         'drawer-left': 'dist/effect/drawer-left',
         'plugin': 'bower_components/plugin/dist/plugin.min',
-        'shade': 'bower_components/shade/dist/shade.min',
+        'shade': 'bower_components/shade/dist/shade',
         'lockup': 'bower_components/lockup/dist/lockup',
         'deckard': 'bower_components/deckard/dist/deckard.min',
         'pikabu': 'dist/pikabu'

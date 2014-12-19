@@ -147,8 +147,6 @@
 
             this.effect.open.call(this);
 
-            this.options.shade && this.$shade.shade('open');
-
             this.$pikabu.addClass(classes.OPENED);
 
             this.$pikabu.lockup('lock');
@@ -218,6 +216,18 @@
                     container: this.options.container,
                     locked: function () {
                         plugin._handleKeyboardShown();
+
+                        if (plugin.options.shade) {
+                            var $shade = plugin.$shade.data('shade').$shade;
+                            var scrollValue = plugin.$container.scrollTop();
+
+                            plugin.$shade.shade('open');
+
+                            $shade.css({
+                                'top': scrollValue,
+                                'bottom': -scrollValue
+                            });
+                        }
                     },
                     unlocked: function () {
                         plugin._handleKeyboardHidden();
@@ -261,6 +271,7 @@
             if (this.options.shade) {
                 this.$shade = this.$container.shade($.extend(true, {}, {
                     zIndex: 2,
+                    append: 'appendTo',
                     click: function() {
                         plugin.close();
                     }
