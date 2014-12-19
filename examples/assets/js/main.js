@@ -10,7 +10,8 @@ require(['config'], function() {
     ) {
         var $drawerLeft = $('#drawerLeftPikabu').pikabu({
             effect: drawerLeft,
-            coverage: '80%'
+            coverage: '80%',
+            shade: false
         });
 
         $('#drawerLeft').on('click', function() {

@@ -8,7 +8,9 @@ html {
 }
 
 body {
-    margin: 10px;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
 }
 
 .button-section {

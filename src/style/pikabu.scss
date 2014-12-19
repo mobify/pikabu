@@ -12,6 +12,7 @@
 // 4. Hide the outline when Pikabu is focused for screen readers
 // 5. Pikabu shows a tap highlight when tapped for an unknown reason. This
 //    removes that.
+//
 
 .pikabu {
     position: fixed; // 1
@@ -28,7 +29,10 @@
     position: relative;
     z-index: 2;
 
-    background: #fff;
+    overflow: hidden;
+
+    background: red;
+    box-shadow: 0 0 10px rgba(blue, 0.5);
 }
 
 // Pikabu: Wrapper

@@ -107,6 +107,8 @@
                 this._trigger('closed');
 
                 this._resetFocus();
+
+                this.$pikabu.lockup('unlock');
             }
         },
 
@@ -153,6 +155,8 @@
         },
 
         close: function() {
+            var plugin = this;
+
             if (!this._isOpen()) {
                 return;
             }
@@ -166,8 +170,6 @@
             this.options.shade && this.$shade.shade('close');
 
             this.effect.close.call(this);
-
-            this.$pikabu.lockup('unlock');
         },
 
         _isOpen: function() {

@@ -13,6 +13,11 @@
         var plugin = this;
         var coverage = this._coverage();
 
+        var $elements = [
+            plugin.$container,
+            plugin.$shade
+        ];
+
         this.$pikabu
             .css({
                 top: 0,
@@ -28,14 +33,16 @@
                 // Force feed the initial value
                 Velocity.animate(
                     plugin.$container,
-                    { translateX: ['100%', '0'] },
+                    { translateX: [this.options.coverage, '0'] },
                     {
                         begin: function() {
                             plugin.$pikabu.show();
                         },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
-                        complete: plugin.animation.openComplete.bind(this)
+                        complete: function() {
+                            plugin.animation.openComplete.call(plugin)
+                        }
                     }
                 );
             },
@@ -44,10 +51,18 @@
                     plugin.$container,
                     'reverse',
                     {
-                        begin: plugin.animation.beginClose.bind(this),
+                        begin: function() {
+                            plugin.animation.beginClose.call(plugin)
+                        },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
-                        complete: plugin.animation.closeComplete.bind(this)
+                        complete: function() {
+                            plugin.$pikabu.hide();
+
+                            console.log('start to begin to unlock');
+
+                            plugin.animation.closeComplete.call(plugin)
+                        }
                     }
                 );
             }
