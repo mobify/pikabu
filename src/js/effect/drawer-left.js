@@ -41,7 +41,7 @@
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         complete: function() {
-                            plugin.animation.openComplete.call(plugin)
+                            plugin.animation.openComplete.call(plugin);
                         }
                     }
                 );
@@ -52,16 +52,14 @@
                     'reverse',
                     {
                         begin: function() {
-                            plugin.animation.beginClose.call(plugin)
+                            plugin.animation.beginClose.call(plugin);
                         },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         complete: function() {
                             plugin.$pikabu.hide();
 
-                            console.log('start to begin to unlock');
-
-                            plugin.animation.closeComplete.call(plugin)
+                            plugin.animation.closeComplete.call(plugin);
                         }
                     }
                 );
