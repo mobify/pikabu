@@ -5,6 +5,9 @@
   outline: none;
   -webkit-tap-highlight-color: transparent; }
 
+.pikabu__viewport {
+  overflow: hidden; }
+
 .pikabu__container {
   position: relative;
   z-index: 2;

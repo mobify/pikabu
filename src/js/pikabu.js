@@ -37,6 +37,7 @@
     var classes = {
         PIKABU: 'pikabu',
         CONTAINER: 'pikabu__container',
+        VIEWPORT: 'pikabu__viewport',
         HEADER: 'pikabu__header',
         WRAPPER: 'pikabu__wrapper',
         SPACER: 'pikabu__spacer',
@@ -70,8 +71,8 @@
 
     Pikabu.DEFAULTS = {
         effect: null,
-        container: null,
-        appendTo: document.body,
+        container: $('.' + classes.CONTAINER),
+        appendTo: $('.' + classes.VIEWPORT),
         structure: {
             header: '',
             footer: false

@@ -25,6 +25,10 @@
     -webkit-tap-highlight-color: rgba(black, 0); // 5
 }
 
+.pikabu__viewport {
+    overflow: hidden;
+}
+
 .pikabu__container {
     position: relative;
     z-index: 2;
