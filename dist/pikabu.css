@@ -1,7 +1,6 @@
 .pikabu {
   position: fixed;
   display: none;
-  background: white;
   outline: none;
   -webkit-tap-highlight-color: transparent; }
 
@@ -10,8 +9,9 @@
 
 .pikabu__container {
   position: relative;
-  z-index: 2;
-  overflow: hidden; }
+  z-index: 1;
+  overflow: hidden;
+  background-color: white; }
 
 .pikabu__wrapper {
   display: -webkit-box;
