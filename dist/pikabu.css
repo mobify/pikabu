@@ -11,10 +11,7 @@
 .pikabu__container {
   position: relative;
   z-index: 2;
-  overflow: hidden;
-  background: red;
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 255, 0.5);
-          box-shadow: 0 0 10px rgba(0, 0, 255, 0.5); }
+  overflow: hidden; }
 
 .pikabu__wrapper {
   display: -webkit-box;

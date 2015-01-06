@@ -14,6 +14,12 @@
 //    removes that.
 //
 
+// Variables
+// ---------
+//
+
+$pikabu__z-index: 2 !default;
+
 .pikabu {
     position: fixed; // 1
 
@@ -25,25 +31,35 @@
     -webkit-tap-highlight-color: rgba(black, 0); // 5
 }
 
+// Pikabu: Viewport
+// ----------------
+//
+// Applying `overflow: hidden;` to `body` doesn't block horizontal scrolling
+// when an internal element is translated outside of its bounds. We need this
+// `viewport` container to block horizontal scrolling.
+
 .pikabu__viewport {
     overflow: hidden;
 }
 
+// Pikabu: Container
+// ----------------
+//
+// This container holds the main body content of the page and gets translated
+// by the effect.
+
 .pikabu__container {
     position: relative;
-    z-index: 2;
+    z-index: $pikabu__z-index;
 
     overflow: hidden;
-
-    background: red;
-    box-shadow: 0 0 10px rgba(blue, 0.5);
 }
 
 // Pikabu: Wrapper
 // --------------
 //
-// The Pikabu Wrapper is responsible for applying a flex context that will layout
-// the children inside (i.e. header, content and footer).
+// The Pikabu Wrapper is responsible for applying a flex context that will
+// layout the children inside (i.e. header, content and footer).
 //
 // This is added to the markup automatically by Pikabu, so no need to include in
 // any authored code.
