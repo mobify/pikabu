@@ -47,8 +47,6 @@
                             }
 
                             plugin.$container.width(windowWidth);
-
-                            plugin.animation.beginOpen.call(plugin);
                         },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
