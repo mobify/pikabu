@@ -13,10 +13,9 @@
         var plugin = this;
         var coverage = this._coverage();
 
-        var $elements = [
-            plugin.$container,
-            plugin.$shade
-        ];
+        var $animators = $('.pikabu__container, .pikabu--fixed, .shade');
+
+        var windowHeight;
 
         this.$pikabu
             .css({
@@ -30,13 +29,26 @@
 
         return {
             open: function() {
+                var containerHeight = plugin.$container.height();
+                var containerWidth = plugin.$container.width();
+                var windowHeight = window.innerHeight;
+                var windowWidth = window.innerWidth;
+
                 // Force feed the initial value
                 Velocity.animate(
-                    plugin.$container,
+                    $animators,
                     { translateX: [this.options.coverage, '0'] },
                     {
                         begin: function() {
                             plugin.$pikabu.show();
+
+                            if (containerHeight < windowHeight) {
+                                plugin.$container.height(windowHeight);
+                            }
+
+                            plugin.$container.width(windowWidth);
+
+                            plugin.animation.beginOpen.call(plugin);
                         },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
@@ -48,7 +60,7 @@
             },
             close: function() {
                 Velocity.animate(
-                    plugin.$container,
+                    $animators,
                     'reverse',
                     {
                         begin: function() {
@@ -58,6 +70,11 @@
                         duration: plugin.options.duration,
                         complete: function() {
                             plugin.$pikabu.hide();
+
+                            plugin.$container.css({
+                                height: '',
+                                width: ''
+                            });
 
                             plugin.animation.closeComplete.call(plugin);
                         }

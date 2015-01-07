@@ -13,7 +13,7 @@ require(['config'], function() {
             coverage: '80%'
         });
 
-        $('#drawerLeft').on('click', function() {
+        $('.js-drawer-left').on('click', function() {
             $drawerLeft.pikabu('toggle');
         });
 
