@@ -82,7 +82,9 @@
         coverage: '100%',
         easing: 'swing',
         duration: 200,
-        shade: {},
+        shade: {
+            zIndex: 2
+        },
         open: $.noop,
         opened: $.noop,
         close: $.noop,
@@ -97,7 +99,7 @@
          */
         animation: {
             beginClose: function() {
-
+                this.options.shade && this.$shade.shade('close');
             },
             openComplete: function() {
                 this._trigger('opened');
@@ -167,8 +169,6 @@
             bouncefix.remove(classes.SCROLLABLE);
 
             this.$pikabu.removeClass(classes.OPENED);
-
-            this.options.shade && this.$shade.shade('close');
 
             this.effect.close.call(this);
         },
@@ -262,18 +262,13 @@
             this._addAccessibility();
 
             if (this.options.shade) {
-                this.$shade = this.$viewport.shade($.extend(true, {}, {
-                    zIndex: 2,
+                this.$shade = this.$viewport.shade($.extend(true, this.options.shade, {
                     append: 'appendTo',
                     click: function() {
                         plugin.close();
                     }
-                }, $.extend(
-                    this.options.shade,
-                    {
-                        duration: this.options.duration
-                    }
-                )));
+                }
+                ));
             }
         },
 
