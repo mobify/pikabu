@@ -13,10 +13,10 @@ require(['config'], function() {
         var $drawerLeft = $('#drawerLeftPikabu').pikabu({
             effect: drawerLeft,
             coverage: '80%',
-            easing: [200, 15],
+            easing: [200, 20],
             duration: 1000,
             shade: {
-                duration: 500,
+                duration: 300,
                 zIndex: 5
             }
         });
@@ -38,7 +38,6 @@ require(['config'], function() {
 
         $('.js-drawer-right').on('click', function() {
             $drawerRight.pikabu('toggle');
-            console.log('clicked');
         });
 
         // Enable active states

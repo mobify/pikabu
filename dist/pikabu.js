@@ -36,6 +36,7 @@
 
     var classes = {
         PIKABU: 'pikabu',
+        ELEMENT: 'pikabu__element',
         CONTAINER: 'pikabu__container',
         VIEWPORT: 'pikabu__viewport',
         HEADER: 'pikabu__header',
@@ -241,13 +242,15 @@
                 $('<div />')
                     .addClass(classes.CONTENT)
                     .addClass(classes.SCROLLABLE)
-                    .append(this.$element)
+                    .append(this.$element.addClass(classes.ELEMENT))
                     .append(this.$spacer)
                     .appendTo($wrapper);
 
                 this._buildComponent('footer').appendTo($wrapper);
             } else {
-                this.$element.appendTo(this.$pikabu);
+                this.$element
+                    .addClass(classes.ELEMENT)
+                    .appendTo(this.$pikabu);
             }
 
             this.$header = this.$pikabu.find('.' + classes.HEADER);
@@ -265,7 +268,7 @@
                 this.$shade = this.$viewport.shade($.extend(true, this.options.shade, {
                     append: 'appendTo',
                     click: function() {
-                        plugin.close();
+                        $('.' + classes.ELEMENT).pikabu('close');
                     }
                 }
                 ));
