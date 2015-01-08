@@ -27,5 +27,8 @@
     "shade": "#pikabu-changes",
     "lockup": "~1.0.0",
     "deckard": "~1.0.0"
+  },
+  "devDependencies": {
+    "spline": "~1.0.1"
   }
 }

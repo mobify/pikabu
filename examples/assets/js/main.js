@@ -18,7 +18,8 @@ require(['config'], function() {
             shade: {
                 duration: 300,
                 zIndex: 5
-            }
+            },
+            cssClass: 'c-pikabu c--left'
         });
 
         var $drawerRight = $('#drawerRightPikabu').pikabu({
@@ -29,7 +30,8 @@ require(['config'], function() {
             shade: {
                 duration: 100,
                 zIndex: 5
-            }
+            },
+            cssClass: 'c-pikabu c--right'
         });
 
         $('.js-drawer-left').on('click', function() {

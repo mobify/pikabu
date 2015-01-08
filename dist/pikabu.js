@@ -75,7 +75,7 @@
         container: $('.' + classes.CONTAINER),
         appendTo: $('.' + classes.VIEWPORT),
         structure: {
-            header: '',
+            header: false,
             footer: false
         },
         zIndex: 0,
