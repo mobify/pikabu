@@ -1,16 +1,33 @@
 // Pikabu
 // =====
 //
+
+// Variables
+// ---------
+//
+// Notes:
+//
+// 1. Sets the default background color for the document. This is necessary
+//    your flyouts don't bleed through when Pikabu is opened.
+// 2. Sets the default z-index for the main body content. This should always be
+//    higher than the sidebar z-index to stop content bleed-through.
+
+$pikabu__background-color: white !default; // 1
+$pikabu__z-index: 1 !default; // 2
+
+// Pikabu: Sidebar
+// ----------------
+//
+// This element contains the sidebar content which is used for the flyout.
 //
 // Notes:
 //
 // 1. The exact position (top, right, bottom, left) is added automatically by
-//    Pikabu. The positioning can be configured by using Pikabu's `coverage` API,
-//    which is explained [here](https://github.com/mobify/pikabu#coverage)
-// 2. The display is automatically set to "block" by Pikabu on open.
-// 3. Avoid content bleed through.
-// 4. Hide the outline when Pikabu is focused for screen readers
-// 5. Pikabu shows a tap highlight when tapped for an unknown reason. This
+//    Pikabu. The positioning can be configured by using Pikabu's `coverage` API
+//    explained [here](https://github.com/mobify/pikabu#coverage)
+// 2. The display is automatically set to `block` by Pikabu on open.
+// 3. Hide the outline when Pikabu is focused for screen readers
+// 4. Pikabu shows a tap highlight when tapped for an unknown reason. This
 //    removes that.
 
 .pikabu {
@@ -18,24 +35,48 @@
 
     display: none; // 2
 
-    background: white; // 3
-    outline: none; // 4
+    outline: none; // 3
 
-    -webkit-tap-highlight-color: rgba(black, 0); // 5
+    -webkit-tap-highlight-color: rgba(black, 0); // 4
 }
+
+// Pikabu: Viewport
+// ----------------
+//
+// Notes:
+//
+// 1. Applying `overflow: hidden;` to `body` doesn't block horizontal scrolling
+//    when an internal element is translated outside of its bounds. We need this
+//    `viewport` container to block horizontal scrolling.
+
+.pikabu__viewport {
+    overflow: hidden; // 1
+}
+
+// Pikabu: Container
+// ----------------
+//
+// This container holds the main body content of the page and gets translated
+// by the effect.
+//
+// Notes:
+//
+// 1. Avoid content bleed-through
 
 .pikabu__container {
     position: relative;
-    z-index: 2;
+    z-index: $pikabu__z-index;
 
-    background: #fff;
+    overflow: hidden;
+
+    background-color: $pikabu__background-color; // 1
 }
 
 // Pikabu: Wrapper
 // --------------
 //
-// The Pikabu Wrapper is responsible for applying a flex context that will layout
-// the children inside (i.e. header, content and footer).
+// The Pikabu Wrapper is responsible for applying a flex context that will
+// layout the children inside (i.e. header, content and footer).
 //
 // This is added to the markup automatically by Pikabu, so no need to include in
 // any authored code.

@@ -8,7 +8,8 @@ html {
 }
 
 body {
-    margin: 10px;
+    margin: 0;
+    padding: 0;
 }
 
 .button-section {
@@ -18,4 +19,13 @@ body {
 
 input {
     font-size: 16px;
+}
+
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 5;
+
+    background: white;
 }

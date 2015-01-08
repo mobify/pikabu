@@ -1,14 +1,17 @@
 .pikabu {
   position: fixed;
   display: none;
-  background: white;
   outline: none;
   -webkit-tap-highlight-color: transparent; }
 
+.pikabu__viewport {
+  overflow: hidden; }
+
 .pikabu__container {
   position: relative;
-  z-index: 2;
-  background: #fff; }
+  z-index: 1;
+  overflow: hidden;
+  background-color: white; }
 
 .pikabu__wrapper {
   display: -webkit-box;

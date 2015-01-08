@@ -13,6 +13,10 @@
         var plugin = this;
         var coverage = this._coverage();
 
+        var $animators = $('.pikabu__container, .pikabu--fixed, .shade');
+
+        var windowHeight;
+
         this.$pikabu
             .css({
                 top: 0,
@@ -25,29 +29,53 @@
 
         return {
             open: function() {
+                var containerHeight = plugin.$container.height();
+                var containerWidth = plugin.$container.width();
+                var windowHeight = window.innerHeight;
+                var windowWidth = window.innerWidth;
+
                 // Force feed the initial value
                 Velocity.animate(
-                    plugin.$container,
-                    { translateX: ['100%', '0'] },
+                    $animators,
+                    { translateX: [this.options.coverage, '0'] },
                     {
                         begin: function() {
                             plugin.$pikabu.show();
+
+                            if (containerHeight < windowHeight) {
+                                plugin.$container.height(windowHeight);
+                            }
+
+                            plugin.$container.width(windowWidth);
                         },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
-                        complete: plugin.animation.openComplete.bind(this)
+                        complete: function() {
+                            plugin.animation.openComplete.call(plugin);
+                        }
                     }
                 );
             },
             close: function() {
                 Velocity.animate(
-                    plugin.$container,
+                    $animators,
                     'reverse',
                     {
-                        begin: plugin.animation.beginClose.bind(this),
+                        begin: function() {
+                            plugin.animation.beginClose.call(plugin);
+                        },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
-                        complete: plugin.animation.closeComplete.bind(this)
+                        complete: function() {
+                            plugin.$pikabu.hide();
+
+                            plugin.$container.css({
+                                height: '',
+                                width: ''
+                            });
+
+                            plugin.animation.closeComplete.call(plugin);
+                        }
                     }
                 );
             }

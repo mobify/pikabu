@@ -4,9 +4,9 @@
 // This is the defauly Pikabu Theme!
 //
 // This theme is OPTIONAL
-
-.pikabu {
-    box-shadow: 0 0 5px 2px rgba(black, 0.25);
+//
+body {
+    overflow-x: hidden;
 }
 
 
@@ -20,7 +20,7 @@
     padding: 0 5px;
     border-bottom: 1px solid #ededed;
 
-    background: white;
+    background: blue;
 }
 
 

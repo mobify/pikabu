@@ -1,6 +1,5 @@
-.pikabu {
-  -webkit-box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25);
-          box-shadow: 0 0 5px 2px rgba(0, 0, 0, 0.25); }
+body {
+  overflow-x: hidden; }
 
 .pikabu__header {
   position: relative;
@@ -10,7 +9,7 @@
   display: flex;
   padding: 0 5px;
   border-bottom: 1px solid #ededed;
-  background: white; }
+  background: blue; }
 
 .pikabu__title {
   -webkit-box-flex: 1;

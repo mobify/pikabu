@@ -21,8 +21,8 @@
             .css({
                 top: 0,
                 bottom: 0,
-                left: 0,
-                right: coverage ? coverage : 'auto',
+                left: coverage ? coverage : 'auto',
+                right: 0,
                 width: coverage ? 'auto' : this.options.coverage,
                 height: 'auto'
             });
@@ -37,7 +37,7 @@
                 // Force feed the initial value
                 Velocity.animate(
                     $animators,
-                    { translateX: [this.options.coverage, '0'] },
+                    { translateX: ['-' + this.options.coverage, '0'] },
                     {
                         begin: function() {
                             plugin.$pikabu.show();

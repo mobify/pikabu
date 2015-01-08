@@ -36,7 +36,9 @@
 
     var classes = {
         PIKABU: 'pikabu',
+        ELEMENT: 'pikabu__element',
         CONTAINER: 'pikabu__container',
+        VIEWPORT: 'pikabu__viewport',
         HEADER: 'pikabu__header',
         WRAPPER: 'pikabu__wrapper',
         SPACER: 'pikabu__spacer',
@@ -70,8 +72,8 @@
 
     Pikabu.DEFAULTS = {
         effect: null,
-        container: null,
-        appendTo: document.body,
+        container: $('.' + classes.CONTAINER),
+        appendTo: $('.' + classes.VIEWPORT),
         structure: {
             header: '',
             footer: false
@@ -81,7 +83,9 @@
         coverage: '100%',
         easing: 'swing',
         duration: 200,
-        shade: {},
+        shade: {
+            zIndex: 2
+        },
         open: $.noop,
         opened: $.noop,
         close: $.noop,
@@ -96,7 +100,7 @@
          */
         animation: {
             beginClose: function() {
-
+                this.options.shade && this.$shade.shade('close');
             },
             openComplete: function() {
                 this._trigger('opened');
@@ -107,6 +111,8 @@
                 this._trigger('closed');
 
                 this._resetFocus();
+
+                this.$pikabu.lockup('unlock');
             }
         },
 
@@ -153,6 +159,8 @@
         },
 
         close: function() {
+            var plugin = this;
+
             if (!this._isOpen()) {
                 return;
             }
@@ -163,11 +171,7 @@
 
             this.$pikabu.removeClass(classes.OPENED);
 
-            this.options.shade && this.$shade.shade('close');
-
             this.effect.close.call(this);
-
-            this.$pikabu.lockup('unlock');
         },
 
         _isOpen: function() {
@@ -222,6 +226,8 @@
                     }
                 });
 
+            this.$viewport = $('.' + classes.VIEWPORT);
+
             this.$container = this.$pikabu.data('lockup').$container.addClass(classes.CONTAINER);
 
             this.$pikabu.appendTo(this.options.appendTo ? $(this.options.appendTo) : this.$container);
@@ -236,13 +242,15 @@
                 $('<div />')
                     .addClass(classes.CONTENT)
                     .addClass(classes.SCROLLABLE)
-                    .append(this.$element)
+                    .append(this.$element.addClass(classes.ELEMENT))
                     .append(this.$spacer)
                     .appendTo($wrapper);
 
                 this._buildComponent('footer').appendTo($wrapper);
             } else {
-                this.$element.appendTo(this.$pikabu);
+                this.$element
+                    .addClass(classes.ELEMENT)
+                    .appendTo(this.$pikabu);
             }
 
             this.$header = this.$pikabu.find('.' + classes.HEADER);
@@ -257,17 +265,13 @@
             this._addAccessibility();
 
             if (this.options.shade) {
-                this.$shade = this.$container.shade($.extend(true, {}, {
-                    zIndex: 2,
+                this.$shade = this.$viewport.shade($.extend(true, this.options.shade, {
+                    append: 'appendTo',
                     click: function() {
-                        plugin.close();
+                        $('.' + classes.ELEMENT).pikabu('close');
                     }
-                }, $.extend(
-                    this.options.shade,
-                    {
-                        duration: this.options.duration
-                    }
-                )));
+                }
+                ));
             }
         },
 
