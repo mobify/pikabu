@@ -179,10 +179,24 @@
         },
 
         _bindEvents: function() {
+            var _this = this;
+
             // Block scrolling on anything but pikabu content
-            this.$pikabu.on('touchmove', function(e) {
+            _this.$pikabu.on('touchmove', function(e) {
                 if (!$(e.target).parents().hasClass(classes.CONTENT)) {
                     e.preventDefault();
+                }
+            });
+
+            // Device orientationchange will cause the pikabu width to update.
+            // Reflect this change on $container by translating it further to
+            // the right (by the width of pikabu)
+            $(window).on('resize orientationchange', function() {
+                if (_this._isOpen()) {
+                    var pikabuWidth = _this.$pikabu.width();
+
+                    _this.$container.css('transform', 'translateX(' + pikabuWidth + 'px)');
+                    _this.$container.css('-webkit-transform', 'translateX(' + pikabuWidth + 'px)');
                 }
             });
         },
