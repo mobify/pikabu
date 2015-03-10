@@ -1,8 +1,8 @@
 {
   "name": "pikabu",
-  "repository" : {
-    "type" : "git",
-    "url" : "https://github.com/mobify/pikabu.git"
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mobify/pikabu.git"
   },
   "version": "2.0.0",
   "description": "A mobile first content fly-in UI plugin",
@@ -15,7 +15,7 @@
     "grunt-contrib-copy": "~0.4.1",
     "grunt-contrib-jshint": "0.10.0",
     "grunt-contrib-sass": "0.8.1",
-    "grunt-contrib-uglify": "~0.1.1",
+    "grunt-contrib-uglify": "0.8",
     "grunt-contrib-watch": "~0.5.1",
     "grunt-css": "~0.5.4",
     "grunt-jscs": "0.7.1",
