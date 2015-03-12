@@ -6,8 +6,6 @@ A mobile-first content fly-in UI plugin.
 [![Dependency Status](https://www.versioneye.com/user/projects/54512dcb9fc4d548ec000380/badge.svg?style=flat)](https://www.versioneye.com/user/projects/54512dcb9fc4d548ec000380)
 [![Circle CI](https://circleci.com/gh/mobify/pikabu.png?style=shield&circle-token=7f052e50aabb80c939303cc2f5118aa92ca502fa)](https://circleci.com/gh/mobify/pikabu)
 
-![Pikabu in action](https://raw.githubusercontent.com/mobify/pikabu/master/examples/assets/i/pikabu.gif "Pikabu in action")
-
 ## Dependencies
 
 * [Zepto](http://zeptojs.com/)

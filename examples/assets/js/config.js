@@ -5,6 +5,7 @@ require.config({
         '$': 'lib/zeptojs/dist/zepto',
         'bouncefix': 'bower_components/bouncefix.js/dist/bouncefix.min',
         'velocity': 'bower_components/mobify-velocity/velocity',
+        'airbnb': 'dist/effect/airbnb',
         'drawer-left': 'dist/effect/drawer-left',
         'drawer-right': 'dist/effect/drawer-right',
         'plugin': 'bower_components/plugin/dist/plugin.min',

@@ -3,12 +3,14 @@ require(['config'], function() {
         '$',
         'drawer-left',
         'drawer-right',
+        'airbnb',
         'pikabu'
     ],
     function(
         $,
         drawerLeft,
-        drawerRight
+        drawerRight,
+        airBnb
     ) {
         var $drawerLeft = $('#drawerLeftPikabu').pikabu({
             effect: drawerLeft,
@@ -17,14 +19,34 @@ require(['config'], function() {
             duration: 1000,
             shade: {
                 duration: 300,
-                zIndex: 5
+                zIndex: 5,
+                opacity: 0.2
             },
             cssClass: 'c-pikabu c--left'
         });
 
+        var $airBnb = $('#airBnbPikabu').pikabu({
+            effect: airBnb,
+            coverage: '80%',
+            easing: [200, 20],
+            duration: 1000,
+            shade: {
+                duration: 300,
+                zIndex: 5,
+                opacity: 0.2
+            },
+            cssClass: 'c-pikabu c--left',
+            open: function() {
+                $('html').addClass('airbnb');
+            },
+            closed: function() {
+                $('html').removeClass('airbnb');
+            }
+        });
+
         var $drawerRight = $('#drawerRightPikabu').pikabu({
             effect: drawerRight,
-            coverage: '60%',
+            coverage: '80%',
             easing: 'swing',
             duration: 200,
             shade: {
@@ -40,6 +62,10 @@ require(['config'], function() {
 
         $('.js-drawer-right').on('click', function() {
             $drawerRight.pikabu('toggle');
+        });
+
+        $('.js-airbnb').on('click', function() {
+            $airBnb.pikabu('toggle');
         });
 
         // Enable active states
