@@ -13,7 +13,7 @@
         var plugin = this;
         var coverage = this._coverage();
 
-        var $animators = $('.pikabu__container, .pikabu--fixed, .shade');
+        var $animators = $('.pikabu__container, .pikabu__fixed');
 
         var windowHeight;
 

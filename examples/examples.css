@@ -21,7 +21,7 @@ input {
     font-size: 16px;
 }
 
-.header {
+header {
     position: fixed;
     top: 0;
     width: 100%;
@@ -40,8 +40,4 @@ input {
 
 .pikabu__container {
     background: green;
-}
-
-.pikabu--fixed {
-    background: pink;
 }

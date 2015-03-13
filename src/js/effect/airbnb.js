@@ -13,7 +13,7 @@
         var plugin = this;
         var coverage = this._coverage();
 
-        var $animators = $('.pikabu__container, .pikabu--fixed, .shade');
+        var $animators = $('.pikabu__container, .pikabu__fixed, .shade');
 
         this.$pikabu
             .css({
@@ -21,31 +21,30 @@
                 bottom: 0,
                 left: 0,
                 right: coverage ? coverage : 'auto',
-                width: coverage ? 'auto' : this.options.coverage,
+                width: coverage ? 'auto' : plugin.options.coverage,
                 height: 'auto'
             });
 
         return {
             open: function() {
-                $('.pikabu__viewport').css({
-                    '-webkit-perspective': '1500px',
-                    'overflow': 'hidden'
-                });
-
                 // Force feed the initial value
                 Velocity.animate(
                     $animators,
                     {
                         translateZ: ['-750px', '0'],
-                        translateX: [this.options.coverage, '0'],
+                        translateX: [plugin.options.coverage, '0'],
                         rotateY: ['-45deg', '0']
                     },
                     {
+                        begin: function() {
+                            plugin.$viewport.css({
+                                '-webkit-perspective': '1500px',
+                                'overflow': 'hidden'
+                            });
+                        },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         complete: function() {
-                            Velocity.hook(plugin.$container, 'translateZ', '-751px');
-
                             plugin.animation.openComplete.call(plugin);
                         }
                     }
@@ -58,6 +57,9 @@
                         translateZ: [0, 0]
                     },
                     {
+                        begin: function() {
+                            plugin.$pikabu.css('zIndex', '10');
+                        },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         display: 'block',
@@ -80,7 +82,7 @@
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         complete: function() {
-                            $('.pikabu__viewport').css({
+                            plugin.$viewport.css({
                                 '-webkit-perspective': '',
                                 'overflow': ''
                             });

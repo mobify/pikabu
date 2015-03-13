@@ -35,10 +35,10 @@
     var iOS7orBelow = $.os.ios && $.os.major <= 7;
 
     var classes = {
-        PIKABU: 'pikabu',
+        PIKABU: 'pikabu__drawer',
         ELEMENT: 'pikabu__element',
         CONTAINER: 'pikabu__container',
-        VIEWPORT: 'pikabu__viewport',
+        VIEWPORT: 'pikabu',
         HEADER: 'pikabu__header',
         WRAPPER: 'pikabu__wrapper',
         SPACER: 'pikabu__spacer',
@@ -113,6 +113,7 @@
                 this._resetFocus();
 
                 this.$pikabu.lockup('unlock');
+                this.$viewport.removeClass(classes.OPENED);
             }
         },
 
@@ -171,7 +172,6 @@
             bouncefix.remove(classes.SCROLLABLE);
 
             this.$pikabu.removeClass(classes.OPENED);
-            this.$viewport.removeClass(classes.OPENED);
 
             this.effect.close.call(this);
         },

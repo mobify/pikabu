@@ -18,15 +18,15 @@ $pikabu__z-index: 1 !default; // 2
 
 html,
 body,
-.pikabu__viewport {
+.pikabu {
     width: 100%;
     height: 100%;
 }
 
-// Pikabu: Sidebar
+// Pikabu: Drawer
 // ----------------
 //
-// This element contains the sidebar content which is used for the flyout.
+// This element contains the drawer content which is used for the flyout.
 //
 // Notes:
 //
@@ -38,7 +38,7 @@ body,
 // 4. Pikabu shows a tap highlight when tapped for an unknown reason. This
 //    removes that.
 
-.pikabu {
+.pikabu__drawer {
     position: fixed; // 1
 
     display: none; // 2
@@ -66,7 +66,7 @@ body,
 
     background-color: $pikabu__background-color; // 1
 
-    .pikabu__viewport.pikabu--is-open & {
+    .pikabu.pikabu--is-open & {
         max-height: 100%;
     }
 }
@@ -92,12 +92,6 @@ body,
     overflow: hidden;
     height: 100%;
 }
-
-.pikabu__container,
-.pikabu--fixed {
-    backface-visibility: hidden;
-}
-
 
 
 // Pikabu: Header & Footer
