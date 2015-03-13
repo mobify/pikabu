@@ -31,13 +31,17 @@ input {
 }
 
 .c-pikabu {
-
-}
-
-html.airbnb {
-    background: #333;
+    background: blue;
 }
 
 .c-pikabu.c--airbnb {
 
+}
+
+.pikabu__container {
+    background: green;
+}
+
+.pikabu--fixed {
+    background: pink;
 }

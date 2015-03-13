@@ -42,7 +42,6 @@ body,
     position: fixed; // 1
 
     display: none; // 2
-
     outline: none; // 3
 
     -webkit-tap-highlight-color: rgba(black, 0); // 4
@@ -66,6 +65,10 @@ body,
     overflow: hidden;
 
     background-color: $pikabu__background-color; // 1
+
+    .pikabu__viewport.pikabu--is-open & {
+        max-height: 100%;
+    }
 }
 
 // Pikabu: Wrapper
@@ -91,7 +94,7 @@ body,
 }
 
 .pikabu__container,
-.pikabu.pikabu__fixed {
+.pikabu--fixed {
     backface-visibility: hidden;
 }
 

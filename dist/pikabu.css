@@ -16,6 +16,8 @@ body,
   min-height: 100%;
   overflow: hidden;
   background-color: white; }
+  .pikabu__viewport.pikabu--is-open .pikabu__container {
+    max-height: 100%; }
 
 .pikabu__wrapper {
   display: -webkit-box;
@@ -31,7 +33,7 @@ body,
   height: 100%; }
 
 .pikabu__container,
-.pikabu.pikabu__fixed {
+.pikabu--fixed {
   -webkit-backface-visibility: hidden;
           backface-visibility: hidden; }
 

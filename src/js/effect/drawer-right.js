@@ -41,12 +41,6 @@
                     {
                         begin: function() {
                             plugin.$pikabu.show();
-
-                            if (containerHeight < windowHeight) {
-                                plugin.$container.height(windowHeight);
-                            }
-
-                            plugin.$container.width(windowWidth);
                         },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
@@ -68,11 +62,6 @@
                         duration: plugin.options.duration,
                         complete: function() {
                             plugin.$pikabu.hide();
-
-                            plugin.$container.css({
-                                height: '',
-                                width: ''
-                            });
 
                             plugin.animation.closeComplete.call(plugin);
                         }

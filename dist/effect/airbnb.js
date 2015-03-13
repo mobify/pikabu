@@ -15,8 +15,6 @@
 
         var $animators = $('.pikabu__container, .pikabu--fixed, .shade');
 
-        var windowHeight;
-
         this.$pikabu
             .css({
                 top: 0,
@@ -29,11 +27,6 @@
 
         return {
             open: function() {
-                var containerHeight = plugin.$container.height();
-                var containerWidth = plugin.$container.width();
-                var windowHeight = window.innerHeight;
-                var windowWidth = window.innerWidth;
-
                 $('.pikabu__viewport').css({
                     '-webkit-perspective': '1500px',
                     'overflow': 'hidden'
@@ -48,16 +41,11 @@
                         rotateY: ['-45deg', '0']
                     },
                     {
-                        begin: function() {
-                            if (containerHeight < windowHeight) {
-                                plugin.$container.height(windowHeight);
-                            }
-
-                            plugin.$container.width(windowWidth);
-                        },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         complete: function() {
+                            Velocity.hook(plugin.$container, 'translateZ', '-751px');
+
                             plugin.animation.openComplete.call(plugin);
                         }
                     }
@@ -66,15 +54,13 @@
                 Velocity.animate(
                     plugin.$pikabu,
                     {
-                        translateX: [0, '-100%']
+                        translateX: [0, '-100%'],
+                        translateZ: [0, 0]
                     },
                     {
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         display: 'block',
-                        complete: function() {
-                            plugin.$pikabu.css('z-index', plugin.options.zIndex + 10);
-                        }
                     }
                 );
             },
@@ -94,11 +80,6 @@
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         complete: function() {
-                            plugin.$container.css({
-                                height: '',
-                                width: ''
-                            });
-
                             $('.pikabu__viewport').css({
                                 '-webkit-perspective': '',
                                 'overflow': ''
@@ -117,10 +98,7 @@
                     {
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
-                        display: 'none',
-                        complete: function() {
-                            plugin.$pikabu.css('z-index', '');
-                        }
+                        display: 'none'
                     }
                 );
             }

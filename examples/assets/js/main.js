@@ -32,10 +32,9 @@ require(['config'], function() {
             duration: 1000,
             shade: {
                 duration: 300,
-                zIndex: 5,
                 opacity: 0.2
             },
-            cssClass: 'c-pikabu c--left',
+            cssClass: 'c-pikabu c--airbnb',
             open: function() {
                 $('html').addClass('airbnb');
             },

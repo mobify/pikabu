@@ -154,6 +154,7 @@
             this.options.shade && this.$shade.shade('open');
 
             this.$pikabu.addClass(classes.OPENED);
+            this.$viewport.addClass(classes.OPENED);
 
             this.$pikabu.lockup('lock');
         },
@@ -170,6 +171,7 @@
             bouncefix.remove(classes.SCROLLABLE);
 
             this.$pikabu.removeClass(classes.OPENED);
+            this.$viewport.removeClass(classes.OPENED);
 
             this.effect.close.call(this);
         },
