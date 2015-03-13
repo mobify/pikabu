@@ -25,6 +25,9 @@
                 height: 'auto'
             });
 
+        Velocity.hook(this.$pikabu, 'translateX', '-100%');
+        Velocity.hook(this.$pikabu, 'translateZ', '0');
+
         return {
             open: function() {
                 // Force feed the initial value
@@ -57,12 +60,10 @@
                         translateZ: [0, 0]
                     },
                     {
-                        begin: function() {
-                            plugin.$pikabu.css('zIndex', '10');
-                        },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         display: 'block',
+                        delay: 10
                     }
                 );
             },

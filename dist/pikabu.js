@@ -46,7 +46,8 @@
         CLOSE: 'pikabu__close',
         CONTENT: 'pikabu__content',
         OPENED: 'pikabu--is-open',
-        SCROLLABLE: 'pikabu--is-scrollable'
+        SCROLLABLE: 'pikabu--is-scrollable',
+        FIXED: 'pikabu__fixed'
     };
 
     /**

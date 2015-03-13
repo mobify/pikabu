@@ -30,6 +30,7 @@ require(['config'], function() {
             coverage: '80%',
             easing: [200, 20],
             duration: 1000,
+            zIndex: 10,
             shade: {
                 duration: 300,
                 opacity: 0.2
