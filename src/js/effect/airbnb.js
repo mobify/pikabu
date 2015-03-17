@@ -12,8 +12,7 @@
     return function() {
         var plugin = this;
         var coverage = this._coverage();
-
-        var $animators = $('.pikabu__container, .pikabu__fixed, .shade');
+        var $animators = plugin.$animators;
 
         this.$pikabu
             .css({
@@ -40,10 +39,7 @@
                     },
                     {
                         begin: function() {
-                            plugin.$viewport.css({
-                                '-webkit-perspective': '1500px',
-                                'overflow': 'hidden'
-                            });
+                            Velocity.hook(plugin.$viewport, 'perspective', '1500px');
                         },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
@@ -63,7 +59,7 @@
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         display: 'block',
-                        delay: 10
+                        delay: 100
                     }
                 );
             },
@@ -83,11 +79,7 @@
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         complete: function() {
-                            plugin.$viewport.css({
-                                '-webkit-perspective': '',
-                                'overflow': ''
-                            });
-
+                            Velocity.hook(plugin.$viewport, 'perspective', '');
                             plugin.animation.closeComplete.call(plugin);
                         }
                     }

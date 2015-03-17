@@ -7,11 +7,6 @@ html {
     -webkit-text-size-adjust: 100%;
 }
 
-body {
-    margin: 0;
-    padding: 0;
-}
-
 .button-section {
     text-align: center;
     padding: 10px 0;
@@ -34,10 +29,13 @@ header {
     background: blue;
 }
 
-.c-pikabu.c--airbnb {
-
-}
-
 .pikabu__container {
     background: green;
+}
+
+.tallifier {
+    height: 3000px;
+    width: 75%;
+    margin: 0 auto;
+    background: linear-gradient(to top, red, purple);
 }

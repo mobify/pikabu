@@ -12,8 +12,7 @@
     return function() {
         var plugin = this;
         var coverage = this._coverage();
-
-        var $animators = $('.pikabu__container, .pikabu__fixed');
+        var $animators = plugin.$animators;
 
         var windowHeight;
 

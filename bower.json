@@ -19,14 +19,14 @@
     "./!(src|dist|lib|templates)"
   ],
   "dependencies": {
-    "plugin": "~2.1.0",
+    "plugin": "~3",
     "mobify-velocity": "#velocity-1.2.2",
     "requirejs-text": "~2.0.12",
     "requirejs": "~2.1.14",
     "bouncefix.js": "~0.3.0",
     "shade": "#pikabu-changes",
-    "lockup": "~1.0.0",
-    "deckard": "~1.0.0"
+    "lockup": "#new-method",
+    "deckard": "~1.1.0"
   },
   "devDependencies": {
     "spline": "~1.0.1"

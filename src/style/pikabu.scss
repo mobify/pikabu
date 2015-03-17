@@ -17,10 +17,13 @@ $pikabu__z-index: 1 !default; // 2
 
 
 html,
-body,
+body {
+    margin: 0;
+    padding: 0;
+}
+
 .pikabu {
     width: 100%;
-    height: 100%;
 }
 
 // Pikabu: Drawer
@@ -61,14 +64,14 @@ body,
     position: relative;
     z-index: $pikabu__z-index;
 
-    min-height: 100%;
+    // min-height: 100%;
     overflow: hidden;
 
     background-color: $pikabu__background-color; // 1
 
-    .pikabu.pikabu--is-open & {
-        max-height: 100%;
-    }
+    // &.lockup--is-locked {
+    //     max-height: 100%;
+    // }
 }
 
 // Pikabu: Wrapper

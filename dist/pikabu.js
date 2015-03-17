@@ -115,6 +115,7 @@
 
                 this.$pikabu.lockup('unlock');
                 this.$viewport.removeClass(classes.OPENED);
+                this.$animators.css('transform', '');
             }
         },
 
@@ -124,6 +125,7 @@
             this.$element = $(element);
             this.$doc = $(document);
             this.$body = $('body');
+            this.$animators = $('.' + classes.CONTAINER + ', ' + '.' + classes.FIXED);
 
             this._build();
 
@@ -151,14 +153,14 @@
 
             bouncefix.add(classes.SCROLLABLE);
 
+            this.$pikabu.lockup('lock');
+
             this.effect.open.call(this);
 
             this.options.shade && this.$shade.shade('open');
 
             this.$pikabu.addClass(classes.OPENED);
             this.$viewport.addClass(classes.OPENED);
-
-            this.$pikabu.lockup('lock');
         },
 
         close: function() {
@@ -268,14 +270,22 @@
             this._addAccessibility();
 
             if (this.options.shade) {
-                this.$shade = this.$viewport.shade($.extend(true, this.options.shade, {
-                    append: 'appendTo',
-                    click: function() {
-                        $('.' + classes.ELEMENT).pikabu('close');
-                    }
-                }
-                ));
+                this.$shade = this.$viewport.shade(
+                    $.extend(
+                        true,
+                        this.options.shade,
+                        {
+                            append: 'appendTo',
+                            click: function() {
+                                $('.' + classes.ELEMENT).pikabu('close');
+                            }
+                        }
+                    )
+                );
+
+                this.$shadeEl = this.$viewport.shade('getElement');
             }
+            this.$animators = this.$animators.add(this.$shadeEl);
         },
 
         _buildComponent: function(name) {
