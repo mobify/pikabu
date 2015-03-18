@@ -15,14 +15,10 @@
 $pikabu__background-color: white !default; // 1
 $pikabu__z-index: 1 !default; // 2
 
-
 html,
-body {
-    margin: 0;
-    padding: 0;
-}
-
+body,
 .pikabu {
+    height: 100%;
     width: 100%;
 }
 
@@ -64,14 +60,10 @@ body {
     position: relative;
     z-index: $pikabu__z-index;
 
-    // min-height: 100%;
+    min-height: 100%;
     overflow: hidden;
 
     background-color: $pikabu__background-color; // 1
-
-    // &.lockup--is-locked {
-    //     max-height: 100%;
-    // }
 }
 
 // Pikabu: Wrapper

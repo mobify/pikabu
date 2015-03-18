@@ -28,19 +28,11 @@
 
         return {
             open: function() {
-                var containerHeight = plugin.$container.height();
-                var containerWidth = plugin.$container.width();
-                var windowHeight = window.innerHeight;
-                var windowWidth = window.innerWidth;
-
                 // Force feed the initial value
                 Velocity.animate(
                     $animators,
                     { translateX: ['-' + this.options.coverage, '0'] },
                     {
-                        begin: function() {
-                            plugin.$pikabu.show();
-                        },
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         complete: function() {

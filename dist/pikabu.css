@@ -1,9 +1,7 @@
 html,
-body {
-  margin: 0;
-  padding: 0; }
-
+body,
 .pikabu {
+  height: 100%;
   width: 100%; }
 
 .pikabu__drawer {
@@ -15,6 +13,7 @@ body {
 .pikabu__container {
   position: relative;
   z-index: 1;
+  min-height: 100%;
   overflow: hidden;
   background-color: white; }
 

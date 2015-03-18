@@ -105,17 +105,21 @@
             },
             openComplete: function() {
                 this._trigger('opened');
-
                 this._focus();
+
+                // Fixes an issue with collapsed browser chrome in iOS8
+                window.scrollTo(0,0);
             },
             closeComplete: function() {
                 this._trigger('closed');
 
                 this._resetFocus();
 
-                this.$pikabu.lockup('unlock');
                 this.$viewport.removeClass(classes.OPENED);
+                this.$viewport.css('height', '');
                 this.$animators.css('transform', '');
+                this.$pikabu.lockup('unlock');
+                this.$pikabu.hide();
             }
         },
 
@@ -154,6 +158,9 @@
             bouncefix.add(classes.SCROLLABLE);
 
             this.$pikabu.lockup('lock');
+            this.$pikabu.show();
+
+            this.$viewport.height(window.innerHeight);
 
             this.effect.open.call(this);
 
