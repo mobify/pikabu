@@ -1,20 +1,24 @@
 @-webkit-keyframes wiggle {
-    from {
+    0, 50%, 100% {
+        -webkit-transform: translateX(0);
+    }
+    25% {
         -webkit-transform: translateX(-3px);
-                transform: translateX(-3px);
-    } to {
+    }
+    75% {
         -webkit-transform: translateX(3px);
-                transform: translateX(3px);
     }
 }
 
 @keyframes wiggle {
-    from {
-        -webkit-transform: translateX(-3px);
-                transform: translateX(-3px);
-    } to {
-        -webkit-transform: translateX(3px);
-                transform: translateX(3px);
+    0, 50%, 100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-3px);
+    }
+    75% {
+        transform: translateX(3px);
     }
 }
 
@@ -82,8 +86,8 @@ body {
 }
 
 .c-header__menu.c--wiggle {
-    -webkit-animation: wiggle 0.2s infinite ease-out;
-            animation: wiggle 0.2s infinite ease-out;
+    -webkit-animation: wiggle 0.3s infinite linear;
+            animation: wiggle 0.3s infinite linear;
 }
 
 .pikabu__container {
