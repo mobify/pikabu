@@ -5,6 +5,7 @@ require(['config'], function() {
         'drawer-left',
         'drawer-right',
         'airbnb',
+        'slide-along',
         'pikabu'
     ],
     function(
@@ -12,7 +13,8 @@ require(['config'], function() {
         FastClick,
         drawerLeft,
         drawerRight,
-        airBnb
+        airBnb,
+        slideAlong
     ) {
         var activeEffect;
 
@@ -55,11 +57,26 @@ require(['config'], function() {
             cssClass: 'c-pikabu c--right'
         });
 
+        var $slideAlong = $('#slideAlongPikabu').pikabu({
+            effect: slideAlong,
+            coverage: '80%',
+            easing: [100, 15],
+            duration: 1000,
+            shade: {
+                duration: 100,
+                zIndex: 5
+            },
+            cssClass: 'c-pikabu c--slide'
+        });
+
         var effects = {
             'drawerLeft': $drawerLeft,
             'drawerRight': $drawerRight,
-            'airbnb': $airBnb
+            'airbnb': $airBnb,
+            'slideAlong': $slideAlong
         };
+
+        var $menu = $('.js-menu-open');
 
         activeEffect = effects['drawerLeft'];
 
@@ -72,10 +89,16 @@ require(['config'], function() {
 
             activeEffect = effects[effect];
 
-            $('.js-menu-open').attr('data-pikabu-effect', effect);
+            $menu
+                .attr('data-pikabu-effect', effect)
+                .addClass('c--wiggle');
+
+            setTimeout(function(){
+                $menu.removeClass('c--wiggle');
+            }, 500);
         });
 
-        $('.js-menu-open').on('click', function() {
+        $menu.on('click', function() {
             activeEffect.pikabu('open');
         });
 

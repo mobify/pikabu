@@ -1,3 +1,23 @@
+@-webkit-keyframes wiggle {
+    from {
+        -webkit-transform: translateX(-3px);
+                transform: translateX(-3px);
+    } to {
+        -webkit-transform: translateX(3px);
+                transform: translateX(3px);
+    }
+}
+
+@keyframes wiggle {
+    from {
+        -webkit-transform: translateX(-3px);
+                transform: translateX(-3px);
+    } to {
+        -webkit-transform: translateX(3px);
+                transform: translateX(3px);
+    }
+}
+
 * {
     box-sizing: border-box;
 }
@@ -22,7 +42,7 @@ body {
     padding: 5px;
     height: 75px;
 
-    background: rgba(44, 118, 94, 0.85);
+    background: rgba(28, 74, 76, 0.75);
 }
 
 .c-header__menu {
@@ -33,7 +53,7 @@ body {
     width: 65px;
     height: 65px;
 
-    background: #318365;
+    background: #3ca274;
     border: 0;
 
     font-family: inherit;
@@ -44,17 +64,26 @@ body {
     -webkit-appearance: none;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 
-    -webkit-transition: left 0.2s ease-in-out;
+    -webkit-transition:
+        left 0.2s ease-in-out,
+        margin-left 0.2s ease-in-out;
+    transition:
+        left 0.2s ease-in-out,
+        margin-left 0.2s ease-in-out;
 }
 
 .c-header__menu:active {
-    background: #318365;
-    opacity: 0.6;
+    background: #3ca274;
 }
 
-.c-header__menu[data-pikabu-effect="drawerRight"] {
+.c-header__menu[data-pikabu-effect*="Right"] {
     left: 100%;
     margin-left: -70px;
+}
+
+.c-header__menu.c--wiggle {
+    -webkit-animation: wiggle 0.2s infinite ease-out;
+            animation: wiggle 0.2s infinite ease-out;
 }
 
 .pikabu__container {
@@ -66,7 +95,10 @@ body {
 }
 
 .c-masthead {
-    margin: 0 -20px;
+    position: relative;
+    z-index: 3;
+
+    margin: 0 -20px 1.5em;
     padding: 6em 3em 1.5em;
 
     background: #3ca274;

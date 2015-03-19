@@ -5,6 +5,7 @@ require.config({
         '$': 'lib/zeptojs/dist/zepto',
         'bouncefix': 'bower_components/bouncefix.js/dist/bouncefix.min',
         'velocity': 'bower_components/mobify-velocity/velocity',
+        'slide-along': 'dist/effect/slide-along',
         'airbnb': 'dist/effect/airbnb',
         'drawer-left': 'dist/effect/drawer-left',
         'drawer-right': 'dist/effect/drawer-right',
@@ -13,7 +14,7 @@ require.config({
         'lockup': 'bower_components/lockup/dist/lockup',
         'deckard': 'bower_components/deckard/dist/deckard.min',
         'pikabu': 'dist/pikabu',
-        'FastClick': 'bower_components/fastclick/lib/fastclick'
+        'FastClick': 'bower_components/fastclick/lib/fastclick',
     },
     'shim': {
         '$': {

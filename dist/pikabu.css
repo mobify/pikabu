@@ -9,6 +9,9 @@ body,
   height: 100%;
   width: 100%; }
 
+.pikabu.pikabu--is-open {
+  overflow: hidden; }
+
 .pikabu__drawer {
   position: fixed;
   display: none;

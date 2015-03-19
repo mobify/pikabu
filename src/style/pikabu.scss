@@ -28,6 +28,18 @@ body,
     width: 100%;
 }
 
+// Pikabu: Viewport
+// ----------------
+//
+// This is the container for the Pikabu structure.
+
+.pikabu {
+    &.pikabu--is-open {
+        overflow: hidden;
+    }
+}
+
+
 // Pikabu: Drawer
 // ----------------
 //
