@@ -52,8 +52,6 @@
                         easing: plugin.options.easing,
                         duration: plugin.options.duration,
                         complete: function() {
-                            plugin.$pikabu.hide();
-
                             plugin.animation.closeComplete.call(plugin);
                         }
                     }

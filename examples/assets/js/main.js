@@ -1,6 +1,7 @@
 require(['config'], function() {
     require([
         '$',
+        'FastClick',
         'drawer-left',
         'drawer-right',
         'airbnb',
@@ -8,10 +9,13 @@ require(['config'], function() {
     ],
     function(
         $,
+        FastClick,
         drawerLeft,
         drawerRight,
         airBnb
     ) {
+        var activeEffect;
+
         var $drawerLeft = $('#drawerLeftPikabu').pikabu({
             effect: drawerLeft,
             coverage: '80%',
@@ -26,7 +30,7 @@ require(['config'], function() {
             cssClass: 'c-pikabu c--left'
         });
 
-        var $airBnb = $('#airBnbPikabu').pikabu({
+        var $airBnb = $('#airbnbPikabu').pikabu({
             effect: airBnb,
             coverage: '80%',
             easing: [200, 20],
@@ -36,13 +40,7 @@ require(['config'], function() {
                 duration: 300,
                 opacity: 0.2
             },
-            cssClass: 'c-pikabu c--airbnb',
-            open: function() {
-                $('html').addClass('airbnb');
-            },
-            closed: function() {
-                $('html').removeClass('airbnb');
-            }
+            cssClass: 'c-pikabu c--airbnb'
         });
 
         var $drawerRight = $('#drawerRightPikabu').pikabu({
@@ -57,23 +55,33 @@ require(['config'], function() {
             cssClass: 'c-pikabu c--right'
         });
 
-        $('.js-drawer-left').on('click', function() {
-            $drawerLeft.pikabu('toggle');
+        var effects = {
+            'drawerLeft': $drawerLeft,
+            'drawerRight': $drawerRight,
+            'airbnb': $airBnb
+        };
+
+        activeEffect = effects['drawerLeft'];
+
+        $('.c-effects__button').on('click', function() {
+            var $button = $(this);
+            var effect = $button.attr('data-pikabu-effect');
+
+            $('.c-effects__button').removeClass('c--active');
+            $button.addClass('c--active');
+
+            activeEffect = effects[effect];
+
+            $('.js-menu-open').attr('data-pikabu-effect', effect);
         });
 
-        $('.js-drawer-right').on('click', function() {
-            $drawerRight.pikabu('toggle');
-        });
-
-        $('.js-airbnb').on('click', function() {
-            $airBnb.pikabu('toggle');
+        $('.js-menu-open').on('click', function() {
+            activeEffect.pikabu('open');
         });
 
         // Enable active states
         $(document).on('touchstart', function() {});
 
-        $(window).on('resize', function() {
-            $.__deckard.orientation.call($);
-        });
+        FastClick.attach(document.body);
     });
 });

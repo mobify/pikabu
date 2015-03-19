@@ -12,7 +12,8 @@ require.config({
         'shade': 'bower_components/shade/dist/shade',
         'lockup': 'bower_components/lockup/dist/lockup',
         'deckard': 'bower_components/deckard/dist/deckard.min',
-        'pikabu': 'dist/pikabu'
+        'pikabu': 'dist/pikabu',
+        'FastClick': 'bower_components/fastclick/lib/fastclick'
     },
     'shim': {
         '$': {

@@ -3,6 +3,9 @@
 <head>
     <title>Examples of Pikabu in action</title>
     <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <script src="//use.typekit.net/keh4brl.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+
     <!-- Pikabu Styles -->
     <link rel="stylesheet" href="../dist/pikabu.css">
     <link rel="stylesheet" href="../dist/pikabu-theme.css">
@@ -13,17 +16,32 @@
 
 <body>
     <div class="pikabu">
-        <header class="header pikabu__fixed">
-            <button tabindex="1" class="js-drawer-left">Left Drawer</button>
-            <button tabindex="1" class="js-drawer-right">Right Drawer</button>
+        <header class="c-header pikabu__fixed">
+            <button tabindex="1" class="c-header__menu js-menu-open" data-pikabu-effect="drawerLeft">Menu</button>
         </header>
 
         <div class="pikabu__container">
-            <h2>Pikabu</h2>
+            <div class="c-masthead">
+                <h1 class="c-masthead__title">Pikabu</h1>
 
-            <button class="js-airbnb">AirBnB Style</button>
+                <p class="c-masthead__subtitle">Functional, stylish, off-canvas flyouts for all devices.</p>
+            </div>
 
-            <div class="tallifier"></div>
+            <p>Pikabu makes declaring any effect you want easy. It works with fixed headers across a range of devices&mdash;including mobile browsers.</p>
+
+            <p>To try it out, choose an effect from the list below then tap the menu button above:</p>
+
+            <ul class="c-effects">
+                <li>
+                    <button class="c-effects__button c--active" data-pikabu-effect="drawerLeft">Left Drawer</button>
+                </li>
+                <li>
+                    <button class="c-effects__button" data-pikabu-effect="drawerRight">Right Drawer</button>
+                </li>
+                <li>
+                    <button class="c-effects__button" data-pikabu-effect="airbnb">Perspective Drawer</button>
+                </li>
+            </ul>
 
             <div id="drawerLeftPikabu" hidden>
                 <div class="c-search">
@@ -34,7 +52,7 @@
                 </nav>
             </div>
 
-            <div id="airBnbPikabu" hidden>
+            <div id="airbnbPikabu" hidden>
                 <div class="c-search">
                     <input type="search" placeholder="Search…">
                 </div>

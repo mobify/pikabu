@@ -3,45 +3,118 @@
 }
 
 html {
-    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-family: "proxima-nova", Helvetica, Arial, sans-serif;
+    font-size: 18px;
+    line-height: 1.4;
     -webkit-text-size-adjust: 100%;
 }
 
-html,
 body {
-    margin: 0;
-    padding: 0;
+    background: #3ca274;
 }
 
-.button-section {
-    text-align: center;
-    padding: 10px 0;
-}
-
-input {
-    font-size: 16px;
-}
-
-header {
+.c-header {
     position: fixed;
     top: 0;
-    width: 100%;
     z-index: 5;
 
-    background: white;
+    width: 100%;
+    padding: 5px;
+    height: 65px;
 }
 
-.c-pikabu {
-    background: blue;
+.c-header__menu {
+    position: absolute;
+    top: 5px;
+    left: 5px;
+
+    width: 65px;
+    height: 65px;
+
+    background: white;
+    border: 0;
+
+    font-family: inherit;
+
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.c-header__menu:active {
+    background: red;
+}
+
+.pikabu.pikabu--drawerRight .c-header__menu {
+    right: 5px;
 }
 
 .pikabu__container {
-    background: green;
+    padding: 0 20px 20px;
+
+    background: #faf6f2;
+
+    color: #1c4a48;
 }
 
-.tallifier {
-    height: 3000px;
-    width: 75%;
-    margin: 0 auto;
-    background: linear-gradient(to top, red, purple);
+.c-masthead {
+    margin: 0 -20px;
+    padding: 6em 3em 1.5em;
+
+    background: #3ca274;
+
+    color: #faf6f2;
+    text-align: center;
 }
+
+.c-masthead__title {
+    margin: 0 0 10px;
+
+    font-size: 36px;
+    font-weight: 900;
+    color: #eff5ab;
+}
+
+.c-masthead__subtitle {
+    margin: 0;
+
+    font-size: 20px;
+}
+
+.c-effects {
+    list-style: none;
+    margin: 20px -10px;
+    padding: 0;
+}
+
+.c-effects__button {
+    width: 100%;
+    padding: 20px;
+    margin: 0 0 10px;
+    border: 2px solid #3ca274;
+
+    border-radius: 5px;
+    background: transparent;
+
+    font-family: inherit;
+    font-size: inherit;
+    font-weight: bold;
+    color: #3ca274;
+
+    -webkit-appearance: none;
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.c-effects__button:active {
+    background: #3ca274;
+    opacity: 0.8;
+
+    color: #faf6f2;
+}
+
+.c-effects__button.c--active {
+    background: #3ca274;
+
+    color: #faf6f2;
+}
+
+

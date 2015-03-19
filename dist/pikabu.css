@@ -1,4 +1,9 @@
 html,
+body {
+  margin: 0;
+  padding: 0; }
+
+html,
 body,
 .pikabu {
   height: 100%;

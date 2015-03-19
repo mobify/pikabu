@@ -29,6 +29,8 @@
     "deckard": "~1.1.0"
   },
   "devDependencies": {
-    "spline": "~1.0.1"
+    "spline": "~1.0.1",
+    "typicons": "~2.0.7",
+    "fastclick": "~1.0.6"
   }
 }

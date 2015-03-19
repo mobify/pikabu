@@ -12,6 +12,19 @@ module.exports = function(grunt) {
                 dest: 'dist',
                 ext: '.css'
             }]
+        },
+        examples: {
+            options: {
+                style: 'nested',
+                sourcemap: 'none'
+            },
+            files: [{
+                expand: true,
+                cwd: 'src/style',
+                src: ['*.scss'],
+                dest: 'dist',
+                ext: '.css'
+            }]
         }
     };
 };
