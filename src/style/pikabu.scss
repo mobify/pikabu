@@ -156,10 +156,15 @@ body,
 // Add this class to any fixed elements on your page that need to transition
 // with your main content. Those fixed elements need to be inside of `.pikabu`
 // and outside of `.pikabu__container`.
+//
+//
+// Notes:
+//
+// 1. Switching to `absolute` removes a flicker that occurs on iOS devices.
 
 .pikabu__fixed {
     .pikabu.pikabu--is-open & {
-        position: absolute;
+        position: absolute; // 1
     }
 }
 
