@@ -150,6 +150,19 @@ body,
     -webkit-overflow-scrolling: touch;
 }
 
+// Pikabu: Fixed
+// -------------
+//
+// Add this class to any fixed elements on your page that need to transition
+// with your main content. Those fixed elements need to be inside of `.pikabu`
+// and outside of `.pikabu__container`.
+
+.pikabu__fixed {
+    .pikabu.pikabu--is-open & {
+        position: absolute;
+    }
+}
+
 
 // Pikabu: Hidden
 // -------------
