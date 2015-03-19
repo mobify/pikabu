@@ -20,7 +20,9 @@ body {
 
     width: 100%;
     padding: 5px;
-    height: 65px;
+    height: 75px;
+
+    background: rgba(44, 118, 94, 0.85);
 }
 
 .c-header__menu {
@@ -31,21 +33,28 @@ body {
     width: 65px;
     height: 65px;
 
-    background: white;
+    background: #318365;
     border: 0;
 
     font-family: inherit;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #faf6f2;
 
     -webkit-appearance: none;
     -webkit-tap-highlight-color: rgba(0,0,0,0);
+
+    -webkit-transition: left 0.2s ease-in-out;
 }
 
 .c-header__menu:active {
-    background: red;
+    background: #318365;
+    opacity: 0.6;
 }
 
-.pikabu.pikabu--drawerRight .c-header__menu {
-    right: 5px;
+.c-header__menu[data-pikabu-effect="drawerRight"] {
+    left: 100%;
+    margin-left: -70px;
 }
 
 .pikabu__container {
@@ -117,4 +126,6 @@ body {
     color: #faf6f2;
 }
 
-
+.pikabu.pikabu--is-open {
+    background: #1c4a48;
+}
