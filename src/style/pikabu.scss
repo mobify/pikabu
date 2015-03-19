@@ -73,12 +73,13 @@ body,
 // Notes:
 //
 // 1. Avoid content bleed-through
+// 2. Ensure container doesn't collapse if content isn't as tall as the viewport
 
 .pikabu__container {
     position: relative;
     z-index: $pikabu__z-index;
 
-    min-height: 100%;
+    min-height: 100%; // 2
     overflow: hidden;
 
     background-color: $pikabu__background-color; // 1
