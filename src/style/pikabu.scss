@@ -11,9 +11,12 @@
 //    your flyouts don't bleed through when Pikabu is opened.
 // 2. Sets the default z-index for the main body content. This should always be
 //    higher than the sidebar z-index to stop content bleed-through.
+// 3. If you use a prefix for Deckard, set it as a variable here so we can
+//    properly target iOS for certain fixes.
 
 $pikabu__background-color: white !default; // 1
 $pikabu__z-index: 1 !default; // 2
+$pikabu__deckard-prefix: ''; // 3
 
 // Document
 // --------
@@ -193,7 +196,7 @@ body,
 
     width: 100%;
 
-    .pikabu.pikabu--is-open & {
+    .#{$pikabu__deckard-prefix}ios .pikabu.pikabu--is-open & {
         position: absolute; // 1
     }
 }

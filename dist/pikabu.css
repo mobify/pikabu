@@ -64,7 +64,7 @@ body,
   position: fixed;
   z-index: 2;
   width: 100%; }
-  .pikabu.pikabu--is-open .pikabu__fixed {
+  .ios .pikabu.pikabu--is-open .pikabu__fixed {
     position: absolute; }
 
 [hidden] {
