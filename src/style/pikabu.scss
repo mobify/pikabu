@@ -30,6 +30,14 @@ html,
 body {
     margin: 0; // 1
     padding: 0; // 1
+
+    box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
 }
 
 html,
@@ -180,6 +188,11 @@ body,
 // 1. Switching to `absolute` removes a flicker that occurs on iOS devices.
 
 .pikabu__fixed {
+    position: fixed;
+    z-index: $pikabu__z-index + 1;
+
+    width: 100%;
+
     .pikabu.pikabu--is-open & {
         position: absolute; // 1
     }

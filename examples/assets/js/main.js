@@ -26,8 +26,8 @@ require(['config'], function() {
             shade: {
                 duration: 300,
                 zIndex: 5,
-                opacity: 0,
-                background: 'red'
+                opacity: 0.45,
+                color: '#1c4a48'
             },
             cssClass: 'c-pikabu c--left'
         });

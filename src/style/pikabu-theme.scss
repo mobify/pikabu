@@ -2,5 +2,15 @@
 // ===========
 //
 
+$pikabu-theme__sidebar-bg: #1c4a48;
+
 .pikabu {
+
+    &.pikabu--is-open {
+        background: $pikabu-theme__sidebar-bg;
+    }
+}
+
+.pikabu__container {
+    padding: 0 20px 20px;
 }

@@ -46,7 +46,7 @@ body {
     padding: 5px;
     height: 75px;
 
-    background: rgba(28, 74, 76, 0.75);
+    background: rgba(60, 162, 116, 0.98);
 }
 
 .c-header__menu {
@@ -56,8 +56,10 @@ body {
 
     width: 65px;
     height: 65px;
+    padding-top: 40px;
 
-    background: #3ca274;
+    background: rgba(239, 245, 171, 0.15) url(assets/i/menu.png) center 14px no-repeat;
+    background-size: 32px auto;
     border: 0;
 
     font-family: inherit;
@@ -77,7 +79,7 @@ body {
 }
 
 .c-header__menu:active {
-    background: #3ca274;
+    background-color: rgba(239, 245, 171, 0.25);
 }
 
 .c-header__menu[data-pikabu-effect*="Right"] {
@@ -90,9 +92,17 @@ body {
             animation: wiggle 0.3s infinite linear;
 }
 
-.pikabu__container {
-    padding: 0 20px 20px;
+.c-header__title {
+    margin: 0;
 
+    font-size: 32px;
+    font-weight: 900;
+    color: #eff5ab;
+    line-height: 70px;
+    text-align: center;
+}
+
+.pikabu__container {
     background: #faf6f2;
 
     color: #1c4a48;
@@ -111,24 +121,56 @@ body {
     text-align: center;
 }
 
-.c-masthead__title {
-    margin: 0 0 10px;
-
-    font-size: 36px;
-    font-weight: 900;
-    color: #eff5ab;
-}
-
 .c-masthead__subtitle {
     margin: 0;
 
     font-size: 20px;
 }
 
-.c-effects {
+.c-masthead__links {
+    margin: 20px 0 0;
+    padding: 0;
+
     list-style: none;
+}
+
+.c-masthead__link {
+    display: inline-block;
+    margin: 0;
+}
+
+.c-masthead__link:nth-child(even) {
+    margin-left: 5px;
+}
+
+.c-masthead__link:nth-child(odd) {
+    margin-right: 5px;
+}
+
+.c-masthead__button {
+    display: block;
+    padding: 15px 20px;
+    border: 2px solid rgba(250, 246, 242, 0.5);
+
+    border-radius: 5px;
+
+    color: #faf6f2;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.c-masthead__button:active {
+    border: 2px solid rgba(250, 246, 242, 1);
+}
+
+.c-effects {
     margin: 20px -10px;
     padding: 0;
+
+    list-style: none;
 }
 
 .c-effects__button {
@@ -162,6 +204,3 @@ body {
     color: #faf6f2;
 }
 
-.pikabu.pikabu--is-open {
-    background: #1c4a48;
-}

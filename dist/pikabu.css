@@ -1,7 +1,15 @@
 html,
 body {
   margin: 0;
-  padding: 0; }
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box; }
+
+*,
+*::after,
+*::before {
+  -webkit-box-sizing: inherit;
+          box-sizing: inherit; }
 
 html,
 body,
@@ -52,8 +60,12 @@ body,
           flex: 1;
   -webkit-overflow-scrolling: touch; }
 
-.pikabu.pikabu--is-open .pikabu__fixed {
-  position: absolute; }
+.pikabu__fixed {
+  position: fixed;
+  z-index: 2;
+  width: 100%; }
+  .pikabu.pikabu--is-open .pikabu__fixed {
+    position: absolute; }
 
 [hidden] {
   display: none !important; }
