@@ -196,7 +196,7 @@ body,
 
     width: 100%;
 
-    .#{$pikabu__deckard-prefix}ios .pikabu.pikabu--is-open & {
+    .#{$pikabu__deckard-prefix}ios:not(.#{$pikabu__deckard-prefix}chrome) .pikabu.pikabu--is-open & {
         position: absolute; // 1
     }
 }
