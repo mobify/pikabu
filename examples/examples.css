@@ -204,3 +204,73 @@ body {
     color: #faf6f2;
 }
 
+.pikabu__container {
+    padding: 0 20px 20px;
+}
+
+.c-sidebar__heading {
+    margin: 0;
+
+    font-size: 24px;
+}
+
+.c-sidebar__heading.c--small {
+    margin: 0 -20px;
+    padding: 10px 20px;
+
+    background: rgba(10,10,10, 0.15);
+    opacity: 0.75;
+
+    font-size: 14px;
+    font-weight: normal;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.c-sidebar__button {
+    display: block;
+    margin: 10px -10px;
+    padding: 15px 20px;
+    border: 2px solid rgba(250, 246, 242, 0.25);
+
+    border-radius: 5px;
+
+    color: #faf6f2;
+    font-weight: bold;
+    font-size: 16px;
+    text-decoration: none;
+    text-align: center;
+
+    -webkit-tap-highlight-color: rgba(0,0,0,0);
+}
+
+.c-sidebar__button:active {
+    border: 2px solid rgba(250, 246, 242, 0.5);
+}
+
+.c-sidebar__links {
+    margin: 0 -20px;
+    padding: 0;
+
+    list-style: none;
+}
+
+.c-sidebar__link {
+    border-bottom: 1px solid rgba(10,10,10, 0.15);
+}
+
+.c-sidebar__link:last-child {
+    border-bottom: 0;
+}
+
+.c-sidebar__link a {
+    display: block;
+    padding: 15px 20px;
+
+    text-decoration: none;
+    color: #faf6f2;
+}
+
+.c-sidebar__link a:active {
+    background: rgba(250, 246, 242, 0.05);
+}
