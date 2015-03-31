@@ -149,7 +149,7 @@
         },
 
         open: function() {
-            if (this._isOpen()) {
+            if (this._isOpen() || this._isAnimating()) {
                 return;
             }
 
@@ -173,7 +173,7 @@
         close: function() {
             var plugin = this;
 
-            if (!this._isOpen()) {
+            if (!this._isOpen() || this._isAnimating()) {
                 return;
             }
 
@@ -188,6 +188,10 @@
 
         _isOpen: function() {
             return this.$pikabu.hasClass(classes.OPENED);
+        },
+
+        _isAnimating: function() {
+            return this.$container.hasClass('velocity-animating');
         },
 
         _bindEvents: function() {
