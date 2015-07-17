@@ -42,15 +42,16 @@ We highly recommend using Require.js with Pikabu. To use Require, you have to re
     'paths': {
     	'plugin': 'bower_components/plugin/dist/plugin.min',
         'pikabu': 'bower_components/pikabu/dist/pikabu.min',
-        'modal-center': 'bower_components/pikabu/dist/effect/modal-center',
-        'sheet-bottom': 'bower_components/pikabu/dist/effect/sheet-bottom',
-        'sheet-left': 'bower_components/pikabu/dist/effect/sheet-left',
-        'sheet-right': 'bower_components/pikabu/dist/effect/sheet-right',
-        'sheet-top': 'bower_components/pikabu/dist/effect/sheet-top',
         'shade': 'bower_components/shade/dist/shade.min',
         'lockup': 'bower_components/lockup/dist/lockup.min',
         'deckard': 'bower_components/deckard/dist/deckard.min',
-        'bouncefix': 'bower_components/bouncefix.js/dist/bouncefix.min'
+        'bouncefix': 'bower_components/bouncefix.js/dist/bouncefix.min',
+        'velocity': 'bower_components/mobify-velocity/velocity',
+        // or jQuery version 'velocity': 'bower_components/mobify-velocity/jquery.velocity',
+        
+        'drawer-left': 'bower_components/pikabu/dist/effect/drawer-left',
+        'drawer-right': 'bower_components/pikabu/dist/effect/drawer-right'
+        // There are a few more within the 'effect' folder
     }
 }
 
