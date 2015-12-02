@@ -4,4 +4,5 @@
 localConfig.json
 node_modules/
 src/*.css
-build/
+build/pikabu.zip
+build/pikabu.js

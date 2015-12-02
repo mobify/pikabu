@@ -1,5 +1,8 @@
 var Mobify = window.Mobify = window.Mobify || {};
-Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
+var Adaptive = window.Adaptive || {};
+if (Adaptive.$ === undefined) {
+    Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
+}
 
 // Pikabu.js
 (function($) {
@@ -359,10 +362,7 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
                 // Set dimensions of elements
                 _this.setHeights();
                 _this.setViewportWidth();
-            } 
-
-           
-
+            }
         });
     }
 
@@ -573,4 +573,4 @@ Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
         }
     };
 
-})(Mobify.$);
+})(Adaptive.$ || Mobify.$);
