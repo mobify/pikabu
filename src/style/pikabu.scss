@@ -1,0 +1,214 @@
+// Pikabu
+// =====
+//
+
+// Variables
+// ---------
+//
+// Notes:
+//
+// 1. Sets the default background color for the document. This is necessary
+//    your flyouts don't bleed through when Pikabu is opened.
+// 2. Sets the default z-index for the main body content. This should always be
+//    higher than the sidebar z-index to stop content bleed-through.
+// 3. If you use a prefix for Deckard, set it as a variable here so we can
+//    properly target iOS for certain fixes.
+
+$pikabu__background-color: white !default; // 1
+$pikabu__z-index: 1 !default; // 2
+$pikabu__deckard-prefix: ''; // 3
+
+// Document
+// --------
+//
+// Notes:
+//
+// 1. A `margin` and `padding` of `0` is required on the root elements to avoid
+//    any sizing issues when transforming content. If you need content padding,
+//    add it to `.pikabu__container`.
+// 2. A `height` and `width` of `100%` gives the document a structure that we
+//    can attach to to avoid scrolling issues and height issues.
+
+html,
+body {
+    margin: 0; // 1
+    padding: 0; // 1
+
+    box-sizing: border-box;
+}
+
+*,
+*::after,
+*::before {
+    box-sizing: inherit;
+}
+
+html,
+body,
+.pikabu {
+    height: 100%; // 2
+    width: 100%; // 2
+}
+
+// Pikabu: Viewport
+// ----------------
+//
+// This is the container for the Pikabu structure.
+//
+// Notes:
+//
+// 1. On Chrome, translated elements overflow beyond their parents. Hiding
+//    `overflow` when Pikabu is opened fixes this issue.
+
+.pikabu {
+    &.pikabu--is-open {
+        overflow: hidden; // 1
+    }
+}
+
+
+// Pikabu: Drawer
+// ----------------
+//
+// This element contains the drawer content which is used for the flyout.
+//
+// Notes:
+//
+// 1. The exact position (top, right, bottom, left) is added automatically by
+//    Pikabu. The positioning can be configured by using Pikabu's `coverage` API
+//    explained [here](https://github.com/mobify/pikabu#coverage)
+// 2. The display is automatically set to `block` by Pikabu on open.
+// 3. Hide the outline when Pikabu is focused for screen readers
+// 4. Pikabu shows a tap highlight when tapped for an unknown reason. This
+//    removes that.
+
+.pikabu__drawer {
+    position: fixed; // 1
+
+    display: none; // 2
+    outline: none; // 3
+
+    -webkit-tap-highlight-color: rgba(black, 0); // 4
+}
+
+// Pikabu: Container
+// ----------------
+//
+// This container holds the main body content of the page and gets translated
+// by the effect.
+//
+// Notes:
+//
+// 1. Avoid content bleed-through
+// 2. Ensure container doesn't collapse if content isn't as tall as the viewport
+
+.pikabu__container {
+    position: relative;
+    z-index: $pikabu__z-index;
+
+    min-height: 100%; // 2
+    overflow: hidden;
+
+    background-color: $pikabu__background-color; // 1
+}
+
+// Pikabu: Wrapper
+// --------------
+//
+// The Pikabu Wrapper is responsible for applying a flex context that will
+// layout the children inside (i.e. header, content and footer).
+//
+// This is added to the markup automatically by Pikabu, so no need to include in
+// any authored code.
+//
+//
+// Notes:
+//
+// 1. The relevant flex children are the `.pikabu__header`, `.pikabu__footer`
+//    and `.pikabu__content`
+
+.pikabu__wrapper {
+    display: flex; // 1
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+}
+
+
+// Pikabu: Header & Footer
+// ----------------------
+//
+// The header is the top section of a Pikabu modal. Typically holds a heading or
+// title.
+//
+// There is no footer by default. However, you can pass HTML to Pikabu via its API,
+// as explained [here](https://github.com/mobify/pikabu#footer)
+//
+//
+// Notes:
+//
+// 1. `display: flex` is coming from `.pikabu__wrapper`
+// 2. This prevents the header and footer from being forced to shrink relative to
+//    other flex children (read: the content) – in other words, the header and
+//    footer will not shrink to accomodate the `.pikabu__content` element
+
+.pikabu__header,
+.pikabu__footer {
+    flex-shrink: 0; // 1, 2
+}
+
+
+// Pikabu: Content
+// --------------
+//
+// This is the actual container for a Pikabu's content. This is added automically
+// by Pikabu, so you do not need to use it in your code
+//
+//
+// Notes:
+//
+// 1. `display: flex` is coming from `.pikabu__wrapper`
+// 2. This allows the content to grow or shrink as necessary based on content
+//    and the header/footer
+
+.pikabu__content {
+    overflow: auto;
+    flex: 1; // 1, 2
+
+    -webkit-overflow-scrolling: touch;
+}
+
+// Pikabu: Fixed
+// -------------
+//
+// Add this class to any fixed elements on your page that need to transition
+// with your main content. Those fixed elements need to be inside of `.pikabu`
+// and outside of `.pikabu__container`.
+//
+//
+// Notes:
+//
+// 1. Switching to `absolute` removes a flicker that occurs on iOS devices.
+
+.pikabu__fixed {
+    position: fixed;
+    z-index: $pikabu__z-index + 1;
+
+    width: 100%;
+
+    .#{$pikabu__deckard-prefix}ios:not(.#{$pikabu__deckard-prefix}chrome) .pikabu.pikabu--is-open & {
+        position: absolute; // 1
+    }
+}
+
+
+// Pikabu: Hidden
+// -------------
+//
+// We polyfill the hidden attribute here to ensure it hides all content when
+// applied. Pikabu uses [hidden] to hide content from FOUT before the plugin is
+// initialized.
+
+[hidden] {
+    display: none !important;
+}

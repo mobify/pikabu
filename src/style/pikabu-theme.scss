@@ -1,0 +1,22 @@
+// Pikabu Theme
+// ===========
+//
+
+$pikabu-theme__sidebar-bg: #1c4a48;
+$pikabu-theme__color: #faf6f2;
+
+.pikabu {
+    &.pikabu--is-open {
+        background: $pikabu-theme__sidebar-bg;
+    }
+}
+
+.pikabu__container {
+    padding: 20px;
+}
+
+.pikabu__content {
+    padding: 20px;
+
+    color: $pikabu-theme__color;
+}

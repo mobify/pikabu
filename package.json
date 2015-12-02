@@ -1,19 +1,30 @@
 {
-  "name": "mobify-pikabu",
-  "version": "0.2.2",
-  "description": "A module for creating off-canvas flyouts",
+  "name": "pikabu",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mobify/pikabu.git"
+  },
+  "version": "2.0.0",
+  "description": "A mobile first content fly-in UI plugin",
   "devDependencies": {
+    "chai": "~1.9.0",
     "grunt": "~0.4.x",
-    "grunt-contrib-uglify": "~0.1.1",
-    "grunt-contrib-compass": "0.4.0",
-    "grunt-contrib-connect": "0.3.0",
-    "grunt-contrib-copy": "0.4.1",
-    "grunt-contrib-qunit": "0.2.2",
-    "grunt-s3": "~0.1.0",
+    "grunt-autoprefixer": "~2.0.0",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-connect": "~0.3.0",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-jshint": "0.10.0",
+    "grunt-contrib-sass": "0.8.1",
+    "grunt-contrib-uglify": "0.8",
+    "grunt-contrib-watch": "~0.5.1",
+    "grunt-css": "~0.5.4",
+    "grunt-jscs": "0.7.1",
+    "grunt-mocha-phantomjs": "~0.3.2",
     "grunt-shell": "~0.2.1",
-    "grunt-zip": "~0.4.2",
-    "grunt-clean": "~0.4.0",
-    "grunt-release": "0.7.0"
+    "grunt-version": "^0.3.0",
+    "jshint": "2.5.0",
+    "mobify-code-style": "1.0.0",
+    "mocha": "~1.14.0"
   },
   "license": "MIT"
 }

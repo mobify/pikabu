@@ -1,8 +1,4 @@
-.DS_Store
-*.scssc
-
-localConfig.json
 node_modules/
-src/*.css
-build/pikabu.zip
-build/pikabu.js
+bower_components/
+.DS_Store
+/.sass-cache/

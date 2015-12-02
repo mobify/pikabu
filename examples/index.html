@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Examples of Pikabu in action</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
+    <script src="//use.typekit.net/keh4brl.js"></script>
+    <script>try{Typekit.load();}catch(e){}</script>
+
+    <!-- Pikabu Styles -->
+    <link rel="stylesheet" href="../dist/pikabu.css">
+    <link rel="stylesheet" href="../dist/pikabu-theme.css">
+
+    <!-- Example Page Styles -->
+    <link rel="stylesheet" href="examples.css">
+</head>
+
+<body>
+    <div class="pikabu">
+        <header class="c-header pikabu__fixed">
+            <button tabindex="1" class="c-header__menu js-menu-open" data-pikabu-effect="drawerLeft">Menu</button>
+
+            <h1 class="c-header__title">Pikabu.js</h1>
+        </header>
+
+        <div class="pikabu__container">
+
+            <div class="c-masthead">
+                <p class="c-masthead__subtitle">Functional, stylish, off-canvas flyouts for all devices.</p>
+
+                <ul class="c-masthead__links">
+                    <li class="c-masthead__link">
+                        <a href="http://github.com/mobify/pikabu" title="View on Github" class="c-masthead__button">Github</a>
+                    </li>
+                    <li class="c-masthead__link">
+                        <a href="http://github.com/mobify/pikabu" title="Read the Docs" class="c-masthead__button">Docs</a>
+                    </li>
+                </ul>
+            </div>
+
+            <p>Pikabu makes declaring any effect you want easy. It works with fixed headers across a range of devices&mdash;including mobile browsers.</p>
+
+            <p>To try it out, choose an effect from the list below then tap the menu button above:</p>
+
+            <ul class="c-effects">
+                <li>
+                    <button class="c-effects__button c--active" data-pikabu-effect="drawerLeft">Left Drawer</button>
+                </li>
+                <li>
+                    <button class="c-effects__button" data-pikabu-effect="drawerRight">Right Drawer</button>
+                </li>
+                <li>
+                    <button class="c-effects__button" data-pikabu-effect="airbnb">Perspective Drawer</button>
+                </li>
+                <li>
+                    <button class="c-effects__button" data-pikabu-effect="slideAlong">Slide Along</button>
+                </li>
+            </ul>
+
+            <div id="drawerLeftPikabu" hidden>
+                <h1 class="c-sidebar__heading">Effect: Left Drawer</h1>
+
+                <a href="http://github.com/mobify/pikabu" class="c-sidebar__button">View on Github</a>
+
+                <h2 class="c-sidebar__heading c--small">Docs</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">Installation</a></li>
+                    <li class="c-sidebar__link"><a href="#">Usage</a></li>
+                    <li class="c-sidebar__link"><a href="#">API</a></li>
+                </ul>
+
+                <h2 class="c-sidebar__heading c--small">Pikabu</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">Issues</a></li>
+                    <li class="c-sidebar__link"><a href="#">Fork</a></li>
+                    <li class="c-sidebar__link"><a href="#">Download</a></li>
+                </ul>
+
+                <h2 class="c-sidebar__heading c--small">Mobify</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">About Mobify</a></li>
+                    <li class="c-sidebar__link"><a href="#">Mobify Open Source</a></li>
+                    <li class="c-sidebar__link"><a href="#">Scooch</a></li>
+                    <li class="c-sidebar__link"><a href="#">Pinny</a></li>
+                    <li class="c-sidebar__link"><a href="#">Bellows</a></li>
+                </ul>
+            </div>
+
+            <div id="airbnbPikabu" hidden>
+                <h1 class="c-sidebar__heading">Effect: Perspective</h1>
+
+                <a href="http://github.com/mobify/pikabu" class="c-sidebar__button">View on Github</a>
+
+                <h2 class="c-sidebar__heading c--small">Docs</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">Installation</a></li>
+                    <li class="c-sidebar__link"><a href="#">Usage</a></li>
+                    <li class="c-sidebar__link"><a href="#">API</a></li>
+                </ul>
+
+                <h2 class="c-sidebar__heading c--small">Pikabu</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">Issues</a></li>
+                    <li class="c-sidebar__link"><a href="#">Fork</a></li>
+                    <li class="c-sidebar__link"><a href="#">Download</a></li>
+                </ul>
+
+                <h2 class="c-sidebar__heading c--small">Mobify</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">About Mobify</a></li>
+                    <li class="c-sidebar__link"><a href="#">Mobify Open Source</a></li>
+                    <li class="c-sidebar__link"><a href="#">Scooch</a></li>
+                    <li class="c-sidebar__link"><a href="#">Pinny</a></li>
+                    <li class="c-sidebar__link"><a href="#">Bellows</a></li>
+                </ul>
+            </div>
+
+            <div id="slideAlongPikabu" hidden>
+                <h1 class="c-sidebar__heading">Effect: Slide Along</h1>
+
+                <a href="http://github.com/mobify/pikabu" class="c-sidebar__button">View on Github</a>
+
+                <h2 class="c-sidebar__heading c--small">Docs</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">Installation</a></li>
+                    <li class="c-sidebar__link"><a href="#">Usage</a></li>
+                    <li class="c-sidebar__link"><a href="#">API</a></li>
+                </ul>
+
+                <h2 class="c-sidebar__heading c--small">Pikabu</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">Issues</a></li>
+                    <li class="c-sidebar__link"><a href="#">Fork</a></li>
+                    <li class="c-sidebar__link"><a href="#">Download</a></li>
+                </ul>
+
+                <h2 class="c-sidebar__heading c--small">Mobify</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">About Mobify</a></li>
+                    <li class="c-sidebar__link"><a href="#">Mobify Open Source</a></li>
+                    <li class="c-sidebar__link"><a href="#">Scooch</a></li>
+                    <li class="c-sidebar__link"><a href="#">Pinny</a></li>
+                    <li class="c-sidebar__link"><a href="#">Bellows</a></li>
+                </ul>
+            </div>
+
+            <div id="drawerRightPikabu" hidden>
+                <h1 class="c-sidebar__heading">Effect: Right Drawer</h1>
+
+                <a href="http://github.com/mobify/pikabu" class="c-sidebar__button">View on Github</a>
+
+                <h2 class="c-sidebar__heading c--small">Docs</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">Installation</a></li>
+                    <li class="c-sidebar__link"><a href="#">Usage</a></li>
+                    <li class="c-sidebar__link"><a href="#">API</a></li>
+                </ul>
+
+                <h2 class="c-sidebar__heading c--small">Pikabu</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">Issues</a></li>
+                    <li class="c-sidebar__link"><a href="#">Fork</a></li>
+                    <li class="c-sidebar__link"><a href="#">Download</a></li>
+                </ul>
+
+                <h2 class="c-sidebar__heading c--small">Mobify</h2>
+                <ul class="c-sidebar__links">
+                    <li class="c-sidebar__link"><a href="#">About Mobify</a></li>
+                    <li class="c-sidebar__link"><a href="#">Mobify Open Source</a></li>
+                    <li class="c-sidebar__link"><a href="#">Scooch</a></li>
+                    <li class="c-sidebar__link"><a href="#">Pinny</a></li>
+                    <li class="c-sidebar__link"><a href="#">Bellows</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script data-main="assets/js/main" src="../bower_components/requirejs/require.js"></script>
+</body>
+</html>
+
+
