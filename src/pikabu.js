@@ -1,8 +1,5 @@
 var Mobify = window.Mobify = window.Mobify || {};
-var Adaptive = window.Adaptive || {};
-if (Adaptive.$ === undefined) {
-    Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
-}
+Mobify.$ = Mobify.$ || window.Zepto || window.jQuery;
 
 // Pikabu.js
 (function($) {
@@ -81,29 +78,33 @@ if (Adaptive.$ === undefined) {
 
         /* @url: http://stackoverflow.com/questions/5661671/detecting-transform-translate3d-support */
         function has3d() {
-            var el = document.createElement('p'),
-                has3d,
-                transforms = {
-                    'webkitTransform':'-webkit-transform',
-                    'OTransform':'-o-transform',
-                    'msTransform':'-ms-transform',
-                    'MozTransform':'-moz-transform',
-                    'transform':'transform'
-                };
+            // borrowed from modernizr
+            var div = document.createElement('div'),
+            ret = false,
+            properties = ['perspectiveProperty', 'WebkitPerspective'];
+            for (var i = properties.length - 1; i >= 0; i--){
+                ret = ret ? ret : div.style[properties[i]] != undefined;
+            };
 
-            // Add it to the body to get the computed style.
-            document.body.insertBefore(el, null);
+            // webkit has 3d transforms disabled for chrome, though
+            //   it works fine in safari on leopard and snow leopard
+            // as a result, it 'recognizes' the syntax and throws a false positive
+            // thus we must do a more thorough check:
+            if (ret){
+                var st = document.createElement('style');
+                // webkit allows this media query to succeed only if the feature is enabled.    
+                // "@media (transform-3d),(-o-transform-3d),(-moz-transform-3d),(-ms-transform-3d),(-webkit-transform-3d),(modernizr){#modernizr{height:3px}}"
+                st.textContent = '@media (-webkit-transform-3d){#test3d{height:3px}}';
+                document.getElementsByTagName('head')[0].appendChild(st);
+                div.id = 'test3d';
+                document.body.appendChild(div);
 
-            for (var t in transforms) {
-                if (el.style[t] !== undefined) {
-                    el.style[t] = "translate3d(1px,1px,1px)";
-                    has3d = window.getComputedStyle(el).getPropertyValue(transforms[t]);
-                }
+                ret = div.offsetHeight === 3;
+
+                st.parentNode.removeChild(st);
+                div.parentNode.removeChild(div);
             }
-
-            document.body.removeChild(el);
-
-            return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
+            return ret;
         }
 
         // Determine which transition event to use
@@ -116,11 +117,11 @@ if (Adaptive.$ === undefined) {
 
             var el = document.createElement('fakeelement');
             var transitions = {
-                'WebkitTransition':'webkitTransitionEnd',
                 'transition':'transitionEnd transitionend',
                 'OTransition':'oTransitionEnd',
                 'MSTransition':'msTransitionEnd',
-                'MozTransition':'transitionend'
+                'MozTransition':'transitionend',
+                'WebkitTransition':'webkitTransitionEnd'
             }
 
             var t;
@@ -135,7 +136,7 @@ if (Adaptive.$ === undefined) {
         function isNewChrome(targetVersion) {
             var isChrome = navigator.userAgent.match(/Chrome\/([\d\.]+)\s/);
             var targetVersion = 29;
-
+            
             return (isChrome && parseFloat(isChrome[1]) >= targetVersion);
         }
 
@@ -186,22 +187,14 @@ if (Adaptive.$ === undefined) {
                     right: '80%'
                 },
 
-                // Reset scroll to top position when pikabu is closed
-                // intended to fix reflowing, however this introduces UX issues
-                resetScroll: true,
-
-                // Apply internal pikabu logics to animate sidebar
-                // Note: this may be slow on Android when pushing css properties to DOM
-                // Alternatively you can disable this and style animation in CSS
-                useDefaultAnimation: true,
-
                 // Transition speeds for open/close animation
                 transitionSpeed: 0.2,
 
                 // Events we publish
                 'onInit': function() {},
                 'onOpened': function() {},
-                'onClosed': function() {}
+                'onClosed': function() {},
+                'onClose': function() {}
             }
         });
 
@@ -310,12 +303,13 @@ if (Adaptive.$ === undefined) {
         this.$element.on('pikabu:initialized', this.settings.onInit);
         this.$element.on('pikabu:opened', this.settings.onOpened);
         this.$element.on('pikabu:closed', this.settings.onClosed);
+        this.$element.on('pikabu:close', this.settings.onClose);
     };
 
     // Bind nav toggles and overlay handlers
     Pikabu.prototype.bindHandlers = function() {
+
         var _this = this;
-        $.fn.tap = $.fn.tap || $.fn.fasttap || $.fn.click;
 
         if (window.FastButton) {
             this.$navToggles.fasttap(function(e) {
@@ -371,7 +365,10 @@ if (Adaptive.$ === undefined) {
                 // Set dimensions of elements
                 _this.setHeights();
                 _this.setViewportWidth();
-            }
+            } 
+
+           
+
         });
     }
 
@@ -382,15 +379,15 @@ if (Adaptive.$ === undefined) {
         var classesToApply = '';
 
         if (this.device.hasOverflowScrollingTouch) {
-            classesToApply += 'pikabu--has-overflow-scrolling';
-        }
+            classesToApply = 'pikabu--has-overflow-scrolling';
+        } 
         if (this.device.isLegacyAndroid) {
             classesToApply += ' pikabu--is-legacy-android';
         }
         if (this.device.supportsTransitions) {
             classesToApply += ' pikabu--has-transitions';
         }
-        if (this.device.has3d) {
+        if (this.device.has3d && !this.device.isLegacyAndroid) {
             classesToApply += ' pikabu--has-translate3d';
         }
 
@@ -399,26 +396,22 @@ if (Adaptive.$ === undefined) {
 
     // Styles that aren't deleted when the sidebars are closed
     Pikabu.prototype.applyPersistentStyles = function() {
-        if(!this.settings.useDefaultAnimation) {
-            return false;
-        }
-
-        var bothSidebars = this.settings.selectors['common'] + ', \n' +
+        var bothSidebars = this.settings.selectors['common'] + ', \n' + 
             this.settings.selectors['element'];
         var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + this.settings.selectors['left'];
         var rightSidebarSelector = '.' + this.rightVisibleClass + ' ' + this.settings.selectors['right'];
-        var styles = '<style>\n' +
-                bothSidebars + ' {\n' +
-                    '-webkit-transition: -webkit-transform ' + this.settings.transitionSpeed + 's ease-in;\n' +
-                    '-moz-transition: -moz-transform '+ this.settings.transitionSpeed + 's ease-in;\n' +
-                    '-ms-transition: -ms-transform ' + this.settings.transitionSpeed + 's ease-in;\n' +
+        var styles = '<style>\n' + 
+                bothSidebars + ' {\n' + 
+                    '-webkit-transition: -webkit-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
+                    '-moz-transition: -moz-transform '+ this.settings.transitionSpeed + 's ease-in;\n' + 
+                    '-ms-transition: -ms-transform ' + this.settings.transitionSpeed + 's ease-in;\n' + 
                     '-o-transition: -o-transform ' + this.settings.transitionSpeed +'s ease-in;\n' +
                     'transition: transform ' + this.settings.transitionSpeed +'s ease-in;\n' +
-                '}\n' +
+                '}\n' + 
                 leftSidebarSelector + ' {\n' +
                     '\twidth: ' + this.settings.widths['left'] + ';\n' +
-                '}\n' +
-                rightSidebarSelector + ' {\n' +
+                '}\n' + 
+                rightSidebarSelector + ' {\n' + 
                     '\twidth: ' + this.settings.widths['right'] + ';\n' +
                     '}' +
                 '</style>';
@@ -429,10 +422,7 @@ if (Adaptive.$ === undefined) {
 
     // Styles applied when sidebars are opened
     Pikabu.prototype.applyTransformations = function(sidebar) {
-        if(!this.settings.useDefaultAnimation) {
-            return false;
-        }
-
+        
         var width;
         var transform;
 
@@ -441,20 +431,20 @@ if (Adaptive.$ === undefined) {
         // Transform to the left or the right
         transform = sidebar === 'left' ? width : '-' + width;
 
-        var styles = '<style id="' + this.activePikabuStylesSelector.slice(1) + '">\n' +
-                        this.settings.selectors['element'] + ' {\n' +
-                            '\t-webkit-transform: translate3d(' + transform + ', 0, 0);\n' +
-                            '\t-moz-transform: translate3d(' + transform + ', 0, 0);\n' +
-                            '\t-ms-transform: translate3d(' + transform + ', 0, 0);\n' +
+        var styles = '<style id="' + this.activePikabuStylesSelector.slice(1) + '">\n' + 
+                        this.settings.selectors['element'] + ' {\n' + 
+                            '\t-webkit-transform: translate3d(' + transform + ', 0, 0);\n' + 
+                            '\t-moz-transform: translate3d(' + transform + ', 0, 0);\n' + 
+                            '\t-ms-transform: translate3d(' + transform + ', 0, 0);\n' + 
                             '\t-o-transform: translate3d(' + transform + ', 0, 0);\n' +
-                            '\ttransform: translate3d(' + transform + ', 0, 0);\n' +
+                            '\ttransform: translate3d(' + transform + ', 0, 0);\n' + 
                         '}\n' +
-                        this.settings.selectors[sidebar] + ' {\n' +
-                        '\t-webkit-transform: translate3d(0, 0, 0);\n' +
-                        '\t-moz-transform: translate3d(0, 0, 0);\n' +
-                        '\t-ms-transform: translate3d(0, 0, 0);\n' +
-                        '\t-o-transform: translate3d(0, 0, 0);\n' +
-                        '\ttransform: translate3d(0, 0, 0);\n' +
+                        this.settings.selectors[sidebar] + ' {\n' + 
+                        '\t-webkit-transform: translate3d(0, 0, 0);\n' + 
+                        '\t-moz-transform: translate3d(0, 0, 0);\n' + 
+                        '\t-ms-transform: translate3d(0, 0, 0);\n' + 
+                        '\t-o-transform: translate3d(0, 0, 0);\n' + 
+                        '\ttransform: translate3d(0, 0, 0);\n' + 
                         '}' +
                     '</style>';
 
@@ -484,15 +474,14 @@ if (Adaptive.$ === undefined) {
         this.applyTransformations(target);
 
         // Scroll to the top of the sidebar
-        if (this.resetScroll) {
-            this.scrollTo(0);
-        }
+        this.scrollTo(0);
 
         this.$element.trigger('pikabu:opened');
     };
 
     // Reset sidebar classes on closing
     Pikabu.prototype.resetSidebar = function($sidebar) {
+        
         $sidebar.removeClass('pikabu--has-overflow-touch');
 
         // <TODO> Check to make sure this works
@@ -500,9 +489,7 @@ if (Adaptive.$ === undefined) {
         this.$element.css('height', 'auto');
 
         // Not sure why but we need a scrollTo here to get the reflow to work
-        if (this.resetScroll) {
-            this.scrollTo(0);
-        }
+        this.scrollTo(0);
 
         // Remove the unnecessary margin-bottom to force reflow and properly 
         // recalculate the height of this container
@@ -525,46 +512,41 @@ if (Adaptive.$ === undefined) {
         // Add class to body to indicate currently open sidebars
         this.$document
             .removeClass(this.leftVisibleClass + ' ' + this.rightVisibleClass);
-
+        
         // Reset viewport
         this.$viewport.width('auto');
 
         // Remove sidebar, container tranform styles
-        if(this.settings.useDefaultAnimation) {
-            $(this.activePikabuStylesSelector).remove();
-        }
+        $(this.activePikabuStylesSelector).remove();
+        
+        this.$element.trigger('pikabu:close');
 
         // Check to see if CSS transitions are supported
         if(this.device.transitionEvent && this.activeSidebar) {
             // 1. Removing overflow-scrolling-touch causes a content flash
-            // 2. Removing height too soon causes panel with content to be
+            // 2. Removing height too soon causes panel with content to be 
             // not full height during animation, so we do these after the sidebar has closed
             this.$element.one(this.device.transitionEvent, function(e) {
                 _this.resetSidebar($(this));
 
                 // Scroll back to where we were before we opened the sidebar
-                if (this.resetScroll) {
-                    _this.scrollTo(_this.scrollOffset);
-                }
+                // _this.scrollTo(_this.scrollOffset);
             });
         } else {
             setTimeout(function() {
                 _this.resetSidebar($(this));
-
-                if (this.resetScroll) {
-                    _this.scrollTo(_this.scrollOffset);
-                }
+                // _this.scrollTo(_this.scrollOffset);
             }, 250);
         }
     };
-
+    
     // Set width of viewport
     Pikabu.prototype.setViewportWidth = function() {
 
         var width = 'auto';
 
         // Android 2.3.3 is not getting the correct portrait width
-        if(this.device.isLegacyAndroid && orientation == 0) {
+        if(this.device.isLegacyAndroid && typeof orientation !== 'undefined' && orientation == 0) {
             width = Math.min(this.device.height, this.device.width);
         }
 
@@ -574,31 +556,22 @@ if (Adaptive.$ === undefined) {
     // Recalculate sidebar and viewport height on opening the sidebar
     Pikabu.prototype.setHeights = function() {
 
-        // We use outerHeight for newer Androids running Chrome, because Chrome sometimes
-        // hides the address bar, changing the height.
-        var windowHeight = this.device.isNewChrome ? window.outerHeight : $(window).height();
+        var windowHeight = $(window).height();
 
         var $sidebar = this.activeSidebar && this.$sidebars[this.activeSidebar];
-        var sidebarHeight = $sidebar.height('auto').get(0).scrollHeight;
+        var sidebarHeight = $sidebar.removeAttr('style')[0].scrollHeight;
         var maxHeight = Math.max(windowHeight, sidebarHeight);
 
         if(this.device.hasOverflowScrollingTouch) {
             // Lock viewport for devices that have overflow-scrolling: touch, eg: iOS 5 devices
-
-            $sidebar.height(windowHeight);
-
-            this.$element.height(windowHeight);
-            this.$viewport.height(windowHeight);
-            this.$overlay.height(windowHeight);
-
-            // Forces reflowing to prevent occasional scroll locking
-            $sidebar.css('-webkit-overflow-scrolling', 'auto');
-            window.setTimeout(function() {
-                $sidebar.css('-webkit-overflow-scrolling', 'touch');
-            }, 0);
+            $sidebar.css('height', windowHeight);
+            
+            this.$element.css('height', windowHeight);
+            this.$viewport.css('height', windowHeight);
+            this.$overlay.css('height', windowHeight);
 
         } else {
-            // Set viewport to sidebar height or window height - whichever is greater, so that the
+            // Set viewport to sidebar height or window height - whichever is greater, so that the 
             // whole document scrolls revealing contents of the sidebar
             $sidebar.css('height', maxHeight);
 
@@ -608,4 +581,4 @@ if (Adaptive.$ === undefined) {
         }
     };
 
-})(Adaptive.$ || Mobify.$);
+})(Mobify.$);
