@@ -81,29 +81,33 @@ if (Adaptive.$ === undefined) {
 
         /* @url: http://stackoverflow.com/questions/5661671/detecting-transform-translate3d-support */
         function has3d() {
-            var el = document.createElement('p'),
-                has3d,
-                transforms = {
-                    'webkitTransform':'-webkit-transform',
-                    'OTransform':'-o-transform',
-                    'msTransform':'-ms-transform',
-                    'MozTransform':'-moz-transform',
-                    'transform':'transform'
-                };
+            // borrowed from modernizr
+            var div = document.createElement('div'),
+            ret = false,
+            properties = ['perspectiveProperty', 'WebkitPerspective'];
+            for (var i = properties.length - 1; i >= 0; i--){
+                ret = ret ? ret : div.style[properties[i]] != undefined;
+            };
 
-            // Add it to the body to get the computed style.
-            document.body.insertBefore(el, null);
+            // webkit has 3d transforms disabled for chrome, though
+            //   it works fine in safari on leopard and snow leopard
+            // as a result, it 'recognizes' the syntax and throws a false positive
+            // thus we must do a more thorough check:
+            if (ret){
+                var st = document.createElement('style');
+                // webkit allows this media query to succeed only if the feature is enabled.    
+                // "@media (transform-3d),(-o-transform-3d),(-moz-transform-3d),(-ms-transform-3d),(-webkit-transform-3d),(modernizr){#modernizr{height:3px}}"
+                st.textContent = '@media (-webkit-transform-3d){#test3d{height:3px}}';
+                document.getElementsByTagName('head')[0].appendChild(st);
+                div.id = 'test3d';
+                document.body.appendChild(div);
 
-            for (var t in transforms) {
-                if (el.style[t] !== undefined) {
-                    el.style[t] = "translate3d(1px,1px,1px)";
-                    has3d = window.getComputedStyle(el).getPropertyValue(transforms[t]);
-                }
+                ret = div.offsetHeight === 3;
+
+                st.parentNode.removeChild(st);
+                div.parentNode.removeChild(div);
             }
-
-            document.body.removeChild(el);
-
-            return (has3d !== undefined && has3d.length > 0 && has3d !== "none");
+            return ret;
         }
 
         // Determine which transition event to use
@@ -116,12 +120,12 @@ if (Adaptive.$ === undefined) {
 
             var el = document.createElement('fakeelement');
             var transitions = {
-                'WebkitTransition':'webkitTransitionEnd',
-                'transition':'transitionEnd transitionend',
-                'OTransition':'oTransitionEnd',
-                'MSTransition':'msTransitionEnd',
-                'MozTransition':'transitionend'
-            }
+                'WebkitTransition': 'webkitTransitionEnd',
+                'transition': 'transitionEnd transitionend',
+                'OTransition': 'oTransitionEnd',
+                'MSTransition': 'msTransitionEnd',
+                'MozTransition': 'transitionend'
+            };
 
             var t;
             for(t in transitions){
@@ -201,7 +205,8 @@ if (Adaptive.$ === undefined) {
                 // Events we publish
                 'onInit': function() {},
                 'onOpened': function() {},
-                'onClosed': function() {}
+                'onClosed': function() {},
+                'onClose': function() {}
             }
         });
 
@@ -310,6 +315,7 @@ if (Adaptive.$ === undefined) {
         this.$element.on('pikabu:initialized', this.settings.onInit);
         this.$element.on('pikabu:opened', this.settings.onOpened);
         this.$element.on('pikabu:closed', this.settings.onClosed);
+        this.$element.on('pikabu:close', this.settings.onClose);
     };
 
     // Bind nav toggles and overlay handlers
@@ -390,7 +396,7 @@ if (Adaptive.$ === undefined) {
         if (this.device.supportsTransitions) {
             classesToApply += ' pikabu--has-transitions';
         }
-        if (this.device.has3d) {
+        if (this.device.has3d && !this.device.isLegacyAndroid) {
             classesToApply += ' pikabu--has-translate3d';
         }
 
@@ -533,6 +539,8 @@ if (Adaptive.$ === undefined) {
         if(this.settings.useDefaultAnimation) {
             $(this.activePikabuStylesSelector).remove();
         }
+        
+        this.$element.trigger('pikabu:close');
 
         // Check to see if CSS transitions are supported
         if(this.device.transitionEvent && this.activeSidebar) {
@@ -564,7 +572,7 @@ if (Adaptive.$ === undefined) {
         var width = 'auto';
 
         // Android 2.3.3 is not getting the correct portrait width
-        if(this.device.isLegacyAndroid && orientation == 0) {
+        if(this.device.isLegacyAndroid && typeof orientation !== 'undefined' && orientation == 0) {
             width = Math.min(this.device.height, this.device.width);
         }
 
