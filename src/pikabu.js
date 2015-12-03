@@ -377,10 +377,7 @@ if (Adaptive.$ === undefined) {
                 // Set dimensions of elements
                 _this.setHeights();
                 _this.setViewportWidth();
-            } 
-
-           
-
+            }
         });
     }
 
@@ -392,7 +389,7 @@ if (Adaptive.$ === undefined) {
 
         if (this.device.hasOverflowScrollingTouch) {
             classesToApply += 'pikabu--has-overflow-scrolling';
-        } 
+        }
         if (this.device.isLegacyAndroid) {
             classesToApply += ' pikabu--is-legacy-android';
         }
@@ -412,7 +409,7 @@ if (Adaptive.$ === undefined) {
             return false;
         }
 
-        var bothSidebars = this.settings.selectors['common'] + ', \n' + 
+        var bothSidebars = this.settings.selectors['common'] + ', \n' +
             this.settings.selectors['element'];
         var leftSidebarSelector = '.' + this.leftVisibleClass + ' ' + this.settings.selectors['left'];
         var rightSidebarSelector = '.' + this.rightVisibleClass + ' ' + this.settings.selectors['right'];
@@ -502,7 +499,6 @@ if (Adaptive.$ === undefined) {
 
     // Reset sidebar classes on closing
     Pikabu.prototype.resetSidebar = function($sidebar) {
-        
         $sidebar.removeClass('pikabu--has-overflow-touch');
 
         // <TODO> Check to make sure this works
@@ -535,7 +531,7 @@ if (Adaptive.$ === undefined) {
         // Add class to body to indicate currently open sidebars
         this.$document
             .removeClass(this.leftVisibleClass + ' ' + this.rightVisibleClass);
-        
+
         // Reset viewport
         this.$viewport.width('auto');
 
