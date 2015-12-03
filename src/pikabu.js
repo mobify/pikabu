@@ -314,8 +314,8 @@ if (Adaptive.$ === undefined) {
 
     // Bind nav toggles and overlay handlers
     Pikabu.prototype.bindHandlers = function() {
-
         var _this = this;
+        $.fn.tap = $.fn.tap || $.fn.fasttap || $.fn.click;
 
         if (window.FastButton) {
             this.$navToggles.fasttap(function(e) {
@@ -371,15 +371,6 @@ if (Adaptive.$ === undefined) {
                 // Set dimensions of elements
                 _this.setHeights();
                 _this.setViewportWidth();
-
-            } else {
-                // If we are on a wide-screen where sidebars are always visible, fix sidebar height
-                // to window height
-                if(_this.$sidebars['left'].is(':visible') || _this.$sidebars['right'].is(':visible')) {
-                    _this.$viewport.height(windowHeight);
-                    _this.$sidebars['left'].height(windowHeight);
-                    _this.$sidebars['right'].height(windowHeight);
-                }
             }
         });
     }
@@ -599,6 +590,12 @@ if (Adaptive.$ === undefined) {
             this.$element.height(windowHeight);
             this.$viewport.height(windowHeight);
             this.$overlay.height(windowHeight);
+
+            // Forces reflowing to prevent occasional scroll locking
+            $sidebar.css('-webkit-overflow-scrolling', 'auto');
+            window.setTimeout(function() {
+                $sidebar.css('-webkit-overflow-scrolling', 'touch');
+            }, 0);
 
         } else {
             // Set viewport to sidebar height or window height - whichever is greater, so that the
