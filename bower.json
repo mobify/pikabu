@@ -22,7 +22,7 @@
     "plugin": "~3",
     "mobify-velocity": "1.2.2",
     "requirejs-text": "~2.0.12",
-    "requirejs": "~2.1.14",
+    "requirejs": "2.1.22",
     "bouncefix.js": "~0.3.0",
     "shade": "1.1.1",
     "lockup": "1.1.3",
