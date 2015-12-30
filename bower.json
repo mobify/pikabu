@@ -26,7 +26,7 @@
     "bouncefix.js": "~0.3.0",
     "shade": "1.1.1",
     "lockup": "1.1.3",
-    "deckard": "~1.1.0"
+    "deckard": "1.2.0"
   },
   "devDependencies": {
     "spline": "~1.0.1",
