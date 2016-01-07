@@ -1,0 +1,17 @@
+1.1.3
+    - Use iOS7 background scrolling fix with lockup. Also fixes an issue with
+      input focus competing with browser scroll on focusing on inputs.
+1.1.2
+    - Update dependencies
+1.1.1
+    - Updated version of plugin factory
+1.1.0
+    - Adding `destroy` function
+1.0.0
+    - Release of version 1.0.0
+    - Changing default value of container
+0.0.5
+    - Update Deckard to 1.0
+0.0.4
+    - Fixes issue in jQuery where wrapInner returns a cloned element
+    - Removes vestigial iOS version checking code now that we use Deckard

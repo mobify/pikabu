@@ -1,0 +1,36 @@
+// Icon Font Replace
+// =================
+//
+// This is used when we want to replace any text inside an icon font element
+//
+//
+// Notes:
+//
+// 1. The width property is required to fix a rendering bug that happens when
+//    using the hide-text() mixin
+//
+//
+// @param $position [String] : The pseudo element before or after
+// @param $width [] : The width of the icon
+
+@mixin icon-font-replace($position: 'before', $width: 1em) {
+    @include hide-text();
+
+    position: relative;
+
+    display: inline-block;
+    width: $width; // 1
+
+    &::#{$position} {
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+
+        display: block;
+
+        text-align: center;
+        text-indent: 0;
+    }
+}

@@ -1,0 +1,41 @@
+// Hide Text
+// =========
+//
+// Hides text in an element so you can see the background, but still leaves it
+// visible to screen readers.
+//
+// See `$hide-text-direction` for more information and to set this globally
+// for your application.
+//
+// @param $direction [String] : Indicates how the text should be moved out of view.
+
+@mixin hide-text($direction: right) {
+    @if $direction == right {
+        // slightly wider than the box prevents issues with inline-block elements
+        text-indent: 110%;
+        white-space: nowrap;
+        overflow: hidden;
+    } @else {
+        $approximate-em-value: 12px / 1em;
+        $wider-than-any-screen: -9999em;
+        text-indent: $wider-than-any-screen * $approximate-em-value;
+        overflow: hidden;
+        text-align: left;
+    }
+}
+
+
+// Squish Text
+// -----------
+//
+// This is an alternative text replacement mixin.
+//
+// Hides text in an element by squishing the text into oblivion. Use this if you
+// need to hide text contained in an inline element but still have it read by a
+// screen reader.
+
+@mixin squish-text {
+    font: 0/0 a;
+    text-shadow: none;
+    color: transparent;
+}

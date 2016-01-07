@@ -1,0 +1,27 @@
+{
+  "name": "shade",
+  "repository" : {
+    "type" : "git",
+    "url" : "https://github.com/mobify/shade.git"
+  },
+  "version": "1.1.1",
+  "description": "A mobile-first plugin for creating scroll and touch blocking overlays for content",
+  "devDependencies": {
+    "grunt": "~0.4.x",
+    "grunt-contrib-uglify": "~0.1.1",
+    "grunt-shell": "~0.2.1",
+    "grunt-contrib-clean": "~0.5.0",
+    "grunt-contrib-connect": "~0.3.0",
+    "grunt-contrib-watch": "~0.5.1",
+    "grunt-contrib-copy": "~0.4.1",
+    "grunt-contrib-jshint": "0.10.0",
+    "grunt-version": "^0.3.0",
+    "jshint": "2.5.0",
+    "grunt-jscs": "1.0.0",
+    "mobify-code-style": "1.0.0",
+    "grunt-mocha-phantomjs": "~0.3.2",
+    "mocha": "~1.14.0",
+    "chai": "~1.9.0"
+  },
+  "license": "MIT"
+}

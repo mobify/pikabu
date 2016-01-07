@@ -1,0 +1,11 @@
+// Strip Units
+// ===========
+//
+// Strips the units from a value. e.g. 12px -> 12
+//
+// @param $val [Number] : The number that is to have it's unit stripped
+// @return [Number]
+
+@function strip-units($val) {
+  @return ($val / ($val * 0 + 1));
+}

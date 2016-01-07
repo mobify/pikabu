@@ -1,0 +1,30 @@
+1.0.0
+    - Requires Sass 3.4
+    - Added a desktop override mixin (see utilities/_style-override)
+    - Rewrote web-font mixin for better font-family support
+0.4.1
+    - Fixed issue with `$font-formats` not providing the right format name for Truetype fonts.
+0.4.0
+    - Rename `icon-font-content` function to `icon-address`.
+    - Add a `cache-buster` function to generate a cache-busting string at the end of a URL.
+    - Include `cache-buster` in the `icon-font` mixin as an optional flag.
+0.3.1
+    - Fix syntax error with `ellipsis` mixin.
+    - Remove `no-wrap` option from `ellipsis` mixin.
+    - Re-add missing `change-br` mixin to the Spline import file.
+0.3.0
+    - Split the old `icon-font` mixin into discrete files.
+    - Add a new `web-font` mixin to make including web fonts easier.
+0.2.2
+    - `tap-highlight` mixin no longer relies on the non-existent `$margin` variable.
+    - `clearfix` mixin now acts more consistently with how `overflow: hidden` works.
+0.2.1
+    - Updated clearfix mixin to match behaviour with `overflow: hidden`. Should now contain margins instead of collapsing them.
+0.2.0
+    - Add `reverse-gradient()` function.
+0.1.1
+    - Add `rem()` function
+0.1.0
+    - Initial release
+
+For a more detailed changelog, see: https://github.com/mobify/spline/releases

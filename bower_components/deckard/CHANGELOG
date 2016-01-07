@@ -1,0 +1,9 @@
+1.1.0
+ - Adding isModern check to determine if a browser is considered modern
+1.0.2
+ - Fix orientation detection in Chrome's mobile emulation mode
+1.0.1
+ - Removing unnecessary Velocity dependency in bower.json
+1.0.0
+ - Updating AMD wrapper
+ - Refactor of methods inside deckard to decouple functionality
