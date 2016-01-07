@@ -294,7 +294,7 @@
                     )
                 );
 
-                this.$shadeEl = this.$viewport.shade('getElement');
+                this.$shadeEl = this.$viewport.data('shade').$shade;
             }
             this.$animators = this.$animators.add(this.$shadeEl);
         },
