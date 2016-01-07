@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!-- meta -->
+    <meta charset="utf-8" />
+    <title>dom-event.js</title>
+
+    <!-- styles -->
+    <link rel="stylesheet" href="../node_modules/mocha/mocha.css" />
+  </head>
+
+  <body>
+    <!-- content -->
+    <div id="mocha"></div>
+
+    <!-- workboard -->
+    <div id="workboard"></div>
+
+    <!-- tests -->
+    <script src="../bower_components/requirejs/require.js"></script>
+    <script src="../bower_components/easy-amdtest/dist/easy-amdtest.js"></script>
+    <script>
+      var testSuite = new EasyAMDTest({
+        baseUrl: '../src',
+        urlArgs: 'bust=' + (new Date()).getTime(),
+        paths: {
+          'proclaim'  : '/node_modules/proclaim/lib/proclaim',
+          'sinon'     : '/node_modules/sinon/pkg/sinon',
+          'mocha'     : '/node_modules/mocha/mocha',
+          'jquery'    : '/bower_components/jquery/dist/jquery',
+          'dom-event' : '/node_modules/dom-event.js/dist/amd/dom-event'
+        },
+        shim: {
+          'sinon': {
+            exports: 'sinon'
+          }
+        }
+      }).run({
+        name: 'mocha',
+        tests: [
+          './utils.js',
+          './fix.js',
+          './bouncefix.js'
+        ]
+      });
+    </script>
+  </body>
+</html>

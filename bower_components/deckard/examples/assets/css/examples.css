@@ -1,0 +1,72 @@
+html {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    -webkit-text-size-adjust: 100%;
+}
+
+body {
+    margin: 10px;
+}
+
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    max-width: 100%;
+    margin-top: 20px;
+}
+
+table:last-child {
+    border-bottom-right-radius: 3px;
+    border-bottom-left-radius: 3px;
+}
+
+table td {
+    vertical-align: top;
+    padding: 8px;
+    border-color: #ddd;
+    border-style: solid;
+    border-width: 1px 1px 0 0;
+}
+
+table td:first-child {
+    background-color: #f5f5f5;
+    border-width: 1px;
+    font-weight: bold;
+    min-width: 130px;
+}
+
+table tr:last-child td {
+    border-bottom-width: 1px;
+}
+
+.mobile .mobile,
+.tablet .tablet,
+.desktop .desktop,
+
+.portrait .portrait,
+.landscape .landscape,
+
+.ios .ios,
+.iphone .iphone,
+.ipad .ipad,
+.ipod .ipod,
+.android .android,
+.blackberry .blackberry,
+.bb10 .bb10,
+.windows .windows,
+.rimtabletos .rimtabletos,
+.kindle .kindle,
+
+.webkit .webkit,
+.safari .safari,
+.chrome .chrome,
+.firefox .firefox,
+.ie .ie,
+.playbook .playbook,
+.silk .silk {
+    background: #777;
+    color: #FFF;
+    border-radius: 5px;
+    padding: 2px 4px;
+    line-height: 22px;
+}

@@ -1,0 +1,257 @@
+@import "../dist/spline";
+
+// Base Test Page Styles
+// ---------------------
+
+body {
+    font-family: sans-serif;
+}
+
+.example {
+    margin: 20px 0;
+    padding: 0 0 20px;
+    border-bottom: 1px solid #ccc;
+
+    .block {
+        display: inline-block;
+    }
+}
+
+.block {
+    width: 250px;
+    height: 250px;
+    border: 1px solid #333;
+}
+
+
+// Test function `to-list`
+// -----------------------
+
+$string-1: 'up, down, right';
+$string-2: 'to bottom left';
+$string-3: 'top left, bottom right, foo bar';
+$string-4: 'foo,   bar,   baz';
+
+$list-1: to-list($string-1);
+$list-2: to-list($string-2, ' ');
+$list-3: to-list($string-3, ', ');
+$list-4: to-list($string-4, ',   ');
+
+$should-1: up down right;
+$should-2: to bottom left;
+$should-3: 'top left' 'bottom right' 'foo bar';
+$should-4: foo bar baz;
+
+@debug if($list-1 == $should-1, 'PASS: `', 'FAIL: `') + $list-1 + '` should equal `' + $should-1 + '`.';
+@debug if($list-2 == $should-2, 'PASS: `', 'FAIL: `') + $list-2 + '` should equal `' + $should-2 + '`.';
+@debug if($list-3 == $should-3, 'PASS: `', 'FAIL: `') + $list-3 + '` should equal `' + $should-3 + '`.';
+@debug if($list-4 == $should-4, 'PASS: `', 'FAIL: `') + $list-4 + '` should equal `' + $should-4 + '`.';
+
+// Test function `parent-exists`
+// -----------------------
+
+@if parent-exists() {
+    @debug 'FAIL: Parent should not exist';
+}
+@else {
+    @debug 'PASS: Parent should not exist';
+}
+
+.parent-exists-test-1 {
+    .parent-exists-child {
+        @if parent-exists() {
+            @debug 'PASS: Parent should exist';
+        }
+        @else {
+            @debug 'FAIL: Parent should exist';
+        }
+    }
+}
+
+// Test function `reverse-gradient`
+// --------------------------------
+
+$gradient: linear-gradient(blue, red, green 100%);
+$direction-gradient: linear-gradient(to top right, blue, red, green 100%);
+$deg-gradient: linear-gradient(132deg, blue, red, purple);
+
+// Forward Gradient
+.gradient {
+    background: $gradient;
+}
+
+// Reverse Gradient
+.reverse-gradient {
+    background: reverse-gradient($gradient);
+}
+
+// Forward Gradient
+.direction-gradient {
+    background: $direction-gradient;
+}
+
+// Reverse Gradient
+.reverse-direction-gradient {
+    background: reverse-gradient($direction-gradient);
+}
+
+// Forward Gradient
+.deg-gradient {
+    background: $deg-gradient;
+}
+
+// Reverse Gradient
+.reverse-deg-gradient {
+    background: reverse-gradient($deg-gradient);
+}
+
+// Test function `clearfix`
+// --------------------------------
+
+.clearfix {
+    @include clearfix;
+
+    border: 1px solid red;
+
+    .block {
+        float: left;
+
+        margin: 20px;
+    }
+}
+
+.overflow-hidden {
+    overflow: hidden;
+    border: 1px solid red;
+
+    .block {
+        float: left;
+
+        margin: 20px;
+    }
+}
+
+// Test function `ellipsis`
+// --------------------------------
+
+.ellipsis {
+    .block {
+        @include ellipsis;
+    }
+}
+
+// Test Web Font mixin
+// -------------------
+
+$custom-font: 'sourcesanspro';
+
+$custom-font-path: 'fixtures/fonts/#{$custom-font}';
+
+// Normal
+@include web-font(
+    $custom-font,
+    $custom-font-path,
+    $font-weight: normal,
+    $font-style: normal,
+    $cache-buster: true
+);
+
+// Italic
+@include web-font(
+    $custom-font,
+    $custom-font-path,
+    $font-weight: normal,
+    $font-style: italic,
+    $cache-buster: true
+);
+
+// Bold
+@include web-font(
+    $custom-font,
+    $custom-font-path,
+    $font-weight: bold,
+    $font-style: normal,
+    $cache-buster: true
+);
+
+// Light
+@include web-font(
+    $custom-font,
+    $custom-font-path,
+    $font-weight: 300,
+    $font-style: normal,
+    $cache-buster: true
+);
+
+.webfont {
+    font-family: $custom-font, arial, sans-serif;
+
+    .light {
+        font-weight: 300;
+    }
+}
+
+// Test Icon Font mixin
+// --------------------------------
+
+$icon-font: 'spline';
+$icon-font-path: 'fixtures/fonts/icon';
+
+@include web-font(
+    $icon-font,
+    $icon-font-path,
+    $cache-buster: true
+);
+
+.icon {
+    @include icon-font();
+
+    @each $icon, $content in $icon-list {
+        &.icon--#{$icon} {
+            &::before {
+                content: icon-address($icon);
+            }
+        }
+    }
+}
+
+.icon-right {
+    @include icon-font($position: 'after');
+
+    @each $icon, $content in $icon-list {
+        &.icon--#{$icon} {
+            &::after {
+                content: icon-address($icon);
+            }
+        }
+    }
+}
+
+.icon--replace {
+    @include icon-font-replace();
+}
+
+// Test Style Override mixin
+// ---
+
+#main-content #inner-content #content #main .column .form.field ul li.target {
+    color: red;
+}
+
+// Test parent-less declaration
+
+@include style-override(4) {
+    .target:last-child {
+        color: green;
+    }
+}
+
+// Test declaration inside of parent
+
+.parent-test {
+    @include style-override(4) {
+        .target:last-child {
+            color: blue;
+        }
+    }
+}
