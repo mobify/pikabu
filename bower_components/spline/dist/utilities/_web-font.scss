@@ -1,0 +1,73 @@
+// Web Font
+// ========
+//
+// Generates a font face declaration.
+// This mixin expects fonts to be named a specific way. It uses the font style
+// and font weight values to build out the file name.
+//
+// For example:
+// - Normal font:      sourcesanspro.ext
+// - Italic font:      sourcesanspro-italic.ext
+// - Bold font:        sourcesanspro-bold.ext
+// - Light font:       sourcesanspro-300.ext
+//     - (Note that this uses the weight value not a 'light' string)
+// - Bold Italic font: sourcesanspro-bold-italic.ext
+//
+// Dependencies
+// ------------
+//
+// * Spline function: cache-buster()
+//
+//
+// @param $font-family [String] : Font family name
+// @param $path [String] : Location of folder containing font files
+// @param $formats [Map] :
+//          key :   'File extension',
+//          value : 'Format name'
+// @param $font-weight [String] : Font weight declaration
+// @param $font-style [String] : Font style declaration
+// @param $cache-buster [Boolean] : Use cache buster or not
+
+@mixin web-font(
+        $font-family,
+        $path: '../fonts/#{$font-family}',
+        $formats: $font-formats,
+        $font-weight: normal,
+        $font-style: normal,
+        $cache-buster: false
+    ) {
+        $src-list: ();
+
+        @each $file-extension, $format  in $formats {
+            $type-style: '';
+
+            // Check if the font weight is other than normal, if it is then add
+            // the type values to the file
+            @if $font-weight != "normal" {
+                $type-style: $type-style + '-#{$font-weight}';
+            }
+
+            // Check if the font style is other than normal, if it is then add
+            // the type values to the file
+            @if $font-style != "normal" {
+                $type-style: $type-style + '-#{$font-style}';
+            }
+
+            $complete-path: '#{$path}/#{$font-family}#{$type-style}.#{$file-extension}';
+
+            // If a cache-buster is declared, append it to the end of the path
+            @if ($cache-buster) {
+                $complete-path: $complete-path + cache-buster();
+            }
+
+            $src-list: append($src-list, url('#{$complete-path}') format('#{$format}'), comma);
+        }
+
+        @font-face {
+            font-family: $font-family;
+            font-weight: $font-weight;
+            font-style: $font-style;
+
+            src: $src-list;
+        }
+}

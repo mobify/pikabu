@@ -1,0 +1,33 @@
+{
+  "name": "plugin",
+  "version": "3.0.0",
+  "homepage": "https://github.com/mobify/plugin",
+  "authors": [
+    "Mobify <jobs@mobify.com>"
+  ],
+  "description": "A mobile first accordion UI plugin",
+  "main": "dist/plugin.min.js",
+  "keywords": [
+    "plugin",
+    "factory",
+    "mobile",
+    "mobify"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "./!(src|dist|lib|templates)"
+  ],
+  "dependencies": {
+    "requirejs-text": "~2.0.12",
+    "requirejs": "~2.1.14"
+  },
+  "_release": "3.0.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "3.0.0",
+    "commit": "7177fa6bf6ee6cbf36f0d50ae87f69412b6cf8b2"
+  },
+  "_source": "git://github.com/mobify/plugin.git",
+  "_target": "~3.0.0",
+  "_originalSource": "plugin"
+}

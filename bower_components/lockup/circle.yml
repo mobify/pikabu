@@ -1,0 +1,10 @@
+machine:
+  node:
+    version: 0.10.21
+
+test:
+    pre:
+        - gem install sass -v 3.4
+        - bower install
+    override:
+        - grunt test 
