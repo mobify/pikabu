@@ -1,0 +1,19 @@
+{
+  "name": "bouncefix.js",
+  "version": "0.3.0",
+  "devDependencies": {
+    "requirejs": "~2.1.11",
+    "easy-amdtest": "~0.0.1",
+    "jquery": "~1.11.1"
+  },
+  "homepage": "https://github.com/jaridmargolin/bouncefix.js",
+  "_release": "0.3.0",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.0",
+    "commit": "f040f8c5eedb44bc42d689b1e743fc04e5ed8bfd"
+  },
+  "_source": "git://github.com/jaridmargolin/bouncefix.js.git",
+  "_target": "~0.3.0",
+  "_originalSource": "bouncefix.js"
+}

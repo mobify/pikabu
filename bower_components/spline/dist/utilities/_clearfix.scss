@@ -1,0 +1,37 @@
+// Clearfix
+// ========
+//
+// Provides an easy way to contain floats without adding additional markup.
+//
+//
+// Acknowledgements
+//
+// A new micro clearfix hack: [Nicolas Gallagher](http://nicolasgallagher.com/micro-clearfix-hack/)
+// Beat *that* clearfix: [Thierry Koblentz](http://www.css-101.org/articles/clearfix/latest-new-clearfix-so-far.php)
+//
+//
+// Usage:
+//
+//    .contain-floated-children {
+//        @include clearfix;
+//    }
+//
+//
+// Notes:
+//
+// 1. Avoid an Opera bug when the contenteditable attribute is included anywhere
+//    else in the document.
+// 2. Contain the the first child’s top margin. Ensures rendering is consistent
+//    with the other common clearfix method, `overflow: hidden`.
+
+@mixin clearfix {
+    &::before,
+    &::after {
+        content: ' '; // 1
+        display: table; // 2
+    }
+
+    &::after {
+        clear: both;
+    }
+}

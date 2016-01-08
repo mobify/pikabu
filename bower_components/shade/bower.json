@@ -1,0 +1,24 @@
+{
+  "name": "shade",
+  "version": "1.1.1",
+  "homepage": "https://github.com/mobify/shade",
+  "authors": [
+    "Mobify <jobs@mobify.com>"
+  ],
+  "description": "A mobile-first plugin for creating scroll and touch blocking overlays for content",
+  "main": "dist/shade.min.js",
+  "keywords": [
+    "shade",
+    "overlay"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "./!(src|dist|lib|templates)"
+  ],
+  "dependencies": {
+    "plugin": "~3.0.0",
+    "mobify-velocity": "1.1.2",
+    "requirejs-text": "~2.0.12",
+    "requirejs": "~2.1.14"
+  }
+}
