@@ -1,0 +1,19 @@
+// Convert Direction
+// =================
+//
+// Takes a direction and returns the opposite
+//
+// @param $direction [String] : initial direction
+// @return [String]
+
+@function convert-direction($direction) {
+    @if $direction == 'top' {
+        @return 'bottom';
+    } @else if $direction == 'bottom' {
+        @return 'top';
+    } @else if $direction == 'left' {
+        @return 'right';
+    } @else if $direction == 'right' {
+        @return 'left';
+    }
+}

@@ -1,0 +1,12 @@
+// Check if the current selector is nested
+//
+// @return [Boolean]
+
+@function parent-exists() {
+    @if & {
+        @return true;
+    }
+    @else {
+        @return false;
+    }
+}

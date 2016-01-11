@@ -1,0 +1,145 @@
+// TAP HIGHLIGHT
+// =============
+//
+// To add tap highlight for WebKit browsers.
+//
+// Usage:
+//
+// ```scss
+// .x-button {
+//     @include tap-highlight;
+// }
+// ```
+//
+//
+// @param $color [Color] : Default rgba(0, 0, 0, 0); The color of the tap highlight
+// @param $method [String] : Method determines how the tap highlight is styled.
+//        Possible options:
+//            * 'highlight'
+//            * 'custom'
+//            * 'overlay'
+//            * 'box-shadow'
+// @param $position [String] : The pseudo element before or after
+// @param $fast-tap-enabled [String] : Whether or not tap is enabled for this
+//        element. See fasttap.js for more details. All possible values:
+//            * true
+//            * false
+// @param $box-shadow-blur [Number] : Thickness of the highlight's box shadow blur
+// @param $active-selector [String] : The class or pseudo class used to apply the
+//        tap highlight affect, and represents the tap highlight's active state.
+
+@mixin tap-highlight(
+    $method: 'highlight',
+    $color: rgba(0, 0, 0, 0.25),
+    $overlay-position: before,
+    $fast-tap-enabled: false,
+    $box-shadow-blur: 5px,
+    $active-selector: ':active'
+) {
+
+    // $METHOD: HIGHLIGHT
+    //
+    // This is the default highlight style!
+
+    @if $method == 'highlight' {
+
+        // Fast-tap requires it's own styling to simulate the correct
+        // tap-highlight effect. Can't just apply both, otherwise you
+        // get a double tap-highlight effect
+        @if $fast-tap-enabled is true {
+
+            // Remove the ordinary tap highlight
+            -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+            // Fast Tap highlighting uses the :active state
+            &#{$active-selector} {
+                background: $color;
+
+                @content;
+            }
+
+        } @else {
+
+            // Non-Fast Tap elements are highlighted with -wekbit-tap-highlight-color
+            -webkit-tap-highlight-color: $color;
+
+            @content;
+        }
+    }
+
+    // $METHOD: CUSTOM
+    //
+    // Enables you to set your own active state styling for your tap highlight. Removes the tap highlight color.
+
+    @else if $method == 'custom' {
+        // Remove the ordinary tap highlight
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+        // Fast Tap highlighting uses the :active state
+        &#{$active-selector} {
+            @content;
+        }
+    }
+
+    // $METHOD: OVERLAY
+    //
+    // Intended use of the Overlay version of the Tap Highlight is if the
+    // tappable element has children elements with solid background colors,
+    // or images.
+    //
+    // Use the overlay to simulate a background highlight effect!
+    //
+    // Note! This requires a pseudo element (before or after)
+
+    @else if $method == 'overlay' {
+
+        // Allow the pseudo element below to be absolutely positioned
+        position: relative;
+
+        // Remove the ordinary tap highlight
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+        &#{$active-selector}::#{$overlay-position} {
+            content: '';
+
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            z-index: $layer-overlay;
+
+            display: block;
+
+            background: $color;
+
+            @content;
+        }
+    }
+
+
+    // $METHOD: BOX-SHADOW
+    //
+    // The intended use for the Box Shadow highlight is for when you can't
+    // use either the the default highlight OR the overlay (perhaps the
+    // tappable element already uses both before and after pseudo elements)
+    // in which case, use the Box Shadow version!
+
+    @else if $method == 'box-shadow' {
+
+        // Remove the ordinary tap highlight
+        -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+
+        // Fast Tap highlighting uses the :active state
+        &#{$active-selector} {
+            @include box-shadow(
+                0 0 $box-shadow-blur $color,
+                inset 0 0 $box-shadow-blur $color
+            );
+
+            @include border-radius;
+
+            @content;
+        }
+    }
+}
