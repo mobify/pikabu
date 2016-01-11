@@ -2,9 +2,9 @@ define([
     'text!fixtures/pikabu.html',
     'text!fixtures/fullPikabu.html',
     '$',
-    'modal-center',
+    'drawer-left',
     'pikabu'
-], function(fixture, fullFixture, $, modalCenter) {
+], function(fixture, fullFixture, $, drawerLeft) {
     var element;
 
     describe('Pikabu plugin', function() {
@@ -38,7 +38,7 @@ define([
         describe('invoking pikabu', function() {
             it('creates pikabu instance on element', function() {
                 element.pikabu({
-                    effect: modalCenter
+                    effect: drawerLeft
                 });
 
                 assert.isDefined(element.data('pikabu'));
@@ -46,7 +46,7 @@ define([
 
             it('stores element inside instance', function() {
                 element.pikabu({
-                    effect: modalCenter
+                    effect: drawerLeft
                 });
 
                 assert.isDefined(element.data('pikabu').$pikabu);
@@ -62,7 +62,7 @@ define([
         describe('invoking pikabu methods using the plugin interface', function() {
             it('opens a pikabu using the open method', function(done) {
                 element.pikabu({
-                    effect: modalCenter,
+                    effect: drawerLeft,
                     opened: function() {
                         assert.isTrue(element.closest('.pikabu').hasClass('pikabu--is-open'));
                         done();
@@ -74,7 +74,7 @@ define([
 
             it('closes a pikabu item using the close method', function(done) {
                 element.pikabu({
-                    effect: modalCenter,
+                    effect: drawerLeft,
                     opened: function() {
                         element.pikabu('close');
                     },
@@ -89,7 +89,7 @@ define([
 
             it('closes a pikabu item using the close button', function(done) {
                 element.pikabu({
-                    effect: modalCenter,
+                    effect: drawerLeft,
                     opened: function() {
 
                         element.closest('.pikabu').find('.pikabu__close').trigger('click');
@@ -107,7 +107,7 @@ define([
                 assert.throws(function() {
                     element
                         .pikabu({
-                            effect: modalCenter
+                            effect: drawerLeft
                         })
                         .pikabu('noMethod');
                 });
@@ -117,7 +117,7 @@ define([
                 assert.throws(function() {
                     element
                         .pikabu({
-                            effect: modalCenter
+                            effect: drawerLeft
                         })
                         .pikabu('_init');
                 });
@@ -127,7 +127,7 @@ define([
                 assert.throws(function() {
                     element
                         .pikabu({
-                            effect: modalCenter
+                            effect: drawerLeft
                         })
                         .pikabu('singleItemOpen');
                 });
@@ -136,12 +136,12 @@ define([
 
         describe('creates a pikabu with correct container', function() {
             it('creates pikabu with the default container', function() {
-                var $pikabu = $(element).pikabu({ effect: modalCenter });
+                var $pikabu = $(element).pikabu({ effect: drawerLeft });
                 assert.equal($pikabu.closest('.lockup__container').length, 1);
             });
 
             it('creates pikabu in the container element', function() {
-                var $pikabu = $(element).pikabu({ effect: modalCenter, container: '#pikabu-container' });
+                var $pikabu = $(element).pikabu({ effect: drawerLeft, container: '#pikabu-container' });
                 assert.equal($pikabu.closest('#pikabu-container').length, 1);
             });
         });
@@ -149,7 +149,7 @@ define([
         describe('creates a pikabu with correct header', function() {
             it('creates the structure with header = false', function() {
                 var $pikabu = $(fullFixture).pikabu({
-                    effect: modalCenter,
+                    effect: drawerLeft,
                     structure: {
                         header: false
                     }
@@ -162,7 +162,7 @@ define([
             it('creates the correct structure with header = "Something"', function() {
                 var $pikabu = $(fixture)
                     .pikabu({
-                        effect: modalCenter,
+                        effect: drawerLeft,
                         structure: {
                             header: 'Something'
                         }
@@ -177,7 +177,7 @@ define([
             it('creates the correct structure with an HTML header', function() {
                 var $pikabu = $(fixture)
                     .pikabu({
-                        effect: modalCenter,
+                        effect: drawerLeft,
                         structure: {
                             header: '<span class="pikabu__header--custom">Custom header</span><button class="pikabu__close"></button>'
                         }
@@ -193,7 +193,7 @@ define([
         describe('creates a pikabu with correct footer', function() {
             it('creates the structure with footer = false', function() {
                 var $pikabu = $(fullFixture).pikabu({
-                    effect: modalCenter,
+                    effect: drawerLeft,
                     structure: {
                         header: false,
                         footer: false
@@ -208,7 +208,7 @@ define([
             it('creates the correct structure with footer = "Footer"', function() {
                 var $pikabu = $(fixture)
                     .pikabu({
-                        effect: modalCenter,
+                        effect: drawerLeft,
                         structure: {
                             footer: 'Footer'
                         }
@@ -224,7 +224,7 @@ define([
             it('creates the correct structure with an HTML footer', function() {
                 var $pikabu = $(fixture)
                     .pikabu({
-                        effect: modalCenter,
+                        effect: drawerLeft,
                         structure: {
                             footer: '<span class="pikabu__footer--custom">Custom footer</span>'
                         }

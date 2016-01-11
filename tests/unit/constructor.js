@@ -1,9 +1,9 @@
 define([
     'text!fixtures/pikabu.html',
     '$',
-    'modal-center',
+    'drawer-left',
     'pikabu'
-], function(fixture, $, modalCenter) {
+], function(fixture, $, drawerLeft) {
     var Pikabu;
     var element;
 
@@ -15,7 +15,7 @@ define([
 
         it('creates a pikabu instance', function() {
             var pikabu = new Pikabu(element, {
-                effect: modalCenter
+                effect: drawerLeft
             });
 
             assert.isDefined(pikabu);

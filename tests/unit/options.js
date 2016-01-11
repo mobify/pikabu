@@ -1,9 +1,9 @@
 define([
     'text!fixtures/pikabu.html',
     '$',
-    'modal-center',
+    'drawer-left',
     'pikabu'
-], function(fixture, $, modalCenter) {
+], function(fixture, $, drawerLeft) {
     var Pikabu;
     var element;
     var pikabu;
@@ -26,7 +26,7 @@ define([
         describe('creates default options when no options parameter not used', function() {
             beforeEach(function() {
                 pikabu = new Pikabu(element, {
-                    effect: modalCenter
+                    effect: drawerLeft
                 });
             });
 
@@ -80,49 +80,49 @@ define([
 
         describe('creates custom options when options parameter used', function() {
             it('correctly defines effect', function() {
-                pikabu = new Pikabu(element, { effect: modalCenter });
+                pikabu = new Pikabu(element, { effect: drawerLeft });
 
-                assert.deepEqual(pikabu.options.effect, modalCenter);
+                assert.deepEqual(pikabu.options.effect, drawerLeft);
                 assert.isFunction(pikabu.options.effect);
             });
 
             it('correctly defines custom header', function() {
-                pikabu = new Pikabu(element, { effect: modalCenter, structure: { header: '<header>Pinnay</header>' } });
+                pikabu = new Pikabu(element, { effect: drawerLeft, structure: { header: '<header>Pinnay</header>' } });
 
                 assert.equal(pikabu.options.structure.header, '<header>Pinnay</header>');
                 assert.isString(pikabu.options.structure.header);
             });
 
             it('correctly defines custom footer', function() {
-                pikabu = new Pikabu(element, { effect: modalCenter, structure: { footer: '<footer>Stinky foot</footer>' } });
+                pikabu = new Pikabu(element, { effect: drawerLeft, structure: { footer: '<footer>Stinky foot</footer>' } });
 
                 assert.equal(pikabu.options.structure.footer, '<footer>Stinky foot</footer>');
                 assert.isString(pikabu.options.structure.footer);
             });
 
             it('correctly defines zIndex of 5', function() {
-                pikabu = new Pikabu(element, { effect: modalCenter, zIndex: 5 });
+                pikabu = new Pikabu(element, { effect: drawerLeft, zIndex: 5 });
 
                 assert.equal(pikabu.options.zIndex, 5);
                 assert.isNumber(pikabu.options.zIndex);
             });
 
             it('correctly defines coverage of 80%', function() {
-                pikabu = new Pikabu(element, { effect: modalCenter, coverage: '80%' });
+                pikabu = new Pikabu(element, { effect: drawerLeft, coverage: '80%' });
 
                 assert.equal(pikabu.options.coverage, '80%');
                 assert.isString(pikabu.options.coverage);
             });
 
             it('correctly defines duration of 400', function() {
-                pikabu = new Pikabu(element, { effect: modalCenter, duration: 400 });
+                pikabu = new Pikabu(element, { effect: drawerLeft, duration: 400 });
 
                 assert.equal(pikabu.options.duration, 400);
                 assert.isNumber(pikabu.options.duration);
             });
 
             it('correctly defines easing as ease-in-out', function() {
-                pikabu = new Pikabu(element, { effect: modalCenter, easing: 'ease-in-out'});
+                pikabu = new Pikabu(element, { effect: drawerLeft, easing: 'ease-in-out'});
 
                 assert.equal(pikabu.options.easing, 'ease-in-out');
                 assert.isString(pikabu.options.easing);
@@ -132,7 +132,7 @@ define([
                 var open = function() {
                     console.log('I\'m open!')
                 };
-                pikabu = new Pikabu(element, { effect: modalCenter, open: open });
+                pikabu = new Pikabu(element, { effect: drawerLeft, open: open });
 
                 assert.equal(pikabu.options.open, open);
                 assert.isFunction(pikabu.options.open);
