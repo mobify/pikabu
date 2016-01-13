@@ -7,6 +7,8 @@ define([
     var element;
 
     describe('Pikabu events', function() {
+        this.timeout(5000);
+
         beforeEach(function() {
             element = $(fixture);
         });

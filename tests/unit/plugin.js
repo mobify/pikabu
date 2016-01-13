@@ -8,6 +8,8 @@ define([
     var element;
 
     describe('Pikabu plugin', function() {
+        this.timeout(5000);
+
         beforeEach(function() {
             element = $(fixture);
         });
