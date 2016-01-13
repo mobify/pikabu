@@ -110,6 +110,18 @@ define([
                 assert.isFunction(pikabu.options.effect);
             });
 
+            it('correctly defines the container element', function() {
+                pikabu = new Pikabu(element, { effect: drawerLeft, container: '#pikabu-container' });
+
+                assert.equal(pikabu.options.container, '#pikabu-container');
+            });
+
+            it('correctly defines the appendTo element', function() {
+                pikabu = new Pikabu(element, { effect: drawerLeft, appendTo: '#pikabu-appendTo' });
+
+                assert.equal(pikabu.options.appendTo, '#pikabu-appendTo');
+            });
+
             it('correctly defines custom header', function() {
                 pikabu = new Pikabu(element, { effect: drawerLeft, structure: { header: '<header>Pinnay</header>' } });
 
@@ -138,13 +150,6 @@ define([
                 assert.isString(pikabu.options.coverage);
             });
 
-            it('correctly defines duration of 400', function() {
-                pikabu = new Pikabu(element, { effect: drawerLeft, duration: 400 });
-
-                assert.equal(pikabu.options.duration, 400);
-                assert.isNumber(pikabu.options.duration);
-            });
-
             it('correctly defines easing as ease-in-out', function() {
                 pikabu = new Pikabu(element, { effect: drawerLeft, easing: 'ease-in-out'});
 
@@ -152,21 +157,25 @@ define([
                 assert.isString(pikabu.options.easing);
             });
 
-            it('correctly defines open event', function() {
-                var open = function() {
-                    console.log('I\'m open!')
-                };
-                pikabu = new Pikabu(element, { effect: drawerLeft, open: open });
+            it('correctly defines duration of 400', function() {
+                pikabu = new Pikabu(element, { effect: drawerLeft, duration: 400 });
 
-                assert.equal(pikabu.options.open, open);
-                assert.isFunction(pikabu.options.open);
+                assert.equal(pikabu.options.duration, 400);
+                assert.isNumber(pikabu.options.duration);
+            });
+
+            it('correctly defines shade zIndex', function() {
+                pikabu = new Pikabu(element, { effect: drawerLeft, shade: { zIndex: 4 } });
+
+                assert.equal(pikabu.options.shade.zIndex, 4);
+                assert.isNumber(pikabu.options.shade.zIndex);
             });
 
             it('correctly defines open event', function() {
                 var open = function() {
                     console.log('Open!')
                 };
-                pikabu = new Pikabu(element, { effect: modalCenter, open: open });
+                pikabu = new Pikabu(element, { effect: drawerLeft, open: open });
 
                 assert.equal(pikabu.options.open, open);
                 assert.isFunction(pikabu.options.open);
@@ -176,7 +185,7 @@ define([
                 var opened = function() {
                     console.log('Opened!')
                 };
-                pikabu = new Pikabu(element, { effect: modalCenter, opened: opened });
+                pikabu = new Pikabu(element, { effect: drawerLeft, opened: opened });
 
                 assert.equal(pikabu.options.opened, opened);
                 assert.isFunction(pikabu.options.opened);
@@ -186,7 +195,7 @@ define([
                 var close = function() {
                     console.log('Close!')
                 };
-                pikabu = new Pikabu(element, { effect: modalCenter, close: close });
+                pikabu = new Pikabu(element, { effect: drawerLeft, close: close });
 
                 assert.equal(pikabu.options.close, close);
                 assert.isFunction(pikabu.options.close);
@@ -196,16 +205,24 @@ define([
                 var closed = function() {
                     console.log('Closed!')
                 };
-                pikabu = new Pikabu(element, { effect: modalCenter, closed: closed });
+                pikabu = new Pikabu(element, { effect: drawerLeft, closed: closed });
 
                 assert.equal(pikabu.options.closed, closed);
                 assert.isFunction(pikabu.options.closed);
             });
 
-            it('correctly defines the container element', function() {
-                pikabu = new Pikabu(element, { effect: modalCenter, container: '#pikabu-container' });
+            it('correctly defines scrollDuration', function() {
+                pikabu = new Pikabu(element, { effect: drawerLeft, scrollDuration: 100 });
 
-                assert.equal(pikabu.options.container, '#pikabu-container');
+                assert.equal(pikabu.options.scrollDuration, 100);
+                assert.isNumber(pikabu.options.scrollDuration);
+            });
+
+            it('correctly defines spacerHeight', function() {
+                pikabu = new Pikabu(element, { effect: drawerLeft, spacerHeight: 500 });
+
+                assert.equal(pikabu.options.spacerHeight, 500);
+                assert.isNumber(pikabu.options.spacerHeight);
             });
         });
     });
