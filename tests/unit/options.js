@@ -36,6 +36,14 @@ define([
                 });
             });
 
+            it('correctly defines container', function() {
+                assert.isDefined(pikabu.options.container);
+            });
+
+            it('correctly defines appendTo', function() {
+                assert.isDefined(pikabu.options.appendTo);
+            });
+
             it('correctly defines header', function() {
                 assert.equal(pikabu.options.structure.header, Pikabu.DEFAULTS.structure.header);
                 assert.isFalse(pikabu.options.structure.header);
@@ -47,8 +55,13 @@ define([
             });
 
             it('correctly defines zIndex', function() {
-                assert.equal(pikabu.options.zIndex, 2);
+                assert.equal(pikabu.options.zIndex, 0);
                 assert.isNumber(pikabu.options.zIndex);
+            });
+
+            it('correctly defines cssClass', function() {
+                assert.equal(pikabu.options.cssClass, '');
+                assert.isString(pikabu.options.cssClass);
             });
 
             it('correctly defines coverage', function() {
@@ -56,14 +69,19 @@ define([
                 assert.isString(pikabu.options.coverage);
             });
 
+            it('correctly defines easing', function() {
+                assert.equal(pikabu.options.easing, 'swing');
+                assert.isString(pikabu.options.easing);
+            });
+
             it('correctly defines duration', function() {
                 assert.equal(pikabu.options.duration, 200);
                 assert.isNumber(pikabu.options.duration);
             });
 
-            it('correctly defines easing', function() {
-                assert.equal(pikabu.options.easing, 'swing');
-                assert.isString(pikabu.options.easing);
+            it('correctly defines shade zIndex', function() {
+                assert.equal(pikabu.options.shade.zIndex, 2);
+                assert.isNumber(pikabu.options.shade.zIndex);
             });
 
             it('correctly defines events', function() {
@@ -73,8 +91,14 @@ define([
                 assert.isFunction(pikabu.options.closed);
             });
 
-            it('correctly defines container', function() {
-                assert.isDefined(pikabu.options.container);
+            it('correctly defines scrollDuration', function() {
+                assert.equal(pikabu.options.scrollDuration, 50);
+                assert.isNumber(pikabu.options.scrollDuration);
+            });
+
+            it('correctly defines spacerHeight', function() {
+                assert.equal(pikabu.options.spacerHeight, 300);
+                assert.isNumber(pikabu.options.spacerHeight);
             });
         });
 
