@@ -38,12 +38,12 @@ define([
 
             it('correctly defines header', function() {
                 assert.equal(pikabu.options.structure.header, Pikabu.DEFAULTS.structure.header);
-                assert.isString(pikabu.options.structure.header);
+                assert.isFalse(pikabu.options.structure.header);
             });
 
             it('correctly defines footer', function() {
                 assert.equal(pikabu.options.structure.footer, Pikabu.DEFAULTS.structure.footer);
-                assert.isBoolean(pikabu.options.structure.footer);
+                assert.isFalse(pikabu.options.structure.footer);
             });
 
             it('correctly defines zIndex', function() {
