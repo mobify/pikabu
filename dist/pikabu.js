@@ -111,8 +111,6 @@
                 window.scrollTo(0,0);
             },
             closeComplete: function() {
-                this._trigger('closed');
-
                 this._resetFocus();
 
                 this.$viewport.removeClass(classes.OPENED);
@@ -120,6 +118,8 @@
                 this.$animators.css('transform', '');
                 this.$pikabu.lockup('unlock');
                 this.$pikabu.hide();
+
+                this._trigger('closed');
             }
         },
 
