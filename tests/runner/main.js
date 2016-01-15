@@ -10,9 +10,9 @@ require(['config'], function() {
             var tests = [
                 '../../tests/unit/constructor.js',
                 '../../tests/unit/plugin.js',
-                //'../../tests/unit/options.js',
-                //'../../tests/unit/events.js',
-                //'../../tests/unit/sheets.js'
+                '../../tests/unit/options.js',
+                '../../tests/unit/events.js',
+                '../../tests/unit/sheets.js'
             ];
 
             require(tests, function() {
