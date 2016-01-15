@@ -54,7 +54,7 @@
      * Template constants required for building the default HTML structure
      */
     var template = {
-        COMPONENT: '<{0} class="' + classes.PIKABU + '__{0}">{1}</{0}>',
+        COMPONENT: '<{0} class="' + classes.VIEWPORT + '__{0}">{1}</{0}>',
         HEADER: '<h1 class="' + classes.TITLE + '">{0}</h1><button class="' + classes.CLOSE + '">Close</button>',
         FOOTER: '{0}'
     };

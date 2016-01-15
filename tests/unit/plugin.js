@@ -169,7 +169,7 @@ define([
                             header: 'Something'
                         }
                     })
-                    .closest('.pikabu');
+                    .closest('.pikabu__drawer');
 
                 assert.equal($pikabu.find('.pikabu__header').length, 1);
                 assert.equal($pikabu.find('.pikabu__content').length, 1);
