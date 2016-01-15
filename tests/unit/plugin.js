@@ -139,7 +139,7 @@ define([
         describe('creates a pikabu with correct container', function() {
             it('creates pikabu with the default container', function() {
                 var $pikabu = $(element).pikabu({ effect: drawerLeft });
-                assert.equal($pikabu.closest('.lockup__container').length, 1);
+                assert.equal($pikabu.closest('.pikabu').find('.pikabu__container').length, 1);
             });
 
             it('creates pikabu in the container element', function() {
