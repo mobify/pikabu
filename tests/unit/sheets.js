@@ -17,6 +17,8 @@ define([
                 element.remove();
                 element = null;
             }
+
+            $('.pikabu__container').removeClass('pikabu__container');
         });
 
         it('opens correctly using drawer-left', function() {
