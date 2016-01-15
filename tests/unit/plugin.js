@@ -231,9 +231,9 @@ define([
                             footer: '<span class="pikabu__footer--custom">Custom footer</span>'
                         }
                     })
-                    .closest('.pikabu');
+                    .closest('.pikabu__drawer');
 
-                assert.equal($pikabu.find('.pikabu__header').length, 1);
+                assert.equal($pikabu.find('.pikabu__header').length, 0);
                 assert.equal($pikabu.find('.pikabu__footer--custom').length, 1);
                 assert.include($pikabu.find('.pikabu__footer--custom').text(), 'Custom footer');
             });
