@@ -1,0 +1,36 @@
+.lockup {
+  position: fixed;
+  display: none;
+  background: white;
+  outline: none;
+  -webkit-tap-highlight-color: transparent; }
+
+.pinny__wrapper {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  overflow: hidden;
+  height: 100%; }
+
+.pinny__header,
+.pinny__footer {
+  -webkit-flex-shrink: 0;
+      -ms-flex-negative: 0;
+          flex-shrink: 0; }
+
+.pinny__content {
+  overflow: auto;
+  -webkit-box-flex: 1;
+  -webkit-flex: 1;
+      -ms-flex: 1;
+          flex: 1;
+  -webkit-overflow-scrolling: touch; }
+
+[hidden] {
+  display: none !important; }

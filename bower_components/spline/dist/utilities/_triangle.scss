@@ -1,0 +1,119 @@
+// Triangle
+// ========
+//
+// This is triangle, there are two different types of triangle.
+//
+// Markup will generally look something like this:
+//
+// ```html
+// <div class="triangle"></div>
+// <div class="isosceles-right"></div>
+// ```
+//
+// Usage:
+//
+// ```scss
+// .triangle {
+//     @include triangle($type: 'triangle', $direction: 'right', $size: 12px, $color: #000);
+// }
+//
+// .isosceles-right {
+//     @include triangle($type: 'isosceles', $direction: 'up-right', $size: 12px, $color: #000);
+// }
+// ```
+//
+// The first type is Equilateral triangle, all three sides are equal.
+//
+// @param $type [String] : Can be either 'triangle' or 'isosceles'
+// @param $direction [String] : The direction of the triangle. Valid options depends
+//        The chosen shape. If triangle was chosen, then your options are: up,
+//        down, right, or left. Else if isosceles: up-left, up-right, down-right
+//        or down-left
+// @param $size [Number] : value
+// @param $color [Color] : value
+
+@mixin triangle($type, $direction, $size, $color) {
+    width: 0;
+    height: 0;
+
+    border-color: $color;
+
+    // triangle: equilateral triangle (all three sides are equal)
+    @if $type == 'triangle' {
+
+        // triangle face up
+        @if $direction == 'up' {
+            border: {
+                right: $size solid transparent;
+                bottom: $size solid $color;
+                left: $size solid transparent;
+            }
+        }
+
+        // triangle face right
+        @elseif $direction == 'right' {
+            border: {
+                top: $size solid transparent;
+                bottom: $size solid transparent;
+                left: $size solid $color;
+            }
+        }
+        // triangle face up
+        @elseif $direction == 'down' {
+            border: {
+                right: $size solid transparent;
+                top: $size solid $color;
+                left: $size solid transparent;
+            }
+        }
+
+        // triangle face left
+        @elseif $direction == 'left' {
+            border: {
+                top: $size solid transparent;
+                right: $size solid $color;
+                bottom: $size solid transparent;
+            }
+        }
+    }
+
+    // isosceles: isosceles triangle (two equal sides)
+    @if $type == 'isosceles' {
+
+        // isosceles triangle face up right
+        @if $direction == 'up-right' {
+            border: {
+                top: $size solid $color;
+                bottom: $size solid transparent;
+                left: $size solid transparent;
+            }
+        }
+
+        // isosceles triangle face up left
+        @if $direction == 'up-left' {
+            border: {
+                top: $size solid $color;
+                right: $size solid transparent;
+                bottom: $size solid transparent;
+            }
+        }
+
+        // isosceles triangle face down right
+        @if $direction == 'down-right' {
+            border: {
+                top: $size solid transparent;
+                bottom: $size solid $color;
+                left: $size solid transparent;
+            }
+        }
+
+        // isosceles triangle face down-right
+        @if $direction == 'down-left' {
+            border: {
+                top: $size solid transparent;
+                right: $size solid transparent;
+                bottom: $size solid $color;
+            }
+        }
+    }
+}

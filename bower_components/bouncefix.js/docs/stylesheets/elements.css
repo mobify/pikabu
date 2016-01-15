@@ -1,0 +1,96 @@
+/*!
+* elements.css
+* Description: ios style stuff
+* Version: 1.0
+*/
+ 
+/*** TABLE OF CONTENTS ***
+*
+* 1. BASE
+* 2. LAYOUT
+* 3. LIST
+*/
+
+
+/* 1. BASE
+----------------------------------------------------------------------------------------------------*/
+html {
+  height: 100%;
+}
+body {
+  position: relative;
+  margin: 0;
+  padding 0;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  background: rgb(239, 239, 244);
+}
+
+
+/* 1. LAYOUT
+----------------------------------------------------------------------------------------------------*/
+/* fixed header/footer variable content height */
+.content {
+  position: absolute;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+}
+/* ios smooth scrolling */
+.content {
+  overflow: scroll;
+  -webkit-overflow-scrolling: touch;
+}
+/* hide scrollbar */
+.content::-webkit-scrollbar { 
+  display: none; 
+}
+
+
+/* 1. LIST
+----------------------------------------------------------------------------------------------------*/
+.list-title {
+  margin: 0;
+  padding: 30px 15px 12px 15px;  
+}
+.list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.list-item > a {
+  display: block;
+}
+.list-item > a > span {
+  display: block;
+  height: 44px;
+  line-height: 44px;
+  margin-left: 15px;
+}
+
+.list-title {
+  font-size: 17px;
+  font-weight: normal;
+  color: #8f8f94;
+}
+.list {
+  background-color: #fff;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1' height='1'><rect fill='rgb(200, 199, 204)' x='0' y='0' width='1' height='0.5'/></svg>"), url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1' height='1'><rect fill='rgb(200, 199, 204)' x='0' y='0.5' width='1' height='0.5'/></svg>");
+  background-repeat: repeat-x, repeat-x;
+  background-position: top left, bottom left;
+}
+.list-item > a > span {
+  background: repeat-x bottom left url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='1' height='1'><rect fill='rgb(200, 199, 204)' x='0' y='0.5' width='1' height='0.5'/></svg>");
+}
+.list-item:last-child > a > span {
+  background: none;
+}
+.list-item > a {
+  text-decoration: none;
+  color: #000;
+}
+.list-item > a.disabled {
+  opacity: 0.3;
+}
