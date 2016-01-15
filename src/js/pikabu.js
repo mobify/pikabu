@@ -66,6 +66,7 @@
     };
 
     function Pikabu(element, options) {
+        debugger;
         Pikabu.__super__.call(this, element, options, Pikabu.DEFAULTS);
     }
 

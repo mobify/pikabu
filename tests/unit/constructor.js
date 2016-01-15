@@ -12,7 +12,7 @@ define([
         });
 
         it('creates a pikabu instance', function() {
-            var pikabu = $('.pikabu').pikabu({
+            var pikabu = element.pikabu({
                 effect: drawerLeft
             });
 

@@ -1,5 +1,5 @@
 define([
-    'text!fixtures/pikabu.html',
+    'text!fixtures/fullPikabu.html',
     '$',
     'drawer-left',
     'pikabu'
@@ -18,6 +18,19 @@ define([
                 element.remove();
                 element = null;
             }
+
+            $('.pikabu__container').removeClass('pikabu__container');
+        });
+
+        it('fires the opened event when pikabu is opened', function(done) {
+            element.pikabu({
+                effect: drawerLeft,
+                opened: function() {
+                    done();
+                }
+            });
+
+            element.pikabu('open');
         });
 
         it('fires the open event when pikabu is opened', function(done) {
@@ -28,16 +41,6 @@ define([
                 }
             });
 
-            element.pikabu('open');
-        });
-
-        it('fires the opened event when pikabu is opened', function(done) {
-            element.pikabu({
-                effect: drawerLeft,
-                opened: function() {
-                    done();
-                }
-            });
             element.pikabu('open');
         });
 
@@ -86,8 +89,6 @@ define([
 
         it('does not fire the close event when pikabu is already closed', function(done) {
             var closeCount = 0;
-
-            this.timeout(5000);
 
             element.pikabu({
                 effect: drawerLeft,
