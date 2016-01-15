@@ -184,7 +184,7 @@ define([
                             header: '<span class="pikabu__header--custom">Custom header</span><button class="pikabu__close"></button>'
                         }
                     })
-                    .closest('.pikabu');
+                    .closest('.pikabu__drawer');
 
                 assert.equal($pikabu.find('.pikabu__header').length, 1);
                 assert.equal($pikabu.find('.pikabu__header--custom').length, 1);
