@@ -155,9 +155,9 @@ define([
                     structure: {
                         header: false
                     }
-                });
+                }).closest('.pikabu__drawer');
 
-                assert.equal($pikabu.find('.pikabu__header').length, 1);
+                assert.equal($pikabu.find('.pikabu__header').length, 0);
                 assert.equal($pikabu.find('.pikabu__content').length, 1);
             });
 
