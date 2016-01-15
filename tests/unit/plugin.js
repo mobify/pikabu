@@ -143,8 +143,8 @@ define([
             });
 
             it('creates pikabu in the container element', function() {
-                var $pikabu = $(element).pikabu({ effect: drawerLeft, container: '#pikabu-container' });
-                assert.equal($pikabu.closest('#pikabu-container').length, 1);
+                var $pikabu = $(element).pikabu({ effect: drawerLeft, container: '.custom__container' });
+                assert.equal($pikabu.closest('.pikabu').find('.custom__container').length, 1);
             });
         });
 
