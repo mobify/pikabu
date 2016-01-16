@@ -62,18 +62,6 @@ define([
         });
 
         describe('invoking pikabu methods using the plugin interface', function() {
-            it('opens a pikabu using the open method', function(done) {
-                element.pikabu({
-                    effect: drawerLeft,
-                    opened: function() {
-                        assert.isTrue(element.closest('.pikabu').hasClass('pikabu--is-open'));
-                        done();
-                    }
-                });
-
-                element.pikabu('open');
-            });
-
             it('closes a pikabu item using the close button', function(done) {
                 element.pikabu({
                     effect: drawerLeft,
@@ -82,6 +70,18 @@ define([
                     },
                     closed: function() {
                         assert.isFalse(element.closest('.pikabu').hasClass('pikabu--is-open'));
+                        done();
+                    }
+                });
+
+                element.pikabu('open');
+            });
+            
+            it('opens a pikabu using the open method', function(done) {
+                element.pikabu({
+                    effect: drawerLeft,
+                    opened: function() {
+                        assert.isTrue(element.closest('.pikabu').hasClass('pikabu--is-open'));
                         done();
                     }
                 });
