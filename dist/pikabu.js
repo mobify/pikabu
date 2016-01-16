@@ -228,10 +228,6 @@
                     width: this.options.coverage,
                     height: this.options.coverage
                 })
-                .on(events.click, '.' + classes.CLOSE, function(e) {
-                    e.preventDefault();
-                    plugin.close();
-                })
                 .lockup({
                     container: this.options.container,
                     locked: function () {
@@ -242,7 +238,11 @@
                     }
                 });
 
-            this.$viewport = $('.' + classes.VIEWPORT);
+            this.$viewport = $('.' + classes.VIEWPORT)
+                .on(events.click, '.' + classes.CLOSE, function(e) {
+                    e.preventDefault();
+                    plugin.close();
+                });
 
             this.$container = this.$pikabu.data('lockup').$container.addClass(classes.CONTAINER);
 

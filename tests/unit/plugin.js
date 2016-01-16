@@ -74,6 +74,21 @@ define([
                 element.pikabu('open');
             });
 
+            it('closes a pikabu item using the close button', function(done) {
+                element.pikabu({
+                    effect: drawerLeft,
+                    opened: function() {
+                        element.closest('.pikabu').find('.pikabu__close').trigger('click');
+                    },
+                    closed: function() {
+                        assert.isFalse(element.closest('.pikabu').hasClass('pikabu--is-open'));
+                        done();
+                    }
+                });
+
+                element.pikabu('open');
+            });
+
             it('closes a pikabu item using the close method', function(done) {
                 element.pikabu({
                     effect: drawerLeft,
@@ -89,21 +104,6 @@ define([
                 element.pikabu('open');
             });
 
-            it('closes a pikabu item using the close button', function(done) {
-                element.pikabu({
-                    effect: drawerLeft,
-                    opened: function() {
-
-                        element.closest('.pikabu').find('.pikabu__close').trigger('click');
-                    },
-                    closed: function() {
-                        assert.isFalse(element.closest('.pikabu').hasClass('pikabu--is-open'));
-                        done();
-                    }
-                });
-
-                element.pikabu('open');
-            });
 
             it('throws for method calls that don\'t exist', function() {
                 assert.throws(function() {
