@@ -140,12 +140,12 @@ define([
         describe('creates a pikabu with correct container', function() {
             it('creates pikabu with the default container', function() {
                 var $pikabu = $(element).pikabu({ effect: drawerLeft });
-                assert.equal($pikabu.closest('.pikabu').find('.pikabu__container').length, 1);
+                assert.isTrue($pikabu.closest('.pikabu').find('.pikabu__container').hasClass('lockup__container'));
             });
 
             it('creates pikabu in the container element', function() {
                 var $pikabu = $(element).pikabu({ effect: drawerLeft, container: '.custom__container' });
-                assert.equal($pikabu.closest('.pikabu').find('.custom__container').length, 1);
+                assert.isTrue($pikabu.closest('.pikabu').find('.custom__container').hasClass('lockup__container'));
             });
         });
 
