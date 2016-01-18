@@ -61,7 +61,7 @@ define([
             });
         });
 
-        describe('invoking pikabu methods using the plugin interface', function() {
+        describe('invoking pikabu methods by triggering event listeners', function() {
             it('closes a pikabu item using the close button', function(done) {
                 element.pikabu({
                     effect: drawerLeft,
@@ -76,7 +76,9 @@ define([
 
                 element.pikabu('open');
             });
-            
+        });
+
+        describe('invoking pikabu methods using the plugin interface', function() {
             it('opens a pikabu using the open method', function(done) {
                 element.pikabu({
                     effect: drawerLeft,
@@ -103,7 +105,6 @@ define([
 
                 element.pikabu('open');
             });
-
 
             it('throws for method calls that don\'t exist', function() {
                 assert.throws(function() {
