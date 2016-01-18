@@ -1,12 +1,14 @@
 define([
-    'text!fixtures/pikabu.html',
+    'text!fixtures/fullPikabu.html',
     '$',
-    'modal-center',
+    'drawer-left',
     'pikabu'
-], function(fixture, $, modalCenter) {
+], function(fixture, $, drawerLeft) {
     var element;
 
     describe('Pikabu events', function() {
+        this.timeout(5000);
+
         beforeEach(function() {
             element = $(fixture);
         });
@@ -16,11 +18,24 @@ define([
                 element.remove();
                 element = null;
             }
+
+            $('.pikabu__container').removeClass('pikabu__container');
+        });
+
+        it('fires the opened event when pikabu is opened', function(done) {
+            element.pikabu({
+                effect: drawerLeft,
+                opened: function() {
+                    done();
+                }
+            });
+
+            element.pikabu('open');
         });
 
         it('fires the open event when pikabu is opened', function(done) {
             element.pikabu({
-                effect: modalCenter,
+                effect: drawerLeft,
                 open: function() {
                     done();
                 }
@@ -29,20 +44,10 @@ define([
             element.pikabu('open');
         });
 
-        it('fires the opened event when pikabu is opened', function(done) {
-            element.pikabu({
-                effect: modalCenter,
-                opened: function() {
-                    done();
-                }
-            });
-            element.pikabu('open');
-        });
-
         it('does not fire the open event when pikabu is already open', function() {
             var openCount = 0;
             element.pikabu({
-                effect: modalCenter,
+                effect: drawerLeft,
                 open: function() {
                     openCount++;
                 }
@@ -56,7 +61,7 @@ define([
 
         it('fires the close event when pikabu is closed', function(done) {
             element.pikabu({
-                effect: modalCenter,
+                effect: drawerLeft,
                 opened: function() {
                     element.pikabu('close');
                 },
@@ -70,7 +75,7 @@ define([
 
         it('fires the closed event when pikabu is closed', function(done) {
             element.pikabu({
-                effect: modalCenter,
+                effect: drawerLeft,
                 opened: function() {
                     element.pikabu('close');
                 },
@@ -85,10 +90,8 @@ define([
         it('does not fire the close event when pikabu is already closed', function(done) {
             var closeCount = 0;
 
-            this.timeout(5000);
-
             element.pikabu({
-                effect: modalCenter,
+                effect: drawerLeft,
                 opened: function() {
                     element.pikabu('close');
 
