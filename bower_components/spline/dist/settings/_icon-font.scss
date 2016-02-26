@@ -1,0 +1,30 @@
+// Icon Fonts Settings
+// ===================
+//
+// These variables are used to add your icon font file to your CSS, and also to
+// help generate your icon component classes.
+
+// Name the iconset you would like to use
+$icon-font: 'icon-font' !default;
+
+// Set the path to the icon font files. Notice there is no slash at the end!
+$icon-font-path: '../fonts/icons/#{$icon-font}' !default;
+
+// List of icons made available your $icon-font file. Use this icon list to
+// generate your icon component classes.
+$icon-list: (
+
+    question:    '\e000',
+    exclamation: '\e001',
+    information: '\e002',
+
+    checkmark: '\e003',
+    phone:     '\e004',
+
+    plus:  '\e005',
+    minus: '\e006',
+
+    chevron-down:  '\e007',
+    chevron-right: '\e008'
+
+) !default;

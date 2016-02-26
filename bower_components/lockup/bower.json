@@ -1,0 +1,27 @@
+{
+  "name": "lockup",
+  "version": "1.1.3",
+  "homepage": "https://github.com/mobify/lockup",
+  "authors": [
+    "Mobify <jobs@mobify.com>"
+  ],
+  "description": "A mobile first scroll blocking plugin",
+  "main": "dist/lockup.min.js",
+  "keywords": [
+    "lockup",
+    "fly-in",
+    "modal",
+    "mobile",
+    "mobify"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "./!(src|dist|lib|templates)"
+  ],
+  "dependencies": {
+    "plugin": "~3.0.0",
+    "requirejs-text": "~2.0.12",
+    "requirejs": "~2.1.14",
+    "deckard": "~1.2.0"
+  }
+}

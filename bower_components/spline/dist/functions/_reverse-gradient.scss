@@ -1,0 +1,72 @@
+// Reverse Gradient
+// ================
+//
+// Reverse a gradient by passing in a linear-gradient() function
+//
+// @param $gradient [String] : linear-gradient()
+// @return [String]
+
+@function reverse-gradient($gradient) {
+    $reverse-direction: '';
+    $values: '';
+
+    // Extract the values from the linear-gradient() function
+    $first-bracket-idx: str-index($gradient, '(');
+    $last-bracket-idx: str-length($gradient) - 1;
+    $string-gradient: str-slice($gradient, $first-bracket-idx+1, $last-bracket-idx);
+
+    // Convert the string of values into a list
+    $list-gradient: to-list($string-gradient);
+
+    // Get the first value in the list
+    $first-value: nth($list-gradient, 1);
+
+    // Check if the first value contains the word 'to'
+    // If it does, it's a directional gradient
+    @if str-index($first-value, 'to') {
+        $direction: to-list($first-value, ' ');
+
+        // Take the second word and reverse the direction
+        $first-direction: convert-direction(nth($direction, 2));
+
+        // Build a new string with the new direction
+        $reverse-direction: nth($direction, 1) + ' ' + $first-direction;
+
+        // Check if this directional gradient is angled
+        // and reverse/add this word back onto the reversed gradient
+        @if length($direction) == 3 {
+            $second-direction: convert-direction(nth($direction, 3));
+
+            $reverse-direction: $reverse-direction + ' ' + $second-direction;
+        }
+
+        // Replace the directional instruction with the reversed one
+        $reversed-gradient: set-nth($list-gradient, 1, $reverse-direction);
+
+        // Walk through our $reversed-gradient list and turn it back into a string
+        $values: to-string($reversed-gradient);
+    }
+    // If it doesn't have 'to', it might be declared in degrees
+    @else if str-index($first-value, 'deg') {
+        $deg: to-number($first-value);
+
+        // Add 180 to the degree to get the invert. It's okay if this number gets greater than 360
+        $deg: $deg + 180;
+
+        // Replace the degree declaration with the new reversed one
+        $reversed-gradient: set-nth($list-gradient, 1, $deg);
+
+        // Walk through our $reversed-gradient list and turn it back into a string
+        $values: to-string($reversed-gradient);
+    }
+    // If it doesn't have a directional or a 'deg', it's shorthand for 'to bottom'
+    // so let's just invert that
+    @else {
+        $reverse-direction: 'to top';
+
+        // Add the new reversed direction to the original gradient and stringify it
+        $values: join(unquote($reverse-direction), $list-gradient, comma);
+    }
+
+    @return linear-gradient(unquote($values));
+}

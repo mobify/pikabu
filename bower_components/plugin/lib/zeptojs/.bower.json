@@ -1,0 +1,14 @@
+{
+  "name": "zeptojs",
+  "homepage": "https://github.com/madrobby/zepto",
+  "version": "1.1.3",
+  "_release": "1.1.3",
+  "_resolution": {
+    "type": "version",
+    "tag": "v1.1.3",
+    "commit": "fef90efe1c98f43f6ce1e1f2f793077e1c6994c5"
+  },
+  "_source": "git://github.com/madrobby/zepto.git",
+  "_target": "1.1.3",
+  "_originalSource": "zeptojs"
+}

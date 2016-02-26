@@ -54,7 +54,7 @@
      * Template constants required for building the default HTML structure
      */
     var template = {
-        COMPONENT: '<{0} class="' + classes.PIKABU + '__{0}">{1}</{0}>',
+        COMPONENT: '<{0} class="' + classes.VIEWPORT + '__{0}">{1}</{0}>',
         HEADER: '<h1 class="' + classes.TITLE + '">{0}</h1><button class="' + classes.CLOSE + '">Close</button>',
         FOOTER: '{0}'
     };
@@ -111,15 +111,14 @@
                 window.scrollTo(0,0);
             },
             closeComplete: function() {
-                this._trigger('closed');
-
                 this._resetFocus();
 
                 this.$viewport.removeClass(classes.OPENED);
-                this.$viewport.css('height', '');
                 this.$animators.css('transform', '');
                 this.$pikabu.lockup('unlock');
                 this.$pikabu.hide();
+
+                this._trigger('closed');
             }
         },
 
@@ -159,8 +158,6 @@
 
             this.$pikabu.lockup('lock');
             this.$pikabu.show();
-
-            this.$viewport.height(window.innerHeight);
 
             this.effect.open.call(this);
 
@@ -228,10 +225,6 @@
                     width: this.options.coverage,
                     height: this.options.coverage
                 })
-                .on(events.click, '.' + classes.CLOSE, function(e) {
-                    e.preventDefault();
-                    plugin.close();
-                })
                 .lockup({
                     container: this.options.container,
                     locked: function () {
@@ -242,7 +235,11 @@
                     }
                 });
 
-            this.$viewport = $('.' + classes.VIEWPORT);
+            this.$viewport = $('.' + classes.VIEWPORT)
+                .on(events.click, '.' + classes.CLOSE, function(e) {
+                    e.preventDefault();
+                    plugin.close();
+                });
 
             this.$container = this.$pikabu.data('lockup').$container.addClass(classes.CONTAINER);
 
@@ -294,7 +291,7 @@
                     )
                 );
 
-                this.$shadeEl = this.$viewport.shade('getElement');
+                this.$shadeEl = this.$viewport.data('shade').$shade;
             }
             this.$animators = this.$animators.add(this.$shadeEl);
         },
