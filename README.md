@@ -62,12 +62,12 @@ And then require Pikabu in as needed:
 ```
 define([
     'zepto',
-    'modal-center',
+    'drawer-left',
     'pikabu'
     ],
-    function($, modalCenter) {
+    function($, drawerLeft) {
         $('.pikabu').pikabu({
-            effect: modalCenter
+            effect: drawerLeft
         });
     }
 );
@@ -90,13 +90,16 @@ For accessibility and functional purposes, Pikabu will wrap all of your body con
 <link rel="stylesheet" href="pikabu-style.min.css">
 
 <!-- Optionally include a wrapping container -->
-<div id="bodyContent" class="pikabu__body-wrapper">
-    Your specified body content
+<div id="bodyContent" class="pikabu">
+    Position-Fixed Elements
+    <div class="pikabu__container">
+        Your specified body content
+    </div>
 </div>
 
 <!-- Include the markup -->
 <div id="yourPikabu" hidden>
-    Your pikabu content
+    Your pikabu menu content
 </div>
 
 <!-- Include dependencies -->
@@ -114,7 +117,12 @@ For accessibility and functional purposes, Pikabu will wrap all of your body con
 <script src="pikabu.min.js"></script>
 
 <!-- Construct Pikabu -->
-<script>$('#yourPikabu').pikabu()</script>
+<script>
+$('#myPikabu').pikabu({
+    effect: drawerLeft,
+    //customizations
+});
+</script>
 ```
 
 ## Initializing the plugin
@@ -125,14 +133,14 @@ Initializes the pikabu.
 
 ```js
 $('#myPikabu').pikabu({
-    effect: modalCenter
+    effect: drawerLeft
 });
 ```
 
 You can also initialize the Pikabu through the use of a data attribute. The attribute takes a value equal to the effect you want to use.
 
 ```html
-<div id="myPikabu" data-pikabu="sheet-bottom">
+<div id="myPikabu" data-pikabu="drawer-right">
 ```
 
 _You *must* pass Pikabu an effect for it to work._
@@ -143,7 +151,7 @@ Initialize with options.
 
 ```js
 $('#myPikabu').pikabu({
-    effect: sheetBottom,
+    effect: drawerLeft,
     container: '#container',
     structure: {
         header: 'My Pikabu Title',
@@ -151,16 +159,17 @@ $('#myPikabu').pikabu({
     },
     zIndex: 2,
     cssClass: 'my-pikabu-class',
-    coverage: '100%',
+    coverage: '80%',
     easing: 'swing',
     duration: 200,
     shade: {
-        color: '#404040'
+        color: '#404040',
+        zIndex: 5,
     },
-    open: noop,
-    opened: noop,
-    close: noop,
-    closed: noop
+    open: function(){},
+    opened: function(){},
+    close: function(){},
+    closed: function(){}
 });
 ```
 
@@ -168,30 +177,24 @@ $('#myPikabu').pikabu({
 
 ##### effect
 
-default: `{
-        open: noop,
-        close: noop
-    },`
+default: null
 
 Specifies which `effect` module Pikabu should use when opening. `Effect` modules allow you to load specific functionality that tell Pikabu how to open and close. Available `effect` modules can be found in the `dist/effect` folder. Current `effect` modules include:
 
-- Modal Center - opens Pikabu in the center of the screen
-- Sheet Top - slides down from the top of the screen
-- Sheet Bottom - slides up from the bottom of the screen
-- Sheet Left - slides in from the left of the screen
-- Sheet Right - slides in from the right of the screen
+- Drawer Left - slides in from the left of the screen
+- Drawer Right - slides in from the right of the screen
 
 ```js
 $('#myPikabu').pikabu({
-    effect: sheetLeft
+    effect: drawerLeft
 });
 ```
 
 #### container
 
-default: `$container` (lockup's container)
+default: $('.pikabu__container')
 
-Specify the container Pikabu will be created within
+Any content you want to be pushed aside by the pikabu menu should be wrapped in this container element.
 
 ```js
 $('#myPikabu').pikabu({
@@ -202,11 +205,9 @@ $('#myPikabu').pikabu({
 
 #### appendTo
 
-default: null
+default: $('.pikabu')
 
-Specify the element Pikabu will be appended to. By default Pikabu will be appended
-to the lockup container. If you want it to be appended outside the lockup container,
-specify that element here.
+Specify the element Pikabu will be appended to. By default Pikabu will be appended the container with a class name `pikabu`. If you want it to be appended to a different element, specify that element here.
 
 ```js
 $('#myPikabu').pikabu({
@@ -263,10 +264,10 @@ or
 ```js
 // generates a default header with the title "My Pikabu"
 $('#myPikabu').pikabu({
-        structure: {
-            header: 'My Pikabu'
-        }
-    });
+    structure: {
+        header: 'My Pikabu'
+    }
+});
 ```
 
 or
