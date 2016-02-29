@@ -80,7 +80,7 @@ Pikabu requires very minimal markup. All Pikabu needs is a div with your content
 
 > To avoid any unwanted FOUT, decorate the content you will be passing to Pikabu with the `hidden` attribute. We will remove that attribute when Pikabu is initialized.
 
-For accessibility and functional purposes, Pikabu will wrap all of your body content in a wrapping container. This could conflict with other plugins that alter your page's markup. If you're seeing issues, try initializing Pikabu after your other plugins. If you want to specify your own wrapping container, add a class of `lockup__container` to the element. This element should be a root level element to be effective. You can also [pass Pikabu a `container` parameter](https://github.com/mobify/pikabu/tree/1.0-alpha#container).
+For accessibility and functional purposes, Pikabu will wrap all of your body content in a wrapping container. This could conflict with other plugins that alter your page's markup. If you're seeing issues, try initializing Pikabu after your other plugins. If you want to specify your own wrapping container, add a class of `pikabu__container` to the element. This element should be a root level element to be effective.
 
 ```html
 <!-- Include the CSS -->
@@ -89,16 +89,16 @@ For accessibility and functional purposes, Pikabu will wrap all of your body con
 <!-- Optionally include the Theme file -->
 <link rel="stylesheet" href="pikabu-style.min.css">
 
-<!-- Optionally include a wrapping container -->
+<!-- Include a wrapping container -->
 <div id="bodyContent" class="pikabu">
-    Position-Fixed Elements
+    Any fixed position elements with class="pikabu__fixed"
     <div class="pikabu__container">
         Your specified body content
     </div>
 </div>
 
 <!-- Include the markup -->
-<div id="yourPikabu" hidden>
+<div id="myPikabu" hidden>
     Your pikabu menu content
 </div>
 
@@ -120,7 +120,7 @@ For accessibility and functional purposes, Pikabu will wrap all of your body con
 <script>
 $('#myPikabu').pikabu({
     effect: drawerLeft,
-    //customizations
+    //other customizations
 });
 </script>
 ```
@@ -129,18 +129,12 @@ $('#myPikabu').pikabu({
 
 ### pikabu()
 
-Initializes the pikabu.
+Initializes pikabu.
 
 ```js
 $('#myPikabu').pikabu({
     effect: drawerLeft
 });
-```
-
-You can also initialize the Pikabu through the use of a data attribute. The attribute takes a value equal to the effect you want to use.
-
-```html
-<div id="myPikabu" data-pikabu="drawer-right">
 ```
 
 _You *must* pass Pikabu an effect for it to work._
@@ -225,7 +219,7 @@ default: `{
 
 Defines the structure to use for Pikabu. Specifically, Pikabu tries to build its own HTML structure if passed the default options.
 
-**If you want to have full control over the HTML of your Pikabu, including the header, footer, and content section, set `structure: false`**. Setting `structure: false` will still allow the `close` event to be bound to any element that has the `pikabu__close` class, allowing you to specify the element that should trigger closing your Pikabu.
+**If you want to have full control over the HTML of your Pikabu menu, including the header, footer, and content section, set `structure: false`**. Setting `structure: false` will still allow the `close` event to be bound to any element that has the `pikabu__close` class, allowing you to specify the element that should trigger closing your Pikabu menu.
 
 If you are using `structure: false`, you will need to structure your HTML to include the following elements (*missing any elements will cause Pikabu to not function*):
 
@@ -505,6 +499,10 @@ $pikabu.pikabu('close');
 ```html
 <button class="pikabu__close">Close</button>
 ```
+
+##Notes
+
+If there are any `position: fixed;` elements on your page that should be pushed aside by pikabu, be sure to add the `pikabu__fixed` class to them, or ensure that they are located inside the `pikabu__container`.
 
 ## Browser Compatibility
 
