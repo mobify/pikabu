@@ -246,7 +246,7 @@
                     }
                 });
 
-            this.$viewport = $('.' + classes.VIEWPORT);
+            this.$viewport = this.options.appendTo ? $(this.options.appendTo) : $('.' + classes.VIEWPORT)
 
             this.$container = this.$pikabu.data('lockup').$container.addClass(classes.CONTAINER);
 
