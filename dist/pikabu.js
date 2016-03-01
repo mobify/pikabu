@@ -130,6 +130,10 @@
             this.$doc = $(document);
             this.$body = $('body');
             this.$animators = $('.' + classes.CONTAINER + ', ' + '.' + classes.FIXED);
+            
+            if (this.options.container) {
+                this.$animators.push($(this.options.container)[0]);
+            }
 
             this._build();
 
@@ -238,15 +242,15 @@
                     }
                 });
 
-            this.$viewport = $('.' + classes.VIEWPORT)
+            this.$viewport = this.options.appendTo.length ? $(this.options.appendTo) : $('.' + classes.VIEWPORT)
                 .on(events.click, '.' + classes.CLOSE, function(e) {
                     e.preventDefault();
                     plugin.close();
-                });
+                });  
 
             this.$container = this.$pikabu.data('lockup').$container.addClass(classes.CONTAINER);
 
-            this.$pikabu.appendTo(this.options.appendTo ? $(this.options.appendTo) : this.$container);
+            this.$pikabu.appendTo(this.options.appendTo.length ? $(this.options.appendTo) : this.$container);
 
             if (this.options.structure) {
                 var $wrapper = $('<div />')
