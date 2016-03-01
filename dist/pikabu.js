@@ -131,6 +131,10 @@
             this.$body = $('body');
             this.$animators = $('.' + classes.CONTAINER + ', ' + '.' + classes.FIXED);
 
+            if (this.options.container){
+                this.$animators.push($(this.options.container)[0]);
+            };
+
             this._build();
 
             if (!this.options.effect) {
