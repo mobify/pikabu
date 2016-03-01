@@ -1,0 +1,104 @@
+// lockup
+// =====
+//
+//
+// Notes:
+//
+// 1. The exact position (top, right, bottom, left) is added automatically by
+//    lockup. The positioning can be configured by using lockup's `coverage` API,
+//    which is explained [here](https://github.com/mobify/lockup#coverage)
+// 2. The display is automatically set to "block" by lockup on open.
+// 3. Avoid content bleed through.
+// 4. Hide the outline when lockup is focused for screen readers
+// 5. lockup shows a tap highlight when tapped for an unknown reason. This
+//    removes that.
+
+.lockup {
+    position: fixed; // 1
+
+    display: none; // 2
+
+    background: white; // 3
+    outline: none; // 4
+
+    -webkit-tap-highlight-color: rgba(black, 0); // 5
+}
+
+// lockup: Wrapper
+// --------------
+//
+// The lockup Wrapper is responsible for applying a flex context that will layout
+// the children inside (i.e. header, content and footer).
+//
+// This is added to the markup automatically by lockup, so no need to include in
+// any authored code.
+//
+//
+// Notes:
+//
+// 1. The relevant flex children are the `.pinny__header`, `.pinny__footer`
+//    and `.pinny__content`
+
+.pinny__wrapper {
+    display: flex; // 1
+    flex-direction: column;
+    overflow: hidden;
+    height: 100%;
+}
+
+
+
+// lockup: Header & Footer
+// ----------------------
+//
+// The header is the top section of a lockup modal. Typically holds a heading or
+// title.
+//
+// There is no footer by default. However, you can pass HTML to lockup via its API,
+// as explained [here](https://github.com/mobify/lockup#footer)
+//
+//
+// Notes:
+//
+// 1. `display: flex` is coming from `.pinny__wrapper`
+// 2. This prevents the header and footer from being forced to shrink relative to
+//    other flex children (read: the content) – in other words, the header and
+//    footer will not shrink to accomodate the `.pinny__content` element
+
+.pinny__header,
+.pinny__footer {
+    flex-shrink: 0; // 1, 2
+}
+
+
+// lockup: Content
+// --------------
+//
+// This is the actual container for a lockup's content. This is added automically
+// by lockup, so you do not need to use it in your code
+//
+//
+// Notes:
+//
+// 1. `display: flex` is coming from `.pinny__wrapper`
+// 2. This allows the content to grow or shrink as necessary based on content
+//    and the header/footer
+
+.pinny__content {
+    overflow: auto;
+    flex: 1; // 1, 2
+
+    -webkit-overflow-scrolling: touch;
+}
+
+
+// lockup: Hidden
+// -------------
+//
+// We polyfill the hidden attribute here to ensure it hides all content when
+// applied. lockup uses [hidden] to hide content from FOUT before the plugin is
+// initialized.
+
+[hidden] {
+    display: none !important;
+}
