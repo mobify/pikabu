@@ -1,0 +1,25 @@
+// Rem
+// ===
+//
+// Convert pixels to rems
+//
+// For example: for a relational value of 12px write rem(12) when the base is 100%
+// if the base is another value say 150% write rem(12, 150%)
+//
+// @param $pxval [Number] : This is the px value without the "px" (12, but not 12px)
+// @param $base [Number] : This is the percentile font on the body. `$rem-base`
+//        is set in dist/settings/_rem.scss
+// @return [Number]
+
+@function rem($pxval, $base: $rem-base) {
+  @if not unitless($pxval) {
+      $pxval: strip-units($pxval);
+  }
+  @if not unitless($base) {
+      $base: strip-units($base);
+  }
+
+  $base: ($base / 100) * 16;
+
+  @return ($pxval / $base) * 1rem;
+}

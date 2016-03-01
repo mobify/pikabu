@@ -48,7 +48,7 @@ We highly recommend using Require.js with Pikabu. To use Require, you have to re
         'bouncefix': 'bower_components/bouncefix.js/dist/bouncefix.min',
         'velocity': 'bower_components/mobify-velocity/velocity',
         // or jQuery version 'velocity': 'bower_components/mobify-velocity/jquery.velocity',
-        
+
         'drawer-left': 'bower_components/pikabu/dist/effect/drawer-left',
         'drawer-right': 'bower_components/pikabu/dist/effect/drawer-right'
         // There are a few more within the 'effect' folder
@@ -535,6 +535,17 @@ Currently, form inputs and selects inside of Pikabu have issues on iOS7 and unde
 1. `grunt build`
 
 The `dist` directory will be populated with minified versions of the css and javascript files for distribution and use with whatever build system you might use. The `src` directory has our raw unminified Sass and Javascript files if you prefer to work with those.
+
+## Running tests
+
+1. `grunt test`
+
+## Developing tests
+
+1. `grunt test:browser`
+
+Open your browser at (http://localhost:8888/tests/runner)[http://localhost:8888/tests/runner] to manually run tests
+and inspect the page as they're running.
 
 ## License
 

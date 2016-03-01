@@ -1,0 +1,204 @@
+
+<!DOCTYPE html>
+<html>
+  <head id="!">
+    <meta charset="utf-8" />
+    <title>Spline</title>
+    <link rel="stylesheet" href="test.css" media="screen">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maxiumum-scale=1.0, user-scalable=no">
+  </head>
+
+  <body>
+    <h1>Spline Test Page</h1>
+
+    <h2>Reverse Gradient Function</h2>
+
+    <div class="example">
+        <p>No Direction</p>
+        <div class="gradient block"></div>
+        <div class="reverse-gradient block"></div>
+    </div>
+
+    <div class="example">
+        <p>Direction (to top right)</p>
+        <div class="direction-gradient block"></div>
+        <div class="reverse-direction-gradient block"></div>
+    </div>
+
+    <div class="example">
+        <p>Direction (to top right)</p>
+        <div class="deg-gradient block"></div>
+        <div class="reverse-deg-gradient block"></div>
+    </div>
+
+    <h2>Clearfix test</h2>
+
+    <div class="example">
+        <p>This div should have floats with contained margins using the clearfix include</p>
+
+        <div class="clearfix wrapper">
+            <h1>Heading</h1>
+            <div class="block">
+            </div>
+            <div class="block">
+            </div>
+        </div>
+    </div>
+
+    <div class="example">
+        <p>This div should have floats with contained margins using overflow hidden</p>
+
+        <div class="overflow-hidden wrapper">
+            <h1>Heading</h1>
+            <div class="block">
+            </div>
+            <div class="block">
+            </div>
+        </div>
+    </div>
+
+    <h2>Ellipsis test</h2>
+
+    <div class="example">
+        <p>This div should have non-wrapping text cut off by an ellipsis</p>
+
+        <div class="ellipsis wrapper">
+            <div class="block">
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+                quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+                consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+                cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+                proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+            </div>
+        </div>
+    </div>
+
+    <h2>Web Font Test</h2>
+
+    <div class="example">
+        <div class="webfont">
+            <dl>
+                <dt>Regular</dt>
+                <dd>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.
+                </dd>
+
+                <dt>Italic</dt>
+                <dd>
+                    <i>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.</i>
+                </dd>
+
+                <dt>Bold</dt>
+                <dd>
+                    <b>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.</b>
+                </dd>
+
+                <dt>Light</dt>
+                <dd class="light">
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                    tempor incididunt ut labore et dolore magna aliqua.
+                </dd>
+        </div>
+    </div>
+
+    <h2>Icon Font Test</h2>
+
+    <div class="example">
+        <p>This div should have eight icons showing in a list with the icon on the left</p>
+
+        <ul class="iconfont">
+            <li><span class="icon icon--question">Question Mark</span></li>
+            <li><span class="icon icon--exclamation">Exclamation Mark</span></li>
+            <li><span class="icon icon--information">Information Mark</span></li>
+            <li><span class="icon icon--checkmark">Checkmark</span></li>
+            <li><span class="icon icon--phone">Phone</span></li>
+            <li><span class="icon icon--plus">Plus</span></li>
+            <li><span class="icon icon--minus">Minus</span></li>
+            <li><span class="icon icon--chevron-down">Down Chevron</span></li>
+            <li><span class="icon icon--chevron-right">Right Chevron</span></li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <p>This div should have eight icons showing in a list with the icon on the right</p>
+
+        <ul class="iconfont">
+            <li><span class="icon-right icon--question">Question Mark</span></li>
+            <li><span class="icon-right icon--exclamation">Exclamation Mark</span></li>
+            <li><span class="icon-right icon--information">Information Mark</span></li>
+            <li><span class="icon-right icon--checkmark">Checkmark</span></li>
+            <li><span class="icon-right icon--phone">Phone</span></li>
+            <li><span class="icon-right icon--plus">Plus</span></li>
+            <li><span class="icon-right icon--minus">Minus</span></li>
+            <li><span class="icon-right icon--chevron-down">Down Chevron</span></li>
+            <li><span class="icon-right icon--chevron-right">Right Chevron</span></li>
+        </ul>
+    </div>
+
+    <div class="example">
+        <p>This should be a list of eight icons without any text following</p>
+
+        <ul class="iconfont">
+            <li><span class="icon icon--replace icon--question">Question Mark</span></li>
+            <li><span class="icon icon--replace icon--exclamation">Exclamation Mark</span></li>
+            <li><span class="icon icon--replace icon--information">Information Mark</span></li>
+            <li><span class="icon icon--replace icon--checkmark">Checkmark</span></li>
+            <li><span class="icon icon--replace icon--phone">Phone</span></li>
+            <li><span class="icon icon--replace icon--plus">Plus</span></li>
+            <li><span class="icon icon--replace icon--minus">Minus</span></li>
+            <li><span class="icon icon--replace icon--chevron-down">Down Chevron</span></li>
+            <li><span class="icon icon--replace icon--chevron-right">Right Chevron</span></li>
+        </ul>
+    </div>
+
+    <h2>Style override test</h2>
+
+    <div class="example">
+        <p>The first list item should be red, the last overriden and should be green.</p>
+
+        <div id="main-content">
+            <div id="inner-content">
+                <div id="content">
+                    <div id="main">
+                        <div class="column">
+                            <div class="form field">
+                                <ul>
+                                    <li class="target">This should be red.</li>
+                                    <li class="target">This should be green.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="example parent-test">
+        <p>The first list item should be red, the last overriden and should be blue.</p>
+
+        <div id="main-content">
+            <div id="inner-content">
+                <div id="content">
+                    <div id="main">
+                        <div class="column">
+                            <div class="form field">
+                                <ul>
+                                    <li class="target">This should be red.</li>
+                                    <li class="target">This should be blue.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  </body>
+
+</html>

@@ -1,0 +1,54 @@
+
+// Style override
+// ===
+//
+// Allows overriding existing styles with extreme specificity while keeping
+// source code clean and readable. Only use this for overriding 3rd-party CSS
+// that cannot be changed. Does not override !important or inline styles; those
+// must be dealt with separately.
+
+
+// Configurable variables
+// ---
+
+// The default selector used to build the override. Must select the <head> tag.
+// The default value selects <head id="!"> which is short (since it’s prepended
+// to every wrapped selector) and obscure (to help guarantee uniqueness). Since
+// it’s a special character in CSS, the `!` must be escaped. Since the '\' is a
+// special character in SCSS, the '\' for the '!' must be escaped.
+
+$style-override-head-selector: '#\\!' !default;
+
+
+// Style override
+// ---
+//
+// @param $degree [Number]: The “force” of the override. Effectively the number
+//        of id-level selectors you need to override.
+// @param $head-selector [String]: An id selector that matches the <head> tag.
+
+@mixin style-override($degree: 1, $head-selector: $style-override-head-selector) {
+    $selector-chain: '';
+
+    // Build an id selector by chaining the same id onto itself once more than
+    // the specified degree. So if degree: 4, we get #id#id#id#id#id.
+
+    @for $i from 1 through $degree + 1 {
+        $selector-chain: $selector-chain + $head-selector;
+    }
+
+    // Since <body> is a following sibling of <head>, we confer nested selectors
+    // anywhere in the <body> with the extra specificity by wrapping them in
+    // this:
+
+    @if parent-exists() {
+        @at-root #{$selector-chain} ~ body & {
+            @content;
+        }
+    }
+    @else {
+        @at-root #{$selector-chain} ~ body {
+            @content;
+        }
+    }
+}

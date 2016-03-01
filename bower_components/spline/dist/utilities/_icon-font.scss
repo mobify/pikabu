@@ -1,0 +1,53 @@
+// Icon Font
+// =========
+//
+// This is the base mixin required to make our icons work! Note that it takes
+// a number of related mixins, functions and variables for icons to work, as
+// seen in the below example usage:
+//
+// ```scss
+// // _variable.scss
+// $icon-address: (
+//     menu: '\e000'
+// );
+//
+// // settings/_icon-font.scss
+// $icon-font: 'icon-font' !default;
+// $icon-font-path: '../fonts/icons/#{$icon-font}' !default;
+//
+// // vellum/_typography.scss
+// @include web-font($icon-font, $icon-font-path);
+//
+// // components/_icon.scss
+// .c-icon {
+//     @include icon-font;
+// }
+// .c-icon.c--menu {
+//     @include icon-address(menu);
+// }
+// ```
+//
+//
+// Dependencies
+// ------------
+//
+// * A custom font must have been defined using @font-face or web-font()
+// * $icon-font variable must be defined
+//
+//
+// @param $position [String] : The pseudo element before or after
+
+@mixin icon-font($position: 'before') {
+
+    &::#{$position} {
+        display: inline-block;
+
+        font: {
+            family: $icon-font;
+            style: normal;
+            weight: normal;
+        }
+        text-decoration: inherit;
+        vertical-align: middle;
+    }
+}
