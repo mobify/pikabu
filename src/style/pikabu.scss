@@ -43,9 +43,20 @@ body {
 }
 
 html,
+body,
 .pikabu {
     width: 100%; // 2
-    height: 100%; // 2
+    min-height: 100%; // 2
+}
+// ::i-block-chrome, html, body, .pikabu {
+//     height: 100%;
+// }
+
+@supports (-webkit-text-size-adjust:none) and (not (-ms-accelerator:true))
+and (not (-moz-appearance:none)) {
+    html, body, .pikabu {
+        height: 100%; 
+    }
 }
 
 // Pikabu: Viewport
