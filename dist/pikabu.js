@@ -130,10 +130,7 @@
             this.$doc = $(document);
             this.$body = $('body');
             this.$animators = $('.' + classes.CONTAINER + ', ' + '.' + classes.FIXED);
-            
-            if (this.options.container.length) {
-                this.$animators.push($(this.options.container)[0]);
-            }
+            this.$animators.push($(this.options.container)[0]);
 
             this._build();
 
@@ -250,7 +247,7 @@
 
             this.$container = this.$pikabu.data('lockup').$container.addClass(classes.CONTAINER);
 
-            this.$pikabu.appendTo(this.options.appendTo.length ? $(this.options.appendTo) : this.$container);
+            this.$pikabu.appendTo(this.$viewport);
 
             if (this.options.structure) {
                 var $wrapper = $('<div />')

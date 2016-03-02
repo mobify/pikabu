@@ -1,9 +1,10 @@
 define([
     'text!fixtures/pikabu.html',
+    'text!fixtures/customPikabu.html',
     '$',
     'drawer-left',
     'pikabu'
-], function(fixture, $, drawerLeft) {
+], function(fixture, customFixture, $, drawerLeft) {
     var Pikabu;
     var element;
     var pikabu;
@@ -12,6 +13,7 @@ define([
         beforeEach(function() {
             Pikabu = $.fn.pikabu.Constructor;
             element = $(fixture);
+            customElement = $(customFixture);
         });
 
         afterEach(function() {
@@ -111,14 +113,13 @@ define([
             });
 
             it('correctly defines the container element', function() {
-                pikabu = new Pikabu(element, { effect: drawerLeft, container: '#pikabu-container' });
+                pikabu = new Pikabu(customElement, { effect: drawerLeft, container: '#pikabu-container' });
 
                 assert.equal(pikabu.options.container, '#pikabu-container');
             });
 
             it('correctly defines the appendTo element', function() {
-                pikabu = new Pikabu(element, { effect: drawerLeft, appendTo: '#pikabu-appendTo' });
-
+                pikabu = new Pikabu(customElement, { effect: drawerLeft, appendTo: '#pikabu-appendTo' });
                 assert.equal(pikabu.options.appendTo, '#pikabu-appendTo');
             });
 
