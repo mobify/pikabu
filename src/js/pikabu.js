@@ -130,7 +130,7 @@
             this.$doc = $(document);
             this.$body = $('body');
             this.$animators = $('.' + classes.CONTAINER + ', ' + '.' + classes.FIXED);
-            this.$animators.push($(this.options.container)[0]);
+            this.$animators.add($(this.options.container)[0]);
 
             this._build();
 
