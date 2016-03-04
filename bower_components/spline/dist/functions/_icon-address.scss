@@ -1,0 +1,37 @@
+// Icon Address
+// ============
+//
+// Usage:
+//
+// .some-icon {
+//     content: icon-address('twitter');
+// }
+//
+//
+// Dependencies
+// ------------
+//
+// * `$icon-list` is required to be been previously defined, which is a map of
+//                all available with which icon-address() will scan to return
+//                the desired icon code.
+//
+//
+// @param $icon-name [String] : This string (without quotes) refers to the icon
+//        in the $icon-list map, which we expect to map to a unicode address
+// @return [String]
+
+
+// @function: Icon Address
+// --------------------
+
+@function icon-address($icon-name) {
+    // Return the icon font text value
+    @if (map-has-key($icon-list, $icon-name)) {
+        @return map-get($icon-list, $icon-name);
+    }
+
+    // The desired icon does not exist in $icon-list
+    @else {
+        @warn '$icon-name value ("#{$icon-name}") is not set. Refer to $icon-list for a list of available icons';
+    }
+}

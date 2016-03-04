@@ -31,10 +31,9 @@ $pikabu__deckard-prefix: ''; // 3
 
 html,
 body {
+    box-sizing: border-box;
     margin: 0; // 1
     padding: 0; // 1
-
-    box-sizing: border-box;
 }
 
 *,
@@ -46,8 +45,8 @@ body {
 html,
 body,
 .pikabu {
-    height: 100%; // 2
     width: 100%; // 2
+    height: 100%; // 2
 }
 
 // Pikabu: Viewport
@@ -86,6 +85,7 @@ body,
     position: fixed; // 1
 
     display: none; // 2
+
     outline: none; // 3
 
     -webkit-tap-highlight-color: rgba(black, 0); // 4
@@ -106,8 +106,8 @@ body,
     position: relative;
     z-index: $pikabu__z-index;
 
-    min-height: 100%; // 2
     overflow: hidden;
+    min-height: 100%; // 2
 
     background-color: $pikabu__background-color; // 1
 }
@@ -129,8 +129,8 @@ body,
 
 .pikabu__wrapper {
     display: flex; // 1
-    flex-direction: column;
     overflow: hidden;
+    flex-direction: column;
     height: 100%;
 }
 
@@ -184,21 +184,12 @@ body,
 // Add this class to any fixed elements on your page that need to transition
 // with your main content. Those fixed elements need to be inside of `.pikabu`
 // and outside of `.pikabu__container`.
-//
-//
-// Notes:
-//
-// 1. Switching to `absolute` removes a flicker that occurs on iOS devices.
 
 .pikabu__fixed {
     position: fixed;
     z-index: $pikabu__z-index + 1;
 
     width: 100%;
-
-    .#{$pikabu__deckard-prefix}ios:not(.#{$pikabu__deckard-prefix}chrome) .pikabu.pikabu--is-open & {
-        position: absolute; // 1
-    }
 }
 
 

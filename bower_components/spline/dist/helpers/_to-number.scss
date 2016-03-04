@@ -1,0 +1,173 @@
+// To Number
+// =========
+//
+// Cast a value to a number if possible or return 0
+//
+// @param [String] $value: complete source
+// @return [Number] number (0 if cast failed)
+
+@function to-number($value) {
+  // In case everything's good
+  @if type-of($value) == number {
+    @return $value;
+  }
+
+  // Boolean to number
+  @if $value == true  {
+    @return 1;
+  }
+
+  // Fail
+  @if type-of($value) != string {
+    @return 0;
+  }
+
+  // Trying to cast
+  $pointer: 1;
+  $result: 0;
+  $allowed: '-' '0' '1' '2' '3' '4' '5' '6' '7' '8' '9'; // Allowed characted to start with
+  $first: str-slice($value, $pointer, $pointer); // First character of the number
+  $minus: $first == '-'; // Is it negative?
+
+  // Early check for errors
+  @if not index($allowed, $first) {
+    @warn "Could not cast `#{inspect($value)} into number.";
+    @return 0;
+  }
+
+  // Find the integer part
+  $find-integer: _find-integer($value, $pointer);
+  $pointer: nth($find-integer, 1);
+  $result:  nth($find-integer, 2);
+
+  // Find digits
+  @if str-slice($value, $pointer, $pointer) == '.' {
+    $find-digits: _find-digits($value, $pointer);
+    $pointer: nth($find-digits, 1);
+    $digits:  nth($find-digits, 2);
+    $result: $result + $digits;
+  }
+
+  // In case of negative
+  @if $minus {
+    $result: $result * -1;
+  }
+
+  // In case of possible CSS unit
+  @if $pointer < str-length($value) {
+    $result: _length($result, str-slice($value, $pointer));
+  }
+
+  @return $result;
+}
+
+// Finding the integer part of a stringified number
+// --------------------------------------------------------------------------------
+// @param [string] $source: string source
+// @param [number] $pointer: current pointer
+// --------------------------------------------------------------------------------
+// @return [list] (new pointer, parsed number)
+
+@function _find-integer($source, $pointer) {
+  $source: to-lower-case($source);
+  $length: str-length($source);
+  $numbers: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
+  $result: 0;
+
+  @while $pointer <= $length {
+    $token: str-slice($source, $pointer, $pointer);
+    $index: index($numbers, $token);
+
+    @if $token == '-' {
+      // @continue;
+    }
+    @else if $index {
+      $result: $result * 10 + ($index - 1);
+    }
+    @else {
+      @return $pointer, $result;
+    }
+
+    $pointer: $pointer + 1;
+  }
+
+  @return $pointer, $result;
+}
+
+// Finding the digits part of a stringified number
+// --------------------------------------------------------------------------------
+// @param [string] $source: string source
+// @param [number] $pointer: current pointer
+// --------------------------------------------------------------------------------
+// @return [list] (new pointer, parsed number)
+
+@function _find-digits($source, $pointer) {
+  $source: to-lower-case($source);
+  $length: str-length($source);
+  $numbers: '0' '1' '2' '3' '4' '5' '6' '7' '8' '9';
+  $result: 0;
+  $runs: 1;
+
+  @while $pointer <= $length {
+    $token: str-slice($source, $pointer, $pointer);
+    $index: index($numbers, $token);
+
+    @if $token == '.' {
+      // @continue;
+    }
+    @else if $index and $index > 0 {
+      $runs: $runs * 10;
+      $result: $result * 10 + ($index - 1);
+    }
+    @else {
+      @return $pointer, $result / $runs;
+    }
+
+    $pointer: $pointer + 1;
+  }
+
+  @return $pointer, $result / $runs;
+}
+
+// Tries to find a unit that would match a CSS length
+// --------------------------------------------------------------------------------
+// @param [number] $number: number
+// @param [unit] $unit: potential unit
+// --------------------------------------------------------------------------------
+// @return [number] length (0 if cast failed)
+
+@function _length($number, $unit) {
+  $strings: 'px' 'cm' 'mm' '%' 'ch' 'pica' 'in' 'em' 'rem' 'pt' 'pc' 'ex' 'vw' 'vh' 'vmin' 'vmax' 'deg';
+  $units:   1px  1cm  1mm  1%  1ch  1pica  1in  1em  1rem  1pt  1pc  1ex  1vw  1vh  1vmin  1vmax  1deg ;
+  $index: index($strings, $unit);
+
+  @if not $index {
+    @warn "Unknown unit `#{inspect($unit)}`.";
+    @return 0;
+  }
+
+  @return $number * nth($units, $index);
+}
+
+// Power function
+// --------------------------------------------------------------------------------
+// @param [number] $x: number
+// @param [number] $n: power
+// --------------------------------------------------------------------------------
+// @return [number] $x ^ $n
+
+@function _pow($x, $n) {
+  $ret: 1;
+
+  @if $n >= 0 {
+    @for $i from 1 through $n {
+      $ret: $ret * $x;
+    }
+  } @else {
+    @for $i from $n to 0 {
+      $ret: $ret / $x;
+    }
+  }
+
+  @return $ret;
+}

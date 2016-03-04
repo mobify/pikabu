@@ -1,0 +1,11 @@
+// Font Settings
+// =============
+//
+// Font formats is used in the web-font mixin to build out a list of source
+// urls for each format.
+
+$font-formats: (
+    'woff': 'woff',
+    'ttf': 'truetype',
+    'svg': 'svg'
+) !default;
