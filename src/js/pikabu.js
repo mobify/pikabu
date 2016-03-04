@@ -81,7 +81,7 @@
         },
         zIndex: 0,
         cssClass: '',
-        coverage: '100%',
+        coverage: '80%',
         easing: 'swing',
         duration: 200,
         shade: {
