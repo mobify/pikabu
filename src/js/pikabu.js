@@ -238,7 +238,7 @@
                         plugin._handleKeyboardHidden();
                     }
                 });
-           
+
             this.$viewport = $(this.options.appendTo)
                 .on(events.click, '.' + classes.CLOSE, function(e) {
                     e.preventDefault();
