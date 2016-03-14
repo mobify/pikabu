@@ -67,7 +67,7 @@ define([
             });
 
             it('correctly defines coverage', function() {
-                assert.equal(pikabu.options.coverage, '100%');
+                assert.equal(pikabu.options.coverage, '80%');
                 assert.isString(pikabu.options.coverage);
             });
 
