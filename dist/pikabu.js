@@ -128,8 +128,8 @@
             this.$element = $(element);
             this.$doc = $(document);
             this.$body = $('body');
+            $(this.options.container).addClass(classes.CONTAINER);
             this.$animators = $('.' + classes.CONTAINER + ', ' + '.' + classes.FIXED);
-            this.$animators.add($(this.options.container)[0]);
 
             this._build();
 
@@ -227,7 +227,7 @@
                     height: this.options.coverage
                 })
                 .lockup({
-                    container: this.options.container,
+                    container: $('.' + classes.CONTAINER),
                     locked: function () {
                         plugin._handleKeyboardShown();
                     },
@@ -235,8 +235,7 @@
                         plugin._handleKeyboardHidden();
                     }
                 });
-           
-            this.$viewport = $(this.options.appendTo)
+            this.$viewport = this.options.appendTo.length ? $(this.options.appendTo) : $('.' + classes.VIEWPORT)
                 .on(events.click, '.' + classes.CLOSE, function(e) {
                     e.preventDefault();
                     plugin.close();
