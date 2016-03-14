@@ -129,6 +129,7 @@
             this.$doc = $(document);
             this.$body = $('body');
             this.$animators = $('.' + classes.CONTAINER + ', ' + '.' + classes.FIXED);
+            this.$animators.add($(this.options.container)[0]);
 
             this._build();
 
@@ -234,8 +235,8 @@
                         plugin._handleKeyboardHidden();
                     }
                 });
-
-            this.$viewport = $('.' + classes.VIEWPORT)
+           
+            this.$viewport = $(this.options.appendTo)
                 .on(events.click, '.' + classes.CLOSE, function(e) {
                     e.preventDefault();
                     plugin.close();
@@ -243,7 +244,7 @@
 
             this.$container = this.$pikabu.data('lockup').$container.addClass(classes.CONTAINER);
 
-            this.$pikabu.appendTo(this.options.appendTo ? $(this.options.appendTo) : this.$container);
+            this.$pikabu.appendTo(this.$viewport);
 
             if (this.options.structure) {
                 var $wrapper = $('<div />')
