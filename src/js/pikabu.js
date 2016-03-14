@@ -114,7 +114,6 @@
                 this._resetFocus();
 
                 this.$viewport.removeClass(classes.OPENED);
-                this.$viewport.css('height', '');
                 this.$animators.css('transform', '');
                 this.$pikabu.lockup('unlock');
                 this.$pikabu.hide();
@@ -159,8 +158,6 @@
 
             this.$pikabu.lockup('lock');
             this.$pikabu.show();
-
-            this.$viewport.height(window.innerHeight);
 
             this.effect.open.call(this);
 
