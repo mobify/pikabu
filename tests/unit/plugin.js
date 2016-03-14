@@ -1,26 +1,27 @@
 define([
     'text!fixtures/pikabu.html',
-    'text!fixtures/fullPikabu.html',
+    'text!fixtures/drawer.html',
     '$',
     'drawer-left',
+    'drawer-right',
     'pikabu'
-], function(fixture, fullFixture, $, drawerLeft) {
-    var element;
+], function(fixture, drawer, $, drawerLeft, drawerRight, pikabu) {
+    var element, content;
 
-    describe('Pikabu plugin', function() {
-        this.timeout(5000);
-
-        beforeEach(function() {
-            element = $(fixture);
+    describe('Pikabu Plugin', function() {
+           beforeEach(function() {
+            element = $(drawer);
+            content = $(fixture);
+            $('body').append(content);
         });
 
         afterEach(function() {
             if (element) {
-                $('.shade').remove();
                 element.remove();
+                content.remove();
+                $('.shade').remove();
                 element = null;
             }
-            $('.lockup__container').removeClass('lockup__container');
         });
 
         describe('binding to Zepto\'s fn', function() {
@@ -139,19 +140,19 @@ define([
 
         describe('creates a pikabu with correct container', function() {
             it('creates pikabu with the default container', function() {
-                var $pikabu = $(element).pikabu({ effect: drawerLeft });
+                var $pikabu = element.pikabu({ effect: drawerLeft });
                 assert.isTrue($pikabu.closest('.pikabu').find('.pikabu__container').hasClass('lockup__container'));
             });
 
             it('creates pikabu in the container element', function() {
-                var $pikabu = $(element).pikabu({ effect: drawerLeft, container: '.custom__container' });
+                var $pikabu = element.pikabu({ effect: drawerLeft, container: '.custom__container' });
                 assert.isTrue($pikabu.closest('.pikabu').find('.custom__container').hasClass('lockup__container'));
             });
         });
 
         describe('creates a pikabu with correct header', function() {
             it('creates the structure with header = false', function() {
-                var $pikabu = $(fullFixture).pikabu({
+                var $pikabu = element.pikabu({
                     effect: drawerLeft,
                     structure: {
                         header: false
@@ -163,8 +164,7 @@ define([
             });
 
             it('creates the correct structure with header = "Something"', function() {
-                var $pikabu = $(fixture)
-                    .pikabu({
+                var $pikabu = element.pikabu({
                         effect: drawerLeft,
                         structure: {
                             header: 'Something'
@@ -195,7 +195,7 @@ define([
 
         describe('creates a pikabu with correct footer', function() {
             it('creates the structure with footer = false', function() {
-                var $pikabu = $(fullFixture).pikabu({
+                var $pikabu = element.pikabu({
                     effect: drawerLeft,
                     structure: {
                         header: false,

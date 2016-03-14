@@ -1,24 +1,27 @@
 define([
     'text!fixtures/pikabu.html',
+    'text!fixtures/drawer.html',
     '$',
     'drawer-left',
     'drawer-right',
     'pikabu'
-], function(fixture, $, drawerLeft, drawerRight, pikabu) {
-    var element;
+], function(fixture, drawer, $, drawerLeft, drawerRight, pikabu) {
+    var element, content;
 
     describe('Pikabu sheets', function() {
-        beforeEach(function() {
-            element = $(fixture);
+           beforeEach(function() {
+            element = $(drawer);
+            content = $(fixture);
+            $('body').append(content);
         });
 
         afterEach(function() {
             if (element) {
                 element.remove();
+                content.remove();
+                $('.shade').remove();
                 element = null;
             }
-
-            $('.pikabu__container').removeClass('pikabu__container');
         });
 
         it('opens correctly using drawer-left', function() {
