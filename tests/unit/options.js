@@ -1,28 +1,31 @@
 define([
     'text!fixtures/pikabu.html',
     'text!fixtures/customPikabu.html',
+    'text!fixtures/drawer.html',
     '$',
     'drawer-left',
     'pikabu'
-], function(fixture, customFixture, $, drawerLeft) {
-    var Pikabu;
-    var element;
-    var pikabu;
+], function(fixture, customFixture, drawer, $, drawerLeft) {
+    var Pikabu, element, pikabu, customElement, content;
 
     describe('Pikabu options', function() {
         beforeEach(function() {
             Pikabu = $.fn.pikabu.Constructor;
-            element = $(fixture);
+            element = $(drawer);
+            content = $(fixture);
             customElement = $(customFixture);
+            $('body').append(content);
+            $('body').append(customElement);
         });
 
         afterEach(function() {
             if (element) {
                 element.remove();
+                content.remove();
+                customElement.remove();
+                $('.shade').remove();
                 element = null;
             }
-
-            $('.pikabu__container').removeClass('pikabu__container');
         });
 
         describe('creates default options when no options parameter not used', function() {
@@ -107,19 +110,17 @@ define([
         describe('creates custom options when options parameter used', function() {
             it('correctly defines effect', function() {
                 pikabu = new Pikabu(element, { effect: drawerLeft });
-
                 assert.deepEqual(pikabu.options.effect, drawerLeft);
                 assert.isFunction(pikabu.options.effect);
             });
 
             it('correctly defines the container element', function() {
-                pikabu = new Pikabu(customElement, { effect: drawerLeft, container: '#pikabu-container' });
-
+                pikabu = new Pikabu(element, { effect: drawerLeft, container: '#pikabu-container' });
                 assert.equal(pikabu.options.container, '#pikabu-container');
             });
 
             it('correctly defines the appendTo element', function() {
-                pikabu = new Pikabu(customElement, { effect: drawerLeft, appendTo: '#pikabu-appendTo' });
+                pikabu = new Pikabu(element, { effect: drawerLeft, appendTo: '#pikabu-appendTo' });
                 assert.equal(pikabu.options.appendTo, '#pikabu-appendTo');
             });
 

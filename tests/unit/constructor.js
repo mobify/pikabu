@@ -1,23 +1,26 @@
 define([
     'text!fixtures/pikabu.html',
+    'text!fixtures/drawer.html',
     '$',
     'drawer-left',
     'pikabu'
-], function(fixture, $, drawerLeft) {
-    var element;
+], function(fixture, drawer, $, drawerLeft) {
+    var element, content;
 
     describe('Pikabu constructor', function() {
         beforeEach(function() {
-            element = $(fixture);
+            element = $(drawer);
+            content = $(fixture);
+            $('body').append(content);
         });
 
         afterEach(function() {
             if (element) {
                 element.remove();
+                content.remove();
+                $('.shade').remove();
                 element = null;
             }
-
-            $('.pikabu__container').removeClass('pikabu__container');
         });
 
         it('creates a pikabu instance', function() {

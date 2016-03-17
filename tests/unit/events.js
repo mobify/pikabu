@@ -1,35 +1,39 @@
 define([
-    'text!fixtures/fullPikabu.html',
+    'text!fixtures/pikabu.html',
+    'text!fixtures/drawer.html',
     '$',
     'drawer-left',
     'pikabu'
-], function(fixture, $, drawerLeft) {
-    var element;
+], function(fixture, drawer, $, drawerLeft) {
+    var element, content;
+    var timeout = 380; // accounts for Velocity and Shade's animation duration
 
     describe('Pikabu events', function() {
         this.timeout(5000);
 
         beforeEach(function() {
-            element = $(fixture);
+            element = $(drawer);
+            content = $(fixture);
+            $('body').append(content);
         });
 
         afterEach(function() {
             if (element) {
                 element.remove();
+                content.remove();
+                $('.shade').remove();
                 element = null;
             }
-
-            $('.pikabu__container').removeClass('pikabu__container');
         });
 
         it('fires the opened event when pikabu is opened', function(done) {
+
             element.pikabu({
                 effect: drawerLeft,
                 opened: function() {
                     done();
                 }
             });
-
             element.pikabu('open');
         });
 
@@ -63,10 +67,14 @@ define([
             element.pikabu({
                 effect: drawerLeft,
                 opened: function() {
-                    element.pikabu('close');
+                    setTimeout(function() {
+                        element.pikabu('close');
+                    }, timeout);
                 },
                 close: function() {
-                    done();
+                    setTimeout(function() {
+                        done();
+                    }, timeout);
                 }
             });
 
@@ -77,13 +85,16 @@ define([
             element.pikabu({
                 effect: drawerLeft,
                 opened: function() {
-                    element.pikabu('close');
+                    setTimeout(function() {
+                        element.pikabu('close');
+                    }, timeout);
                 },
                 closed: function() {
-                    done();
+                    setTimeout(function() {
+                        done();
+                    }, timeout);
                 }
             });
-
             element.pikabu('open');
         });
 
