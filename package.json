@@ -4,7 +4,7 @@
     "type": "git",
     "url": "https://github.com/mobify/pikabu.git"
   },
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A mobile first content fly-in UI plugin",
   "devDependencies": {
     "chai": "~1.9.0",
