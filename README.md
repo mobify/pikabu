@@ -18,7 +18,7 @@ A mobile-first content fly-in UI plugin.
 
 ### Zepto Support
 
-Pikabu supports Zepto but is not actively developed for it. You should be able to use Pikabu directly with Zepto. While we don't actively support Zepto for Pikabu, we welcome any and all issues and PRs to help us make it work.
+Pikabu supports Zepto but is not actively developed for it. You should be able to use Pikabu directly with Zepto v1.1.0. While we don't actively support Zepto for Pikabu, we welcome any and all issues and PRs to help us make it work.
 
 ## Installation
 
