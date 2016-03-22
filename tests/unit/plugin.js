@@ -24,8 +24,8 @@ define([
             }
         });
 
-        describe('binding to Zepto\'s fn', function() {
-            it('defines pikabu in Zepto', function() {
+        describe('binding to Jquery\'s fn', function() {
+            it('defines pikabu in Jquery', function() {
                 var pikabu = $.fn.pikabu;
 
                 assert.isDefined(pikabu);

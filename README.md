@@ -8,17 +8,17 @@ A mobile-first content fly-in UI plugin.
 
 ## Dependencies
 
-* [Zepto](http://zeptojs.com/)
-* [Mobify's fork of Velocity.js](http://github.com/mobify/velocity)
+* [JQuery](https://jquery.com/)
+* [Velocity](http://julian.com/research/velocity/)
 * [Plugin](http://github.com/mobify/plugin)
 * [Shade](http://github.com/mobify/shade)
 * [Lockup](http://github.com/mobify/lockup)
 * [Deckard](http://github.com/mobify/deckard)
 * [Bouncefix](https://github.com/jaridmargolin/bouncefix.js)
 
-### jQuery Support
+### Zepto Support
 
-Pikabu supports jQuery but is not actively developed for it. You should be able to use Pikabu directly with jQuery 2.0. While we don't actively support jQuery for Pikabu, we welcome any and all issues and PRs to help us make it work.
+Pikabu supports Zepto but is not actively developed for it. You should be able to use Pikabu directly with Zepto. While we don't actively support Zepto for Pikabu, we welcome any and all issues and PRs to help us make it work.
 
 ## Installation
 
@@ -37,7 +37,7 @@ We highly recommend using Require.js with Pikabu. To use Require, you have to re
 {
     'paths': {
         'text': 'node_modules/requirejs-text/text',
-        '$': 'lib/zeptojs/dist/zepto',
+        '$': 'node_modules/jquery/dist/jquery.min',
         'bouncefix': 'node_modules/bouncefix.js/dist/bouncefix.min',
         'velocity': 'node_modules/velocity-animate/velocity',
         'slide-along': 'dist/effect/slide-along',
@@ -60,7 +60,7 @@ And then require Pikabu in as needed:
 
 ```
 define([
-    'zepto',
+    '$',
     'drawer-left',
     'pikabu'
     ],
@@ -102,7 +102,7 @@ For accessibility and functional purposes, Pikabu will wrap all of your body con
 </div>
 
 <!-- Include dependencies -->
-<script src="zepto.min.js"></script>
+<script src="jquery.min.js"></script>
 <script src="velocity.min.js"></script>
 <script src="plugin.min.js"></script>
 <script src="shade.min.js"></script>

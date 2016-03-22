@@ -2,7 +2,7 @@ require.config({
     baseUrl: '../',
     paths: {
         'text': 'node_modules/requirejs-text/text',
-        '$': 'lib/zeptojs/dist/zepto',
+        '$': 'node_modules/jquery/dist/jquery.min',
         'bouncefix': 'node_modules/bouncefix.js/dist/bouncefix.min',
         'velocity': 'node_modules/velocity-animate/velocity',
         'slide-along': 'dist/effect/slide-along',

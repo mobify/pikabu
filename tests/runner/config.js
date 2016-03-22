@@ -4,7 +4,7 @@ require.config({
         'text': 'node_modules/text/text',
         'fixtures': 'tests/fixtures',
         'bouncefix': 'node_modules/bouncefix.js/dist/bouncefix.min',
-        '$': 'lib/zeptojs/dist/zepto',
+        '$': 'node_modules/jquery/dist/jquery.min',
         'velocity': 'node_modules/velocity-animate/velocity',
         'chai': 'node_modules/chai/chai',
         'mocha': 'node_modules/mocha/mocha',
