@@ -1,13 +1,12 @@
 {
   "name": "pikabu",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/mobify/pikabu.git"
-  },
-  "version": "2.0.1",
   "description": "A mobile first content fly-in UI plugin",
+  "version": "2.0.1",
   "devDependencies": {
+    "bouncefix.js": "^0.3.0",
     "chai": "~1.9.0",
+    "deckard": "git+https://github.com/mobify/deckard.git#1.2.0",
+    "fastclick": "^1.0.6",
     "grunt": "~0.4.x",
     "grunt-autoprefixer": "~2.0.0",
     "grunt-contrib-clean": "~0.5.0",
@@ -22,9 +21,21 @@
     "grunt-mocha-phantomjs": "~0.3.2",
     "grunt-shell": "~0.2.1",
     "grunt-version": "^0.3.0",
+    "jquery": "2.2.2",
     "jshint": "2.5.0",
+    "lockup": "git+https://github.com/mobify/lockup.git#1.1.3",
     "mobify-code-style": "1.0.0",
-    "mocha": "~1.14.0"
+    "mocha": "~1.14.0",
+    "plugin": "git+https://github.com/mobify/plugin.git#3.1.0",
+    "requirejs": "2.2.0",
+    "requirejs-glob": "git+https://github.com/mobify/requirejs-glob.git",
+    "shade": "git+https://github.com/mobify/shade.git#1.1.1",
+    "text": "requirejs/text",
+    "velocity-animate": "1.2.3"
   },
-  "license": "MIT"
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mobify/pikabu.git"
+  }
 }
