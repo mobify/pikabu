@@ -36,7 +36,7 @@ We highly recommend using Require.js with Pikabu. To use Require, you have to re
 
 {
     'paths': {
-        'text': 'node_modules/requirejs-text/text',
+        'text': 'node_modules/text/text',
         '$': 'node_modules/jquery/dist/jquery.min',
         'bouncefix': 'node_modules/bouncefix.js/dist/bouncefix.min',
         'velocity': 'node_modules/velocity-animate/velocity',
@@ -49,8 +49,7 @@ We highly recommend using Require.js with Pikabu. To use Require, you have to re
         'lockup': 'node_modules/lockup/dist/lockup',
         'deckard': 'node_modules/deckard/dist/deckard.min',
         'pikabu': 'dist/pikabu',
-        'FastClick': 'node_modules/fastclick/lib/fastclick',
-        // There are a few more within the 'effect' folder
+        'FastClick': 'node_modules/fastclick/lib/fastclick'
     }
 }
 
