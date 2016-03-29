@@ -11,15 +11,6 @@ body {
   -webkit-box-sizing: inherit;
           box-sizing: inherit; }
 
-html,
-body,
-.pikabu {
-  width: 100%;
-  min-height: 100%; }
-
-@supports (-webkit-text-size-adjust: none) and (not (-ms-accelerator: true)) and (not (-moz-appearance: none)) {
-  html, body, .pikabu {
-    height: 100%; } }
 .pikabu.pikabu--is-open {
   overflow: hidden; }
 

@@ -26,9 +26,7 @@ $pikabu__deckard-prefix: ''; // 3
 // 1. A `margin` and `padding` of `0` is required on the root elements to avoid
 //    any sizing issues when transforming content. If you need content padding,
 //    add it to `.pikabu__container`.
-// 2. A `min-height` and `width` of `100%` gives the document a structure that we
-//    can attach to to avoid scrolling issues and height issues.
-// 3. `height` needs to be set at `100%`, but not for chrome browser 
+// 2. `height` needs to be set at `100%`, but not for chrome browser
 
 html,
 body {
@@ -43,17 +41,11 @@ body {
     box-sizing: inherit;
 }
 
-html,
-body,
-.pikabu {
-    width: 100%; // 2
-    min-height: 100%; // 2
-}
-
-@supports (-webkit-text-size-adjust:none) and (not (-ms-accelerator:true))
-and (not (-moz-appearance:none)) {
-    html, body, .pikabu {
-        height: 100%; // 3
+html.safari {
+    &,
+    body,
+    .pikabu {
+        height: 100%; // 2
     }
 }
 
