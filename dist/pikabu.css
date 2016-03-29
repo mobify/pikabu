@@ -11,6 +11,11 @@ body {
   -webkit-box-sizing: inherit;
           box-sizing: inherit; }
 
+html.safari,
+html.safari body,
+html.safari .pikabu {
+  height: 100%; }
+
 .pikabu.pikabu--is-open {
   overflow: hidden; }
 
