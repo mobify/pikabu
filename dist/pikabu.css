@@ -2,6 +2,7 @@ html,
 body {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
+  width: 100%;
   margin: 0;
   padding: 0; }
 
@@ -10,6 +11,11 @@ body {
 *::before {
   -webkit-box-sizing: inherit;
           box-sizing: inherit; }
+
+html,
+body,
+.pikabu {
+  width: 100%; }
 
 html.safari,
 html.safari body,
