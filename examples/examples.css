@@ -274,3 +274,25 @@ body {
 .c-sidebar__link a:active {
     background: rgba(250, 246, 242, 0.05);
 }
+
+
+/* * * * * * * * * * * * * * * * * * * * * * */
+/* Test for the issue as described in PR #79 */
+
+@supports (display: block) {
+    /*
+     * Notice that this @support block doesn't do anything, it is just present.
+     * So, because of it's presence, it breaks the below :not() rule, which
+     * means our `c-sidebar__heading` elements will have red text :(
+     */
+}
+
+.c-sidebar__heading {
+    color: red;
+}
+.c-sidebar__heading:not(.x-non-existant-value-for-testing-purposes) {
+    color: inherit; /* we WANT this value to apply! If it doesn't apply, we have an issue! */
+}
+
+/* End of Test for the issue as per PR #79 */
+/* * * * * * * * * * * * * * * * * * * * * */
