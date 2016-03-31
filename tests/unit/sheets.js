@@ -1,26 +1,32 @@
 define([
     'text!fixtures/pikabu.html',
+    'text!fixtures/drawer.html',
     '$',
-    'modal-center',
+    'drawer-left',
+    'drawer-right',
     'pikabu'
-], function(fixture, $, modalCenter, sheetTop, sheetBottom, sheetLeft, sheetRight) {
-    var element;
+], function(fixture, drawer, $, drawerLeft, drawerRight, pikabu) {
+    var element, content;
 
     describe('Pikabu sheets', function() {
-        beforeEach(function() {
-            element = $(fixture);
+           beforeEach(function() {
+            element = $(drawer);
+            content = $(fixture);
+            $('body').append(content);
         });
 
         afterEach(function() {
             if (element) {
                 element.remove();
+                content.remove();
+                $('.shade').remove();
                 element = null;
             }
         });
 
-        it('opens correctly using modal-center', function() {
+        it('opens correctly using drawer-left', function() {
             var $pikabu = element.pikabu({
-                effect: modalCenter,
+                effect: drawerLeft,
                 opened: function() {
                     assert.isTrue($pikabu.closest('.pikabu').hasClass('pikabu--is-open'));
                 }
@@ -29,9 +35,9 @@ define([
             $pikabu.pikabu('open');
         });
 
-        it('opens correctly using sheet-top', function() {
+        it('opens correctly using drawer-right', function() {
             var $pikabu = element.pikabu({
-                effect: sheetTop,
+                effect: drawerRight,
                 opened: function() {
                     assert.isTrue($pikabu.closest('.pikabu').hasClass('pikabu--is-open'));
                 }
@@ -40,37 +46,5 @@ define([
             $pikabu.pikabu('open');
         });
 
-        it('opens correctly using sheet-bottom', function() {
-            var $pikabu = element.pikabu({
-                effect: sheetBottom,
-                opened: function() {
-                    assert.isTrue($pikabu.closest('.pikabu').hasClass('pikabu--is-open'));
-                }
-            });
-
-            $pikabu.pikabu('open');
-        });
-
-        it('opens correctly using sheet-left', function() {
-            var $pikabu = element.pikabu({
-                effect: sheetLeft,
-                opened: function() {
-                    assert.isTrue($pikabu.closest('.pikabu').hasClass('pikabu--is-open'));
-                }
-            });
-
-            $pikabu.pikabu('open');
-        });
-
-        it('opens correctly using sheet-right', function() {
-            var $pikabu = element.pikabu({
-                effect: sheetRight,
-                opened: function() {
-                    assert.isTrue($pikabu.closest('.pikabu').hasClass('pikabu--is-open'));
-                }
-            });
-
-            $pikabu.pikabu('open');
-        });
     });
 });

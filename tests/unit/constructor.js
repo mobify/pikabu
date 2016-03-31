@@ -1,21 +1,31 @@
 define([
     'text!fixtures/pikabu.html',
+    'text!fixtures/drawer.html',
     '$',
-    'modal-center',
+    'drawer-left',
     'pikabu'
-], function(fixture, $, modalCenter) {
-    var Pikabu;
-    var element;
+], function(fixture, drawer, $, drawerLeft) {
+    var element, content;
 
     describe('Pikabu constructor', function() {
         beforeEach(function() {
-            Pikabu = $.fn.pikabu.Constructor;
-            element = $(fixture);
+            element = $(drawer);
+            content = $(fixture);
+            $('body').append(content);
+        });
+
+        afterEach(function() {
+            if (element) {
+                element.remove();
+                content.remove();
+                $('.shade').remove();
+                element = null;
+            }
         });
 
         it('creates a pikabu instance', function() {
-            var pikabu = new Pikabu(element, {
-                effect: modalCenter
+            var pikabu = element.pikabu({
+                effect: drawerLeft
             });
 
             assert.isDefined(pikabu);
