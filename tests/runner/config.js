@@ -1,19 +1,19 @@
 require.config({
     baseUrl: '../../',
     paths: {
-        'text': 'bower_components/requirejs-text/text',
+        'text': 'node_modules/text/text',
         'fixtures': 'tests/fixtures',
-        'bouncefix': 'bower_components/bouncefix.js/dist/bouncefix.min',
-        '$': 'lib/zeptojs/dist/zepto',
-        'velocity': 'bower_components/mobify-velocity/velocity',
+        'bouncefix': 'node_modules/bouncefix.js/dist/bouncefix.min',
+        '$': 'node_modules/jquery/dist/jquery.min',
+        'velocity': 'node_modules/velocity-animate/velocity',
         'chai': 'node_modules/chai/chai',
         'mocha': 'node_modules/mocha/mocha',
         'drawer-left': 'dist/effect/drawer-left',
         'drawer-right': 'dist/effect/drawer-right',
-        'plugin': 'bower_components/plugin/dist/plugin.min',
-        'shade': 'bower_components/shade/dist/shade.min',
-        'deckard': 'bower_components/deckard/dist/deckard.min',
-        'lockup': 'bower_components/lockup/dist/lockup',
+        'plugin': 'node_modules/plugin/dist/plugin.min',
+        'shade': 'node_modules/shade/dist/shade.min',
+        'deckard': 'node_modules/deckard/dist/deckard.min',
+        'lockup': 'node_modules/lockup/dist/lockup',
         'pikabu': 'dist/pikabu'
     },
     'shim': {

@@ -8,21 +8,17 @@ A mobile-first content fly-in UI plugin.
 
 ## Dependencies
 
-* [Zepto](http://zeptojs.com/)
-* [Mobify's fork of Velocity.js](http://github.com/mobify/velocity)
+* [JQuery](https://jquery.com/)
+* [Velocity](http://julian.com/research/velocity/)
 * [Plugin](http://github.com/mobify/plugin)
 * [Shade](http://github.com/mobify/shade)
 * [Lockup](http://github.com/mobify/lockup)
 * [Deckard](http://github.com/mobify/deckard)
 * [Bouncefix](https://github.com/jaridmargolin/bouncefix.js)
 
-### Velocity
+### Zepto Support
 
-If you are using Zepto, you need to load `bower_components/mobify-velocity/velocity.js` (this file comes with a jQuery shim bundled directly in it). If you are using jQuery, you need to load `bower_components/velocity/jquery.velocity.js`.
-
-### jQuery Support
-
-Pikabu supports jQuery but is not actively developed for it. You should be able to use Pikabu directly with jQuery 2.0. While we don't actively support jQuery for Pikabu, we welcome any and all issues and PRs to help us make it work.
+Pikabu supports Zepto but is not actively developed for it. You should be able to use Pikabu directly with Zepto v1.1.0. While we don't actively support Zepto for Pikabu, we welcome any and all issues and PRs to help us make it work.
 
 ## Installation
 
@@ -40,18 +36,20 @@ We highly recommend using Require.js with Pikabu. To use Require, you have to re
 
 {
     'paths': {
-        'plugin': 'bower_components/plugin/dist/plugin.min',
-        'pikabu': 'bower_components/pikabu/dist/pikabu.min',
-        'shade': 'bower_components/shade/dist/shade.min',
-        'lockup': 'bower_components/lockup/dist/lockup.min',
-        'deckard': 'bower_components/deckard/dist/deckard.min',
-        'bouncefix': 'bower_components/bouncefix.js/dist/bouncefix.min',
-        'velocity': 'bower_components/mobify-velocity/velocity',
-        // or jQuery version 'velocity': 'bower_components/mobify-velocity/jquery.velocity',
-
-        'drawer-left': 'bower_components/pikabu/dist/effect/drawer-left',
-        'drawer-right': 'bower_components/pikabu/dist/effect/drawer-right'
-        // There are a few more within the 'effect' folder
+        'text': 'node_modules/text/text',
+        '$': 'node_modules/jquery/dist/jquery.min',
+        'bouncefix': 'node_modules/bouncefix.js/dist/bouncefix.min',
+        'velocity': 'node_modules/velocity-animate/velocity',
+        'slide-along': 'dist/effect/slide-along',
+        'airbnb': 'dist/effect/airbnb',
+        'drawer-left': 'dist/effect/drawer-left',
+        'drawer-right': 'dist/effect/drawer-right',
+        'plugin': 'node_modules/plugin/dist/plugin.min',
+        'shade': 'node_modules/shade/dist/shade',
+        'lockup': 'node_modules/lockup/dist/lockup',
+        'deckard': 'node_modules/deckard/dist/deckard.min',
+        'pikabu': 'dist/pikabu',
+        'FastClick': 'node_modules/fastclick/lib/fastclick'
     }
 }
 
@@ -61,7 +59,7 @@ And then require Pikabu in as needed:
 
 ```
 define([
-    'zepto',
+    '$',
     'drawer-left',
     'pikabu'
     ],
@@ -103,7 +101,7 @@ For accessibility and functional purposes, Pikabu will wrap all of your body con
 </div>
 
 <!-- Include dependencies -->
-<script src="zepto.min.js"></script>
+<script src="jquery.min.js"></script>
 <script src="velocity.min.js"></script>
 <script src="plugin.min.js"></script>
 <script src="shade.min.js"></script>

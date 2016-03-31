@@ -10,7 +10,7 @@
             'deckard'
         ], factory);
     } else {
-        var framework = window.Zepto || window.jQuery;
+        var framework = window.jQuery|| window.Zepto;
         factory(framework, window.Plugin, window.bouncefix);
     }
 }(function($, Plugin, bouncefix, Velocity) {
@@ -69,7 +69,7 @@
         Pikabu.__super__.call(this, element, options, Pikabu.DEFAULTS);
     }
 
-    Pikabu.VERSION = '2.0.0';
+    Pikabu.VERSION = '2.0.1';
 
     Pikabu.DEFAULTS = {
         effect: null,

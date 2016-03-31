@@ -10,7 +10,7 @@
             'deckard'
         ], factory);
     } else {
-        var framework = window.Zepto || window.jQuery;
+        var framework = window.jQuery|| window.Zepto;
         factory(framework, window.Plugin, window.bouncefix);
     }
 }(function($, Plugin, bouncefix, Velocity) {
